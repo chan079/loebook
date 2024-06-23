@@ -13,6 +13,8 @@ install.packages('loedata')
 
 [강의자료][pybook]
 
+[python 코드](python)
+
 ## 제5판 서문
 
 이 책에서 사용된 데이터를 `loedata`라는 R 패키지로 정리하여 [CRAN][loedata]에
