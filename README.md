@@ -39,7 +39,7 @@ install.packages('loedata')
 제4판 2022년 2월<br />
 제3판 2019년 9월<br />
 제2판 2017년 2월<br />
-초판 2016년 2월
+초&nbsp;판 2016년 2월
 
 [home]: https://chan079.github.io
 [pybook]: https://www.pybook.co.kr/mall/book/field?goodsno=2198
