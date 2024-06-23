@@ -17,3 +17,4 @@
 [8장 다중회귀 모형과 그 추정](notebooks/08.ipynb)<br />
 [9장 다중회귀 추정량의 성질](notebooks/09.ipynb)<br />
 [10장 다중회귀 모형에서 가설검정](notebooks/10.ipynb)<br />
+[11장 다중회귀 관련 추가 주제](notebooks/11.ipynb)<br />
