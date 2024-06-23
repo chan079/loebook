@@ -1,6 +1,6 @@
-# 계량경제학강의
+# 계량경제학 강의
 
-[한치록][home](2024), 계량경제학강의 제5판, [박영사][pybook].
+[한치록][home](2024), 계량경제학 강의 제5판, [박영사][pybook].
 
 <img src="v5-cover.jpg" border="0" height="230" />
 
@@ -35,13 +35,11 @@ install.packages('loedata')
 2024년 2월<br />
 한치록
 
-## 발행
-
 제5판 2024년 2월<br />
 제4판 2022년 2월<br />
 제3판 2019년 9월<br />
 제2판 2017년 2월<br />
-제1판 2016년 2월
+초판 2016년 2월
 
 [home]: https://chan079.github.io
 [pybook]: https://www.pybook.co.kr/mall/book/field?goodsno=2198
