@@ -10,10 +10,10 @@
 확인한 것이다.
 
 [준비](Prepare%20Data.md)<br />
-[3장 단순회귀 모형의 추정](notbooks/03.ipynb)<br />
-[4장 추정값과 참값의 관계](notbooks/04.ipynb)<br />
-[6장 최소제곱법을 이용한 가설검정](notbooks/06.ipynb)<br />
-[7장 표본크기가 클 때](notbooks/07.ipynb)<br />
-[8장 다중회귀 모형과 그 추정](notbooks/08.ipynb)<br />
-[9장 다중회귀 추정량의 성질](notbooks/09.ipynb)<br />
-[10장 다중회귀 모형에서 가설검정](notbooks/10.ipynb)<br />
+[3장 단순회귀 모형의 추정](notebooks/03.ipynb)<br />
+[4장 추정값과 참값의 관계](notebooks/04.ipynb)<br />
+[6장 최소제곱법을 이용한 가설검정](notebooks/06.ipynb)<br />
+[7장 표본크기가 클 때](notebooks/07.ipynb)<br />
+[8장 다중회귀 모형과 그 추정](notebooks/08.ipynb)<br />
+[9장 다중회귀 추정량의 성질](notebooks/09.ipynb)<br />
+[10장 다중회귀 모형에서 가설검정](notebooks/10.ipynb)<br />
