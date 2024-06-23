@@ -13,7 +13,7 @@ install.packages('loedata')
 
 [강의자료][pybook]
 
-[python 코드](python)
+[Python 코드](python)
 
 ## 제5판 서문
 
