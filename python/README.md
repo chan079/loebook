@@ -18,3 +18,8 @@
 [9장 다중회귀 추정량의 성질](notebooks/09.ipynb)<br />
 [10장 다중회귀 모형에서 가설검정](notebooks/10.ipynb)<br />
 [11장 다중회귀 관련 추가 주제](notebooks/11.ipynb)<br />
+[12장 정규분포 문제](notebooks/12.ipynb)<br />
+[13장 이분산](notebooks/13.ipynb)<br />
+[14장 오차의 자기상관](notebooks/14.ipynb)<br />
+[15장 확률적인 설명변수](notebooks/15.ipynb)<br />
+[16장 도구변수 추정](notebooks/16.ipynb)<br />
