@@ -4,7 +4,7 @@
 
 실습결과 3행, 5행, 10행, 12행을 수정하여야 하며, 올바른 코드와 결과는 다음과 같습니다.
 
-```
+```r
 stage1 <- lm(x2~x1+z2a+z2b,data=Ivdata)
 Ivdata$x2hat <- stage1$fitted
 tsls <- ivreg(y~x1+x2|x1+z2a+z2b,data=Ivdata)
