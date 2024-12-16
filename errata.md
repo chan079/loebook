@@ -9,7 +9,7 @@ stage1 <- lm(x2~x1+z2a+z2b,data=Ivdata)
 Ivdata$x2hat <- stage1$fitted
 tsls <- ivreg(y~x1+x2|x1+z2a+z2b,data=Ivdata)
 aux1 <- lm(z2b~x1+x2hat,data=Ivdata)
-Ivdata$w <- aux1$resid*tsls$resid
+Ivdata$w <- aux1$resid*tsls$residuals
 Ivdata$one <- 1
 aux2 <- lm(one~w-1,data=Ivdata)
 stat <- nrow(Ivdata)*summary(aux2)$r.sq
