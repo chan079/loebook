@@ -9,6 +9,8 @@
 install.packages('loedata')
 ```
 
+[오타수정](errata.md)
+
 [목차](Table%20of%20Contents.md)
 
 [강의자료][pybook]
