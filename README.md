@@ -15,6 +15,8 @@ install.packages('loedata')
 
 [강의자료][pybook]
 
+[19장 머신러닝 예제][mlex]
+
 [Python 코드](python)
 
 ## 제5판 서문
@@ -44,3 +46,4 @@ install.packages('loedata')
 [home]: https://chan079.github.io
 [pybook]: https://www.pybook.co.kr/mall/book/field?goodsno=2198
 [loedata]: https://cran.r-project.org/package=loedata
+[mlex]: http://econ.korea.ac.kr/~chirokhan/book/mlex/
