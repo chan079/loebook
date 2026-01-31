@@ -202,3 +202,8 @@ dfset[which.min(dfset$cv.error),]
 reg.ns2 <- lm(ynext~ns(deathrate,1) + ns(aged,1), data=z14) # final model fit
 RMSE(z15$ynext, predict(reg.ns2, z15))
 ```
+
+[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion {target="_blank"}
+[BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion {target="_blank"}
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics) {target="_blank"}
+[spline]: https://en.wikipedia.org/wiki/Spline_(mathematics) {target="_blank"}
