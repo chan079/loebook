@@ -90,3 +90,4 @@ RMSE(z15$ynext, predict(tune.out$best.model, z15, type='response'))
 ```
 
 [SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
