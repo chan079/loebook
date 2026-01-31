@@ -63,8 +63,8 @@ importance(tr.bag)
 nowrap;">[R 도움말][1]</span>과 [Jake Hoarse의 블로그][2]를
 참조하였다.
 
-[1]: https://www.rdocumentation.org/packages/randomForest/topics/importance {target="_blank"}
-[2]: https://www.displayr.com/how-is-variable-importance-calculated-for-a-random-forest/ {target="_blank"}
+[1]: https://www.rdocumentation.org/packages/randomForest/topics/importance
+[2]: https://www.displayr.com/how-is-variable-importance-calculated-for-a-random-forest/
 
 위에 보고된 결과에 의하면 변수들 중 `deathrate`와 `aged` 변수의
 중요도가 가장 높게 나온다. 다음과 같이 하여 그림을 그릴 수도
