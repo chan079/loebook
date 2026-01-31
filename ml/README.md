@@ -15,11 +15,11 @@
 
 [데이터 준비](2-Classification/20-data.md),
 [Logit, LDA, QDA](2-Classification/21-logit.md),
-ROC와 cutoff 값[](2-Classification/22-roc.md),
-Class Imbalance[](2-Classification/23-imbalance.md),
-Ridge와 Lasso[](2-Classification/24-ridge-lasso.md),
-Decision Tree[](2-Classification/25-tree.md),
-Tree Ensemble[](2-Classification/26-tree-ensembles.md),
-Support Vector Machine[](2-Classification/27-svm.md),
+[ROC와 cutoff 값](2-Classification/22-roc.md),
+[Class Imbalance](2-Classification/23-imbalance.md),
+[Ridge와 Lasso](2-Classification/24-ridge-lasso.md),
+[Decision Tree](2-Classification/25-tree.md),
+[Tree Ensemble](2-Classification/26-tree-ensembles.md),
+[Support Vector Machine](2-Classification/27-svm.md),
 Neural Networks[](2-Classification/28-nn.md),
 Super Learner[](2-Classification/29-super-learner.md)

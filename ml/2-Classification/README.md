@@ -4,17 +4,17 @@
 
 [Logit, LDA, QDA](21-logit.md)
 
-ROC와 cutoff 값[](22-roc.md)
+[ROC와 cutoff 값](22-roc.md)
 
-Class Imbalance[](23-imbalance.md)
+[Class Imbalance](23-imbalance.md)
 
-Ridge와 Lasso[](24-ridge-lasso.md)
+[Ridge와 Lasso](24-ridge-lasso.md)
 
-Decision Tree[](25-tree.md)
+[Decision Tree](25-tree.md)
 
-Tree Ensemble[](26-tree-ensembles.md)
+[Tree Ensemble](26-tree-ensembles.md)
 
-Support Vector Machine[](27-svm.md)
+[Support Vector Machine](27-svm.md)
 
 Neural Networks[](28-nn.md)
 
