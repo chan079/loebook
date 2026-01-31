@@ -58,31 +58,7 @@ Polley and van der Laan (2010)과 Naimi and Balzer (2018)에 설명에
 
 ### 데이터 읽기
 
-시작하기 전에, (아직 실행하지 않았으면) 다음 코드를 실행하여 데이터를
-읽는다('[데이터 준비](10-data.md)' 코드를 실행했으면 별도로 할 필요
-없음).
-
-```R
-## Read data
-#install.packages("loedata")
-data(RegkoPanel, package='loedata')
-vtarget <- 'deathrate'
-z <- RegkoPanel
-for (v in c('grdp', 'regpop')) z[[v]] <- z[[v]]/1e6
-z$eq5d <- z$eq5d*100
-z14 <- subset(z, year==2014)
-z15 <- subset(z, year==2015)
-z16 <- subset(z, year==2016)
-z14$ynext <- z15[match(z14$id, z15$id), vtarget]
-z15$ynext <- z16[match(z15$id, z16$id), vtarget]
-z14 <- na.omit(z14[,-(1:5)])
-z15 <- na.omit(z15[,-(1:5)])
-fm <- ynext~.
-Y <- model.frame(fm, data=z14)[,1]
-X <- model.matrix(fm, data=z14)[,-1]
-RMSE <- function(x,y) sqrt(mean((x-y)^2))
-rmspe.rw <- RMSE(z15$ynext, z15[[vtarget]])
-```
+시작하기 전에, (아직 실행하지 않았으면) [데이터 준비](10-data.md) 페이지 마지막의 코드를 한꺼번에 실행해서 데이터를 준비하라.
 
 ## Discrete Super Learner
 
