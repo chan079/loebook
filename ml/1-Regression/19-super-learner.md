@@ -7,15 +7,15 @@ Prediction][PolleyLaan10], [H2O.ai document][h2o.stack], Naimi and
 Balzer (2018)의 [Stacked Generalization: An Introduction to Super
 Learning][NaimiBalzer18]을 참고하였다.
 
-[Breiman96]: https://statistics.berkeley.edu/sites/default/files/tech-reports/367.pdf {target="_blank"}
+[Breiman96]: https://statistics.berkeley.edu/sites/default/files/tech-reports/367.pdf
 
-[Kennedy17]: https://cran.r-project.org/web/packages/SuperLearner/vignettes/Guide-to-SuperLearner.html {target="_blank"}
+[Kennedy17]: https://cran.r-project.org/web/packages/SuperLearner/vignettes/Guide-to-SuperLearner.html
 
-[PolleyLaan10]: https://biostats.bepress.com/ucbbiostat/paper266/ {target="_blank"}
+[PolleyLaan10]: https://biostats.bepress.com/ucbbiostat/paper266/
 
-[h2o.stack]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/stacked-ensembles.html {target="_blank"}
+[h2o.stack]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/stacked-ensembles.html
 
-[NaimiBalzer18]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6089257/ {target="_blank"}
+[NaimiBalzer18]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6089257/
 
 ## 개요
 
