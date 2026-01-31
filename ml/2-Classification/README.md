@@ -18,6 +18,6 @@
 
 [Neural Networks](28-nn.md)
 
-[Super Learner](29-super-learner.md)
+Super Learner[](29-super-learner.md)
 
 [[Up](../README.md)]
