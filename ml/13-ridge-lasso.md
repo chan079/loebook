@@ -158,7 +158,7 @@ plotVarimp(bhat.ridge, X)  # try 'horiz = TRUE'
 
 ## Lasso
 
-[Lasso][lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
+[Lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
 바꾸면 된다.
 
 ```R
