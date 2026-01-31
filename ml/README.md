@@ -1,4 +1,4 @@
-# [회귀(regression)](1-Regression/)
+# [회귀(regression)](1-Regression/README.md)
 
 [데이터 준비](1-Regression/10-data.md),
 [변수 선택(subset selection)](1-Regression/11-subset-selection.md),
