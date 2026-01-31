@@ -16,7 +16,7 @@
 library(glmnet)
 ## See (데이터 준비) page for Y, X, and X15
 ridge <- glmnet(X,Y,alpha=0)  # alpha=0 for ridge (1=lasso)
-plot(ridge, xvar='lambda')
+plot(ridge, xvar='lambda', sign=1)
 ```
 
 ![lambda에 따른 ridge 계수들. 상단의 '19'는 변수 개수가 19개임을 의미한다.](imgs/ridge_coef.svg){.glmnet}
@@ -31,12 +31,12 @@ plot(ridge, xvar='lambda')
 ```R
 set.seed(1)
 cv.ridge <- cv.glmnet(X,Y, alpha=0)  # 0 = ridge, 1 = lasso
-plot(cv.ridge)
+plot(cv.ridge, sign=1)
 ```
 
 ![Ridge CV 결과: 왼쪽의 세로 점선은 CV 오차를 최소화하는
 lambda에 해당하고 그 오른쪽의 세로 점선은 1se에
-해당한다. 그림 상단의 '19'는 예측변수 개수가 19개임을 의미한다.](imgs/ridge_cv.svg){.glmnet}
+해당한다. 그림 상단의 '19'는 예측변수 개수가 19개임을 의미한다.](imgs/ridge_cv.svg)
 
 CV를 최소화시키는 $\lambda$ 값은 아래에서 보듯이 33.27139이다. Test
 set (`z15`)에 대하여 CV를 이용한 최적 ridge를 적용한 예측의 성과는

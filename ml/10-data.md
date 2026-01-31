@@ -11,6 +11,7 @@ install.packages("loedata")
 ```R
 data(RegkoPanel, package='loedata')
 z <- RegkoPanel
+for (v in c("nbirth", "cbrate", "tfrate")) z[[v]] <- NULL
 for (v in c('grdp', 'regpop')) z[[v]] <- z[[v]]/1e6
 z$eq5d <- z$eq5d*100
 
