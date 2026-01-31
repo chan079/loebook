@@ -107,9 +107,7 @@ mean(tr.bag$rsq)
 ## Toy (quadratic function)
 smpl <- data.frame(x=seq(-1,1,by=.01))
 smpl$y <- 1-smpl$x^2  # y = 1-x^2
-opensvg1('treebag_quad0', width=6) #__
 plot(y~x, data=smpl)
-dev.close() #__
 ```
 
 ![2차함수 데이터](imgs/treebag_quad0.svg)
