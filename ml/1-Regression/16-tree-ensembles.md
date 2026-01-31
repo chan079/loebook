@@ -1003,12 +1003,12 @@ h2o.shutdown(prompt = FALSE)
 [random forest]: https://en.wikipedia.org/wiki/Random_forest
 [boosting]: https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29
 [gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
-[randomForest-pkg]: https://cran.r-project.org/package=randomForest {.pkg target="_blank"}
-[gbm-pkg]: https://cran.r-project.org/package=gbm {.pkg target="_blank"}
+[randomForest-pkg]: https://cran.r-project.org/package=randomForest
+[gbm-pkg]: https://cran.r-project.org/package=gbm
 [xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
-[xgboost-pkg]: https://cran.r-project.org/package=xgboost {.pkg target="_blank"}
-[adabag-pkg]: https://cran.r-project.org/package=adabag {.pkg target="_blank"}
-[SuperLearner-pkg]: https://cran.r-project.org/package=SuperLearner {.pkg target="_blank"}
+[xgboost-pkg]: https://cran.r-project.org/package=xgboost
+[adabag-pkg]: https://cran.r-project.org/package=adabag
+[SuperLearner-pkg]: https://cran.r-project.org/package=SuperLearner
 [SuperLearner-vignette]: https://cran.r-project.org/web/packages/SuperLearner/vignettes/Guide-to-SuperLearner.html
 [OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
 [SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
@@ -1025,13 +1025,13 @@ h2o.shutdown(prompt = FALSE)
 [precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [logit]: https://en.wikipedia.org/wiki/Logistic_regression
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
-[ROCit-pkg]: https://cran.r-project.org/package=ROCit {.pkg target="_blank"}
+[ROCit-pkg]: https://cran.r-project.org/package=ROCit
 [ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
-[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints {.pkg target="_blank"}
+[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
 [ovun]: https://en.wikipedia.org/wiki/Oversampling_and_undersampling_in_data_analysis
 [SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
-[smotefamily]: https://CRAN.R-project.org/package=smotefamily {.pkg target="_blank"}
-[ROSE]: https://cran.r-project.org/package=ROSE {.pkg target="_blank"}
+[smotefamily]: https://CRAN.R-project.org/package=smotefamily
+[ROSE]: https://cran.r-project.org/package=ROSE
 [ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
 [LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
 [QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
