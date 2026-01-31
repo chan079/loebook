@@ -93,9 +93,7 @@ RMSE(z15$ynext, predict(reg, z15))
 사용할 수도 있는데, 그러면 $k=5$가 선택되고, 이 경우 test set에 적용한 결과는 다음과 같다.
 
 ```R
-opensvg1('regfull_cp') #__
 plot(reg.summ$cp, type='o', ylab = 'Cp')
-dev.off() #__
 ```
 
 ![최적 변수집합 선택에서 변수 개수별 Cp](imgs/regfull_cp.svg)
@@ -110,9 +108,7 @@ RMSE(z15$ynext, predict(reg.full, z15, k.cp))
 Adjusted R-squared를 비교하면 다음과 같다.
 
 ```R
-opensvg1('regfull_adjr2') #__
 plot(reg.summ$adjr2, type='o', ylab = 'Adj. R-squared')
-dev.off() #__
 ```
 
 ![최적 변수집합 선택에서 변수 개수별 Adjusted R-squared](imgs/regfull_adjr2.svg)
