@@ -156,64 +156,6 @@ plotVarimp(bhat.ridge, X)  # try 'horiz = TRUE'
 
 ![Ridge 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/ridge_varimp.svg)
 
-<div style="font-size:small; margin-top:3em; border-radius:10px; padding-left:2em; padding-right:2em; border:.5px dotted gray;">
-
-### 참고: glmnet의 ridge 계산 방법에 대한 주석^[이 내용은 고려대 경제학과 박상수 교수와 함께 알아낸 것임]
-
-수학에 의하면 ridge 기울기 추정값은 $\tilde\beta = (n^{-1} \tilde{X}'
-\tilde{X} + \lambda I)^{-1} n^{-1} \tilde{X}'y$ 수식으로 구할 수
-있다($\tilde{X}$는 $x_j$에서 그 표본평균을 차감한 값들의 행렬).
-다음으로 절편은 $\tilde\alpha = \bar{y} - \tilde\beta_1 \bar{x}_1 -
-\cdots - \tilde\beta_p \bar{x}_p$ 수식에 따라 구한다. 그런데 특별히
-디자인한 경우가 아니면, 같은 자료와 같은 $\lambda$를 사용한다 할지라도
-`glmnet`이 구해 주는 ridge 추정값들은 위 수식으로 구한 ridge
-추정값들과 다르다. 이는 `glmnet`이 변수 표준화와 관련하여 특별한 일을
-하기 때문이다.
-
-우선, `glmnet`은 ridge 계산 전에 목표변수($y$)를 표준화하고 계산 종료
-후 되돌린다. 그러므로 `glmnet`에서 사용하는 ‘$\lambda$’는 수식에
-나오는 벌점이 아니다. `glmnet`이 사용한 $\lambda$에 대하여 위 행렬
-연산을 통하여 직접 ridge 추정값을 구하려면, $\hat\sigma_y$을
-목표변수의 표본표준편차(표본분산 계산 시 $n-1$이 아니라 $n$으로
-나눔)라 할 때, 벌점을 $\lambda^* = \lambda/\hat\sigma_y$로 바꾸어야
-한다. 이렇게 벌점을 바꾸고 위 행렬 연산을 하면 `glmnet`에서 $x_j$를
-표준화하지 않은(`standardize = FALSE` 옵션 사용) 계수 추정값을 구할 수
-있다.
-
-그런데 `glmnet`은 디폴트로 특성변수들($x_j$)도 표준화한다. 즉,
-$\hat\sigma_j$를 $x_j$의 표본표준편차(표본분산 계산 시 $n-1$이 아니라
-$n$으로 나눔)라 하면 표준화는 모형의 $\beta_j x_j$를 $(\beta_j
-\hat\sigma_j) (x_j / \hat\sigma_j)$로 변환한 것과 마찬가지여서, 변수가
-$x_j/\hat\sigma_j$가 되고 계수는 $\hat\beta_j \hat\sigma_j$가 되는
-효과를 갖는다. 표준화의 영향을 되돌리리면 계수 추정값을 다시
-$\hat\sigma_j$로 나누어야 한다.
-
-이상을 정리하면, `glmnet`에 `standardize = TRUE` 옵션(디폴트)을 주고
-계산하는 ridge 추정값은 다음과 같이 구할 수 있다. ① $\tilde{x}_{ij}^*
-= (x_{ij}-\bar{x}_j)/\hat\sigma_j$로 표준화한다. 여기서 $\bar{x}_j$는
-$x_{ij}$의 표본평균, $\hat\sigma_j$는 $x_{ij}$의 표본평균편차(표본분산
-계산 시 $n$으로 나눔). 표본평균을 빼는 것은 절편을 처리하기 위함이며,
-$\hat\sigma_j$로 나누는 것은 변수 표준화. ② $\hat\beta^* = (n^{-1}
-\tilde{X}^{*\prime} \tilde{X}^* + \lambda^*I)^{-1} n^{-1}
-\tilde{X}^{*\prime}y$를 구한다($\tilde{X}^*$는 $\tilde{x}_{ij}^*$의
-행렬, $\lambda^* = \lambda/\hat\sigma_y$). 이것은 ‘베타계수’ $\beta_j
-\hat\sigma_j$들의 추정값 벡터이다. ③ 표준화를 되돌리기 위해
-$\hat\beta_j = \hat\beta_j^* / \hat\sigma_j$를 계산하면 이것이
-최종적인 기울기 계수의 ridge 추정값. ④ 절편 추정값은 앞과 동일하게
-$\hat\alpha = \bar{y} - \hat\beta_1 \bar{x}_1 - \cdots - \hat\beta_p
-\bar{x}_p$로 계산.
-
-참고로, 위 ①∼③의 $\hat\beta$은 $D = diag(\hat\sigma_1^2, \ldots,
-\hat\sigma_p^2)$라 할 때 $(n^{-1}\tilde{X}'\tilde{X} + \lambda^*
-D)^{-1} n^{-1} \tilde{X}'y$으로 계산한 것과 동일하다.
-
-이상의 내용은 R을 이용하여 수치적으로 확인하였다. 확인한 바는
-[여기](ridgenote.md)에 있다.[^1]
-
-[^1]: 이 내용은 고려대 경제학과 박상수 교수와 함께 알아낸 것임
-
-</div>
-
 ## Lasso
 
 [Lasso][lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
