@@ -305,4 +305,4 @@ Performance(qda.fit, TestSet, cutoff = cutoff)
 [QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
 [book]: https://www.statlearning.com/
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
-
+[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
