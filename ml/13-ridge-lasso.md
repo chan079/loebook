@@ -403,4 +403,6 @@ elastic net에서 `glmnet`처럼 안정적인 결과를 얻기는 매우 어려�
 [h2o-faq]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm-faq/cross_validation.html
 [h2o-dl]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html
 [deep learning]: https://en.wikipedia.org/wiki/Deep_learning
+[ridge]: https://en.wikipedia.org/wiki/Ridge_regression
 [lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
+[elastic net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
