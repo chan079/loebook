@@ -162,47 +162,6 @@ RMSE(z15$ynext, predict(reg.ns2, z15))
 정의되어 있으므로 위와 같이 R로 하여금 자동으로 정하도록 하는 것도
 문제될 것은 없다는 생각도 든다.
 
-전체 코드는 다음과 같다.
-
-```R
-library(splines)
-reg.ns <- lm(ynext~ns(deathrate,3)+ns(aged,3), data=z14)
-RMSE(z15$ynext, predict(reg.ns, z15))
-rmspe.rw
-dfset <- expand.grid(df1 = 1:4, df2 = 1:4)
-dfset
-dfset$bic <- dfset$aic <- dfset$adj.r2 <- NA
-for (i in 1:nrow(dfset)) {
-  reg1 <- lm(ynext~ns(deathrate,dfset$df1[i])+ns(aged,dfset$df2[i]), data=z14)
-  dfset$adj.r2[i] <- summary(reg1)$adj.r.squared
-  dfset$aic[i] <- AIC(reg1)
-  dfset$bic[i] <- BIC(reg1)
-}
-dfset[which.max(dfset$adj.r2),]
-dfset[which.min(dfset$aic),]
-dfset[which.min(dfset$bic),]
-reg.ns <- lm(ynext~ns(deathrate, 2) + ns(aged, 2), data=z14)
-RMSE(z15$ynext, predict(reg.ns, z15))
-rmspe.rw
-set.seed(1)
-group <- sample(1:10, nrow(z14), replace = TRUE)
-dfset <- expand.grid(df1 = 1:4, df2 = 1:4, cv.error = NA)
-for (i in 1:nrow(dfset)) {
-  cv.err <- 0
-  df1 <- dfset$df1[i]
-  df2 <- dfset$df2[i]
-  for (k in 1:10) {
-    reg <- lm(ynext~ns(deathrate, df1) + ns(aged, df2), data=z14, subset = group != k)
-    zk <- z14[group==k, ]
-    cv.err <- cv.err + sum((zk$ynext - predict(reg, zk))^2)
-  }
-  dfset$cv.error[i] <- cv.err
-}
-dfset[which.min(dfset$cv.error),]
-reg.ns2 <- lm(ynext~ns(deathrate,1) + ns(aged,1), data=z14) # final model fit
-RMSE(z15$ynext, predict(reg.ns2, z15))
-```
-
 [AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
 [BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)

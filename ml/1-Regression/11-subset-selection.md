@@ -21,11 +21,11 @@ rmspe.rw # random walk, defined in index11.php
 
 ## 변수 선택(subset selection)
 
-이제 예측변수 부분집합을 선택하는 방법들([subset selection](https://en.wikipedia.org/wiki/Feature_selection#Subset_selection))을 살펴본다. 먼저 BIC에 의한 선택을 살펴보고, 교차검증(CV)은 코딩이 약간 복잡하므로 마지막에 살펴본다.
+이제 예측변수 부분집합을 선택하는 방법들([subset selection])을 살펴본다. 먼저 BIC에 의한 선택을 살펴보고, 교차검증(CV)은 코딩이 약간 복잡하므로 마지막에 살펴본다.
 
 ### Best subset selection
 
-Best Subset Selection은 [leaps](https://cran.r-project.org/package=leaps) 패키지에 구현되어 있다. `regsubsets` 명령이 각 k에 해당하는 ‘대표선수’를 선발하도록 회귀를 실행한다.
+Best Subset Selection은 [leaps] 패키지에 구현되어 있다. `regsubsets` 명령이 각 k에 해당하는 ‘대표선수’를 선발하도록 회귀를 실행한다.
 
 ```R
 ## Best Subset Selection
@@ -33,7 +33,7 @@ library(leaps) # install.packages("leaps") if necessary
 reg.full <- regsubsets(ynext~., data=z14, nvmax=19)
 ```
 
-‘대표선수’ 모형 중 [BIC](https://en.wikipedia.org/wiki/Bayesian_information_criterion)가 가장 작은 모형을 최적으로 간주하고 선택해 보자. 대표선수 모형 각각에 대하여 BIC 등 수치를 구하려면 `summary(reg.full)` 명령을 사용하면 된다. BIC는 그 결과 중 `$bic`에 보관되어 있다. 다음 명령을 보라.
+‘대표선수’ 모형 중 [BIC]가 가장 작은 모형을 최적으로 간주하고 선택해 보자. 대표선수 모형 각각에 대하여 BIC 등 수치를 구하려면 `summary(reg.full)` 명령을 사용하면 된다. BIC는 그 결과 중 `$bic`에 보관되어 있다. 다음 명령을 보라.
 
 ```R
 reg.summ <- summary(reg.full)
@@ -258,3 +258,10 @@ RMSE(z15$ynext, predict(regs, z15, k.cv.best))
 
 수학적으로 보면 우변에 상수항만 있는 null 모형도 고려하여야 할 것이나, 실질적으로는
 무의미하므로 고려하지 않고자 한다.
+
+[subset selection]: https://en.wikipedia.org/wiki/Feature_selection#Subset_selection
+[leaps]: https://cran.r-project.org/package=leaps
+[BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
+[Mallows's Cp]: https://en.wikipedia.org/wiki/Mallows%27s_Cp
+[greedy]: https://en.wikipedia.org/wiki/Greedy_algorithm
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
