@@ -301,10 +301,10 @@ LDA와 QDA는 예측변수(X)들이 [정규분포][normaldist]를 갖는다는
 글타래][SEdum]도 있다.  이하에서 LDA와 QDA의 이론에 대하여는 길게
 설명하지 않겠다.
 
-[normaldist]: https://en.wikipedia.org/wiki/Normal_distribution {target="_blank"}
-[SEdum]: https://stats.stackexchange.com/questions/158772/can-we-use-categorical-independent-variable-in-discriminant-analysis {target="_blank"}
+[normaldist]: https://en.wikipedia.org/wiki/Normal_distribution
+[SEdum]: https://stats.stackexchange.com/questions/158772/can-we-use-categorical-independent-variable-in-discriminant-analysis
 
-## [Linear Discriminant Analysis]{#LDA}
+## <a name="LDA">Linear Discriminant Analysis</a>
 
 LDA는 피예측변수(`deny`)가 `yes`인 경우와 `no`인 경우에 X변수들의
 평균이 서로 다르고 분산공분산행렬은 동일한 정규분포를 갖는다고
@@ -373,7 +373,7 @@ Performance(lda.fit, TestSet)
 (=5/20)였다. 여기 LDA에서는 근소하게 상승하나(6/(14+6)=0.3) 낮은 것은
 여전히 마찬가지이다.
 
-## [Quadratic Discriminant Analysis]{#QDA}
+## <a name="QDA">Quadratic Discriminant Analysis</a>
 
 Quadratic discriminant analysis (QDA)에서는 X의 평균뿐 아니라
 분산공분산행렬도 피예측변수가 `no`인 집단과 `yes`인 집단 간에 서로
