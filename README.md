@@ -15,7 +15,7 @@ install.packages('loedata')
 
 [강의자료][pybook]
 
-[19장 머신러닝 예제][mlex]
+[19장 머신러닝 예제](ml)
 
 [Python 코드](python)
 
