@@ -14,7 +14,7 @@
 # [분류(classification)](2-Classification/README.md)
 
 [데이터 준비](2-Classification/20-data.md),
-Logit, LDA, QDA[](2-Classification/21-logit.md),
+[Logit, LDA, QDA](2-Classification/21-logit.md),
 ROC와 cutoff 값[](2-Classification/22-roc.md),
 Class Imbalance[](2-Classification/23-imbalance.md),
 Ridge와 Lasso[](2-Classification/24-ridge-lasso.md),

@@ -2,7 +2,7 @@
 
 [데이터 준비](20-data.md)
 
-Logit, LDA, QDA[](21-logit.md)
+[Logit, LDA, QDA](21-logit.md)
 
 ROC와 cutoff 값[](22-roc.md)
 
