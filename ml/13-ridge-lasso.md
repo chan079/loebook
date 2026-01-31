@@ -154,7 +154,7 @@ plotVarimp <- function(bhat, X, horiz = FALSE) {
 plotVarimp(bhat.ridge, X)  # try 'horiz = TRUE'
 ```
 
-![Ridge 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/ridge_varimp.svg){.title}
+![Ridge 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/ridge_varimp.svg)
 
 <div style="font-size:small; margin-top:3em; border-radius:10px; padding-left:2em; padding-right:2em; border:.5px dotted gray;">
 
@@ -293,7 +293,7 @@ cbind(bhat.lasso, bhat.lasso * c(1, apply(X, 2, sd)))
 plotVarimp(bhat.lasso, X)  # defined above
 ```
 
-![Lasso 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/lasso_varimp.svg){.title}
+![Lasso 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/lasso_varimp.svg)
 
 표준화 계수 추정값의 크기에 의하면, 직전연도 사망률(`deathrate`)이
 가장 중요하고 그 다음으로 고령인구비율(`aged`)이 중요한
@@ -330,7 +330,7 @@ bhat.enet <- coef(cv.enet, s='lambda.min')
 plotVarimp(bhat.enet, X)
 ```
 
-![Elastic Net 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/enet_varimp.svg){.title}
+![Elastic Net 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/enet_varimp.svg)
 
 예측 오차가 아주 작은데(RMSE = 46.06922), 이는 우연히 그런 것이다.
 $\alpha=0.5$는 체계적인 방법으로 최적화하여 정한 것이 아니라, 한번
