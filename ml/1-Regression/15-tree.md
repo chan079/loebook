@@ -65,7 +65,7 @@ rmspe.rw
 
 예상한 대로 좋지 않다. 한 그루의 나무는 목표변수가 연속변수일 때(즉
 회귀 문제에서) 예측 성과가 안 좋기 십상이다. (반면 여러 나무들을
-평균내는 [Ensemble](index17.html) 방법은 평균내는 과정에서 기울기
+평균내는 [Ensemble](16-tree-ensembles.md) 방법은 평균내는 과정에서 기울기
 비슷한 선들이 만들어지므로 대체로 성능이 더 좋다.)
 
 학습용 자료(`z14`)에 해당하는 그림을 그려보면 왜 안 좋은지 알 수
@@ -92,9 +92,7 @@ RMSE(z14$ynext, z14$deathrate)  # Random Walk
 # [1] 57.12526
 ```
 
-이 문제는 [bagging](index17.html)과 [random forest](index17.html)에서
+이 문제는 [bagging](16-tree-ensembles.md)과 [random forest](16-tree-ensembles.md)에서
 상당 부분 해결된다.
 
 [tree]: https://en.wikipedia.org/wiki/Decision_tree_learning
-[bagging]: https://en.wikipedia.org/wiki/Bootstrap_aggregating
-[random forest]: https://en.wikipedia.org/wiki/Random_forest
