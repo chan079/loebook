@@ -19,7 +19,7 @@ ridge <- glmnet(X,Y,alpha=0)  # alpha=0 for ridge (1=lasso)
 plot(ridge, xvar='lambda', sign=1)
 ```
 
-![lambda에 따른 ridge 계수들. 상단의 '19'는 변수 개수가 19개임을 의미한다.](imgs/ridge_coef.svg){.glmnet}
+![lambda에 따른 ridge 계수들. 상단의 '19'는 변수 개수가 19개임을 의미한다.](imgs/ridge_coef.svg)
 
 그림이 특이하다. $\lambda$가 증가함에 따라 보통은 변수들의 계수가
 수축되는데 지금은 어떤 변수의 계수가 수축되는 것이 아니라 확장되었다가
@@ -223,7 +223,7 @@ plot(lasso, xvar='lambda')
 ```
 
 ![lambda에 따른 lasso 계수들. 상단의 숫자는 계수가 0이 아닌 변수
-개수를 말한다.](imgs/lasso_coef.svg){.glmnet}
+개수를 말한다.](imgs/lasso_coef.svg)
 
 Lasso에 대하여 10-fold [CV]를 하면 결과는 다음과 같다.
 
@@ -235,7 +235,7 @@ plot(cv.lasso)
 
 ![Lasso CV 결과: 왼쪽 세로 점선은 CV 오차를 최소화하는 lambda에
 해당하고 오른쪽 세로 점선은 1se에 해당한다. 상단의 숫자는 계수가 0이
-아닌 변수의 개수를 말한다.](imgs/lasso_cv.svg){.glmnet}
+아닌 변수의 개수를 말한다.](imgs/lasso_cv.svg)
 
 이로부터 최적 $\lambda$를 구하고 이에 대응하는 lasso 추정 결과를
 test set (`z15`)에 적용하여 사망률을 예측한 성과는 다음과 같다.
