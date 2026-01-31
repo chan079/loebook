@@ -216,7 +216,7 @@ D)^{-1} n^{-1} \tilde{X}'y$으로 계산한 것과 동일하다.
 
 ## Lasso
 
-[Lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
+[Lasso][lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
 바꾸면 된다.
 
 ```R
@@ -461,3 +461,4 @@ elastic net에서 `glmnet`처럼 안정적인 결과를 얻기는 매우 어려�
 [h2o-faq]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm-faq/cross_validation.html
 [h2o-dl]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html
 [deep learning]: https://en.wikipedia.org/wiki/Deep_learning
+[lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
