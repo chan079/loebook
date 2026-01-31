@@ -1,4 +1,4 @@
-# 회귀(regression)
+# [회귀(regression)](1-Regression/)
 
 [데이터 준비](1-Regression/10-data.md)
 
