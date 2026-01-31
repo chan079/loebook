@@ -1,9 +1,7 @@
 # [회귀(regression)](1-Regression/)
 
 [데이터 준비](1-Regression/10-data.md)
-
 [변수 선택(subset selection)](1-Regression/11-subset-selection.md)
-
 [스플라인(splines)](1-Regression/12-splines.md)
 
 [Ridge와 Lasso](1-Regression/13-ridge-lasso.md)
