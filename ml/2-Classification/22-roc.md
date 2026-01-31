@@ -1,7 +1,5 @@
-<!-- [#topnotif] -->
-
-이 단원의 실습을 하려면 [데이터 준비](index21.php)와 [Logit, LDA,
-QDA](index22.php) 단원의 코드를 우선 실행시켜야 한다. 아직 하지
+이 단원의 실습을 하려면 [데이터 준비](20-data.md)와 [Logit, LDA,
+QDA](21-logit.md) 단원의 코드를 우선 실행시켜야 한다. 아직 하지
 않았으면 해당 페이지들을 방문하여 코드를 클립보드에 복사해서 실행한 후
 계속하자.
 
@@ -17,7 +15,7 @@ QDA](index22.php) 단원의 코드를 우선 실행시켜야 한다. 아직 하�
 경계(cutoff)값을 0에서 1로 점차 변화시키면서 [TPR][evalbin] (즉,
 sensitivity)과 [FPR][evalbin] (즉, 1-specificity)이 어떻게 바뀌는지
 그림으로 표현한 것이 [ROC] 곡선이다. [앞 단원(Logistic
-Regression)](index22.php)의 학습한 ‘전체 데이터를 사용한 로짓모형’에
+Regression)](21-logit.md)의 학습한 ‘전체 데이터를 사용한 로짓모형’에
 대해서 ROC 곡선을 그려 보자.
 
 ```R
@@ -25,15 +23,12 @@ Regression)](index22.php)의 학습한 ‘전체 데이터를 사용한 로짓�
 full <- glm(deny~., data = TrainSet, family = binomial)
 train.phat.full <- predict(full, TrainSet, type = 'r')
 ## ROC
-source('common.R') #__
 library(ROCit)
 roc.train.full <- rocit(train.phat.full, TrainSet$deny)
-opensvg.roc('roc_full') #__
 plot(roc.train.full)
-dev.close() #__
 ```
 
-![Full logit 회귀로부터의 train set ROC 곡선](imgs/roc_full.svg){.roc}
+![Full logit 회귀로부터의 train set ROC 곡선](imgs/roc_full.svg)
 
 Cutoff 값을 0으로 한다면(즉, 확률 예측값이 0보다 크면 `yes`라고
 예측한다면) 늘 `yes`라고 예측할 것이므로 truth가 `yes`인 경우나 `no`인
@@ -83,10 +78,8 @@ Full logistic regression의 경우 cutoff별 TPR - FPR과 이를 최대화시키
 cutoff 값을 그림으로 나타내면 다음과 같다.
 
 ```R
-opensvg1('youden_full') #__
 with(roc.train.full, plot(I(TPR-FPR)~Cutoff, type='l', lwd=2))
 with(roc.train.full, abline(v = Cutoff[which.max(TPR-FPR)], lty=2))
-dev.off() #__
 ```
 
 ![Cutoff 값별 Youden Index (full logit)](imgs/youden_full.svg)
@@ -100,7 +93,7 @@ dev.off() #__
 ```
 
 이 값을 경계로 `yes`와 `no`로 구분하여 재예측할 경우 train set에서
-[confusion matrix]는 [다음]{#yo-train}과 같다.
+[confusion matrix]는 <a name="yo-train">다음</a>과 같다.
 
 ```R
 Performance(full, TrainSet, cutoff = cutoff)
@@ -115,10 +108,10 @@ Performance(full, TrainSet, cutoff = cutoff)
 #   0.7207547   0.8023614   0.3315972   0.7925892 
 ```
 
-Train set에서 [0.5를 경계로 한 경우](index22.php#half-train)에 비하여
+Train set에서 [0.5를 경계로 한 경우](21-logit.md#half-train)에 비하여
 positive (`yes`)라고 훨씬 많이 예측하고, 그러다 보니 [sensitivity]가
 증가하지만 그 대가로 [specificity]는 하락한다.  이 경계값(0.1133907)을
-이용하여 [test set에 대해 예측]{#yo-test}하면 결과는 다음과 같다.
+이용하여 <a name="yo-test">test set에 대해 예측</a>하면 결과는 다음과 같다.
 
 ```R
 Performance(full, TestSet, cutoff = cutoff)
@@ -141,7 +134,7 @@ Performance(full, TestSet, cutoff = cutoff)
 [가치판단]의 문제이다. Youden's Index를 사용하는 방법은 sensitivity +
 specificity를 최대화시키는 방법이다.
 
-[가치판단]: https://en.wikipedia.org/wiki/Value_judgment {target="_blank"}
+[가치판단]: https://en.wikipedia.org/wiki/Value_judgment
 
 참고로, [OptimalCutpoints] 라이브러리를 이용하여 다양한 방식으로
 cutoff 값을 잡을 수 있다(이 라이브러리에 대해서는 [Cross Validated의
@@ -149,7 +142,7 @@ cutoff 값을 잡을 수 있다(이 라이브러리에 대해서는 [Cross Valid
 할 수 있다(복잡하지만 이것이 `OptimalCutpoint` 패키지가 일을 처리하는
 방식이다).
 
-[1]: https://stats.stackexchange.com/questions/29719/how-to-determine-best-cutoff-point-and-its-confidence-interval-using-roc-curve-i {target="_blank"}
+[1]: https://stats.stackexchange.com/questions/29719/how-to-determine-best-cutoff-point-and-its-confidence-interval-using-roc-curve-i
 
 ```R
 A <- data.frame(truth = TrainSet$deny, pred = train.phat.full)
@@ -181,26 +174,22 @@ cutoff point를 이용해 보자.
 
 ```R
 ## LDA
-library(MASS) #_
+library(MASS)
 lda.fit <- lda(deny~., data=TrainSet)
 ## ROC
 library(ROCit)
 train.pred.lda <- predict(lda.fit, TrainSet)$posterior[, 'yes']
 roc.lda <- rocit(train.pred.lda, TrainSet$deny)
-opensvg.roc('roc_lda') #__
 plot(roc.lda)
-dev.off() #__
 ```
 
-![LDA 분석 후 train set에 대해 그린 ROC 곡선](imgs/roc_lda.svg){.roc}
+![LDA 분석 후 train set에 대해 그린 ROC 곡선](imgs/roc_lda.svg)
 
 이 train set에서 cutoff 값별 Youden's J Statistic은 다음 그림과 같다.
 
 ```R
-opensvg1('youden_lda') #__
 with(roc.lda, plot(I(TPR-FPR)~Cutoff, type='l', lwd=2))
 with(roc.lda, abline(v = Cutoff[which.max(TPR-FPR)], lty=2))
-dev.off() #__
 ```
 
 ![LDA 이용 시 cutoff 값별 Youden Index](imgs/youden_lda.svg)
@@ -264,12 +253,10 @@ qda.fit <- qda(deny~., data=TrainSet)
 library(ROCit)
 train.pred.qda <- predict(qda.fit, TrainSet)$posterior[, 'yes']
 roc.qda <- rocit(train.pred.qda, TrainSet$deny)
-opensvg.roc('roc_qda') #__
 plot(roc.qda)
-dev.off() #__
 ```
 
-![QDA 분석 후 train set에서 ROC 곡선](imgs/roc_qda.svg){.roc}
+![QDA 분석 후 train set에서 ROC 곡선](imgs/roc_qda.svg)
 
 Youden-optimal한 cutoff 값은 다음과 같다.
 
@@ -305,3 +292,17 @@ Performance(qda.fit, TestSet, cutoff = cutoff)
 이용하여 이진변수를 예측하는 방법을 살펴보았다. Youden Index는 한 가지
 지표이며, 그 외에서 수많은 지표가 있다. [OptimalCutpoints] 패키지에
 다양한 지표들에 관한 상세한 설명이 있다.
+
+[logit]: https://en.wikipedia.org/wiki/Logistic_regression
+[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
+[QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
+[book]: https://www.statlearning.com/
+[Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
+
