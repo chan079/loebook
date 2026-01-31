@@ -208,7 +208,9 @@ $\hat\alpha = \bar{y} - \hat\beta_1 \bar{x}_1 - \cdots - \hat\beta_p
 D)^{-1} n^{-1} \tilde{X}'y$으로 계산한 것과 동일하다.
 
 이상의 내용은 R을 이용하여 수치적으로 확인하였다. 확인한 바는
-<a href="ridge.php" id = "ridgenote">여기</a>에 있다.
+[여기](ridgenote.md)에 있다.[^1]
+
+[^1]: 이 내용은 고려대 경제학과 박상수 교수와 함께 알아낸 것임
 
 </div>
 
@@ -439,7 +441,7 @@ RMSE(z15$ynext, as.vector(h2o.predict(glm, z15h)))
 h2o.shutdown(prompt = FALSE)
 ```
 
-![H2O 패키지 이용 시 lasso 표준화 계수들의 상대적 크기](imgs/h2o.lasso_varimp.svg){.title}
+![H2O 패키지 이용 시 lasso 표준화 계수들의 상대적 크기](imgs/h2o.lasso_varimp.svg)
 
 참고로, `glmnet`과 `h2o`의 변수 표준화 방식에 약간 차이가 있다.
 `glmnet`은 표본표준편차를 구할 때 분모를 $n-1$이 아니라 $n$으로 나누는
