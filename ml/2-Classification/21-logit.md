@@ -2,7 +2,7 @@
 
 이항반응모형에서 [로지스틱 회귀][logit]가 대표적으로 사용된다.
 
-## [Logit: 전체 예측변수 이용]{#logit-full}
+## <a name="logit-full">Logit: 전체 예측변수 이용</a>
 
 `TrainSet` 데이터셋에서 목표변수(`deny`)를 제외한 나머지 전체 변수들을
 예측변수로 사용하여 로지스틱 회귀를 한 결과는 다음과 같다.
@@ -183,8 +183,8 @@ target="_blank">`confusionMatrix()`</a> 함수로도 간편하게 구할 수
 [A. Kassambara의 포스트][1]와 [토론토 대학 Jerry Brunner 교수가
 작성하였다고 생각되는 pdf 문서][Brunner]에서 도움을 얻었다.
 
-[1]: http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/ {target="_blank"}
-[Brunner]: http://www.utstat.toronto.edu/~brunner/oldclass/appliedf11/handouts/2101f11StepwiseLogisticR.pdf {target="_blank"}
+[1]: http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/
+[Brunner]: http://www.utstat.toronto.edu/~brunner/oldclass/appliedf11/handouts/2101f11StepwiseLogisticR.pdf
 
 ```R
 backward <- step(full, direction = 'backward', trace = 0)
