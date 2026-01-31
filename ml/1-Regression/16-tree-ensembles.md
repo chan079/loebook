@@ -187,7 +187,7 @@ RMSE(z15$ynext, predict(tr.rf, z15, type="response"))
 # [1] 51.84617
 ```
 
-[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 [Tree Bagging]보다도
+[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 Tree Bagging보다도
 약간 더 낫다.
 
 OOB 관측치들을 이용하여 `mtry`를 CV할 수 있다. 이하에 나오는 `X`와
@@ -230,7 +230,7 @@ tr.rf2 <- randomForest(ynext~., data=z14, mtry=12, importance=TRUE)  # mtry=12
 varImpPlot(tr.rf2)
 ```
 
-![임의의 숲 변수 중요도](imgs/rf_varimp.svg){style="height:350px"}
+![임의의 숲 변수 중요도](imgs/rf_varimp.svg)
 
 위 학습 결과를 test set에 적용하면 예측 성과는 다음과 같다.
 
@@ -240,7 +240,7 @@ RMSE(z15$ynext, predict(tr.rf2, z15, type="response"))
 ```
 
 `mtry`를 아예 CV할 수도 있다. 이하 코드에서는 10-fold CV로 `mtry`를
-튜닝한다. 시간이 걸리겠지만 `mtry`를 3~19에 대하여 CV로 탐색하고자
+튜닝한다. 시간이 걸리겠지만 `mtry`를 3-19에 대하여 CV로 탐색하고자
 한다. CPU 코어가 여럿인 경우 병렬(parallel) 처리하면 더 빨리 할 수
 있으므로 `foreach` 패키지와 `doParallel` 패키지를 이용해서 CV를 병렬로
 진행하고자 한다. 우선 10-fold CV를 위한 그룹 구분을 해 준다.
@@ -255,7 +255,7 @@ table(group)
 ```
 
 다음으로 병렬처리를 위한 함수를 만들고자 한다. 이 함수는 train set과
-validation set을 입력 받아, 3~19까지의 `mtry` 값을 이용하여 train
+validation set을 입력 받아, 3-19까지의 `mtry` 값을 이용하여 train
 set에 대하여 임의의 숲 훈련을 하고 각 결과를 validation set에 적용한
 예측치를 구하여 리턴해 준다. 행은 validation set에 대응하고 열은
 `mtry` 값에 해당한다.
@@ -274,11 +274,11 @@ RFpredFun <- function(DF.train, DF.valid) {
 ```
 
 위 `RFpredFun` 함수를 `RFpredFun(DF1,DF2)`와 같이 사용하면 `DF1`
-데이터셋을 이용하여 `mtry`를 3~19로 설정하여 임의의 숲 훈련을 하고 그
+데이터셋을 이용하여 `mtry`를 3-19로 설정하여 임의의 숲 훈련을 하고 그
 결과를 `DF2` 데이터셋에 적용하여 구한 예측치들의 행렬(행은 `DF2`의 행,
-열은 1~19, 단 1~2는 `NA`로 설정)을 리턴한다.
+열은 1-19, 단 1-2는 `NA`로 설정)을 리턴한다.
 
-이제 1~10 fold 각각에 대하여 병렬 처리를 하자.
+이제 1-10 fold 각각에 대하여 병렬 처리를 하자.
 
 ```R
 library(foreach)
@@ -316,7 +316,7 @@ for (fold in 1:10) {
 
 결과는 앞에서 병렬처리로부터 얻은 것과 동일할 것이다.
 
-위 코딩 결과 그룹 1~10 순서로 행들이 정렬되어(즉, 행들이 뒤섞여서)
+위 코딩 결과 그룹 1-10 순서로 행들이 정렬되어(즉, 행들이 뒤섞여서)
 원래 `z14` 데이터셋의 `ynext` 변수와 그대로 비교할 수 없으므로 행을
 `z14`와 동일하도록 재정리해 주자. 이런 부분을 빠뜨리면 이해하기 어려운
 결과가 나올 것이다.
@@ -516,7 +516,7 @@ gbm.perf(cv4)
 관측치들을 사용한다. 이 `bag.fraction`도 튜닝 대상으로 삼을 수
 있다(여기서는 해 보지 않겠다).
 
-이하에서는 `interaction.depth`를 1~4로 하고 `shrinkage`를 0.01, 0.05, 0.1, 0.2 중
+이하에서는 `interaction.depth`를 1-4로 하고 `shrinkage`를 0.01, 0.05, 0.1, 0.2 중
 하나로 하는 모든 가능한 셋팅에 대하여 “grid search”를 해 본다. 단,
 `bag.fraction`은 1로 설정한다.
 
@@ -821,7 +821,7 @@ rf.h2o <- h2o.randomForest(xvar, yvar, z14h, ntrees = 500, seed = 1)
 h2o.varimp_plot(rf.h2o)  # only first 10 (give option to view more)
 ```
 
-![H2O 패키지를 이용한 Random Forest 변수 중요도](imgs/h2o.rf_varimp.svg){.title}
+![H2O 패키지를 이용한 Random Forest 변수 중요도](imgs/h2o.rf_varimp.svg)
 
 위에서 변수 중요도는 10개 변수까지만 그렸다. 변수 개수를 바꾸고 싶으면
 `h2o.varimp_plot(rf.h2o, 19)`처럼 옵션을 주면 된다.
@@ -949,7 +949,7 @@ b2.h2o@model$model_summary
 h2o.learning_curve_plot(b2.h2o)
 ```
 
-![H2O Gradient Boosting Learning Curve Plot](imgs/h2o.gbm_learning_curve.svg){.title}
+![H2O Gradient Boosting Learning Curve Plot](imgs/h2o.gbm_learning_curve.svg)
 
 ```R
 h2o.performance(b2.h2o, newdata = z15h)
