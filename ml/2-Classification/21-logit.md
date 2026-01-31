@@ -426,3 +426,5 @@ Sensitivity는 full logit = 5/20 &lt; LDA = 6/20 &lt; QDA =
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
+[QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
