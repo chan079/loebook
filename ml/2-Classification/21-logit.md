@@ -66,7 +66,7 @@ str(Hmda$deny)
 ‘설정되었음’을 의미한다. 이에 기초하여 확률 예측값이 0.5보다
 크면('작으면'이 아니라) `"yes"`로 예측하도록 목표변수의 이진적
 예측값을 구하자. 다음의 첫 번째 줄은 확률을 예측하고 두 번째 줄은
-확률예측값이 [0.5]{#half-train}보다 크면 `yes`로 예측한다.
+확률예측값이 <a name="half-train">0.5</a>보다 크면 `yes`로 예측한다.
 
 ```R
 train.phat.full <- predict(full, TrainSet, type='r')
@@ -140,7 +140,7 @@ Error rate  = (27+182)/(1921+27+182+83) = 0.0944 = 1 - Accuracy
 이처럼 이 예측모델은 train set에 대해서도 positive를 positive로 제대로
 예측해 주지 못하니([sensitivity]가 너무 낮음) test set에 대해서도
 `yes`를 `yes`로 예측할 빈도가 낮을 것으로 예상할 수 있다. 정말 그런지
-한번 해 보자. [테스트셋]{#half-test}에 대해 ‘설정’될(`yes`가 될)
+한번 해 보자. <a name="half-test">테스트셋</a>에 대해 ‘설정’될(`yes`가 될)
 확률을 우선 예측한 후, 이 확률이 0.5보다 크면 `yes`로, 0.5보다 작거나
 같으면 `no`로 예측한다. 그리고 나서 [confusion matrix]를 구하면 다음과
 같다.
