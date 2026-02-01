@@ -1,4 +1,10 @@
-# [회귀(regression)](1-Regression/README.md)
+# 머신러닝 예제
+
+한치록(2024). [계량경제학강의](../README.md), 제5판, 박영사, 19장 ‘머신러닝과 예측’ 부록 예제, 버전 0.3.
+
+이 문서에 제시된 R 명령들은 [James, Witten, Hastie and Tibshirani (2013, An Introduction to Statistical Learning: with Applications in R, Springer)][JWHT2013]를 비롯한 다양한 문서를 참조하였다.
+
+## [회귀(regression)](1-Regression/README.md)
 
 [데이터 준비](1-Regression/10-data.md)<br />
 [변수 선택(subset selection)](1-Regression/11-subset-selection.md)<br />
@@ -11,7 +17,7 @@
 [신경망(neural networks)](1-Regression/18-nn.md)<br />
 [수퍼 러너(super learner)](1-Regression/19-super-learner.md)
 
-# [분류(classification)](2-Classification/README.md)
+## [분류(classification)](2-Classification/README.md)
 
 [데이터 준비](2-Classification/20-data.md)<br />
 [Logit, LDA, QDA](2-Classification/21-logit.md)<br />
@@ -23,3 +29,5 @@
 [Support Vector Machine](2-Classification/27-svm.md)<br />
 Neural Networks[](2-Classification/28-nn.md)<br />
 Super Learner[](2-Classification/29-super-learner.md)
+
+[JWHT2013]: https://www.statlearning.com/
