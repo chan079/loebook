@@ -6,11 +6,6 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.R
 data(Hmda, package="Ecdat")
 ```
 
-이 단원의 실습을 하려면 [데이터 준비](20-data.md)와 [Logit, LDA,
-QDA](21-logit.md) 단원의 코드를 우선 실행시켜야 한다. 아직 하지
-않았으면 해당 페이지들을 방문하여 코드를 클립보드에 복사해서 실행한 후
-계속하자.
-
 # Receiver Operating Characteristic (ROC) 곡선
 
 로짓 회귀와 같은 분석에서는 `yes`와 `no` 카테고리가 곧바로 예측되는
