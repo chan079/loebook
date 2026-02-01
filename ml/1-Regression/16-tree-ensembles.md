@@ -470,10 +470,10 @@ cv3 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=10000, interactio
 (k <- gbm.perf(cv3, plot=FALSE))
 # [1] 4421
 cv3$cv.error[k]
-# [1] 3855.458
+# [1] 3854.501
 ```
 
-이 결과의 최적 CV 오차 정도는 3855.458로서 `shrinkage = 0.05`인
+이 결과의 최적 CV 오차 정도는 3854.501로서 `shrinkage = 0.05`인
 경우(`cv1`)보다 더 크다. Shrinkage를 0.01로도 해 보았으나 이 경우에도
 최소 CV 오차가 `cv1`의 경우보다 더 큰 것으로 나타났다. (`set.seed`의
 값을 다르게 하면 다른 결과를 얻을 것으로 예상된다.)
@@ -487,7 +487,7 @@ cv4 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction
 (k <- gbm.perf(cv4, plot=FALSE))
 # [1] 118
 cv4$cv.error[k]
-# [1] 3731.242
+# [1] 3717.595
 ```
 
 `interaction.depth`가 4인 경우보다 CV 오차가 근소하게 더 낮다. 위의
@@ -496,7 +496,7 @@ cv4$cv.error[k]
 
 ```R
 RMSE(z15$ynext, predict(cv4, z15, n.trees=k))
-# [1] 56.00893
+# [1] 56.51091
 ```
 
 근소하게 개선되었으나 그리 인상적이지는 않다. 여기서도
@@ -657,14 +657,18 @@ boosting을 반복하지만 5회(`early_stopping_rounds`) 이상 CV error의
 ## Extreme Gradient Boosting
 library(xgboost)
 set.seed(1)
-xgbcv <- xgb.cv(data=X, label=Y, nfold=10, nrounds=1000, early_stopping_rounds = 5, max_depth = 6, eta = .05, verbose=F)
-xgbcv$best_iteration
-# [1] 156
-xgbcv$evaluation_log$test_rmse_mean[xgbcv$best_iteration]
+xgbcv <- xgb.cv(
+    param = xgb.params(max_depth=6, eta=0.05),
+    data=xgb.DMatrix(X, label=Y),
+    nfold=10, nrounds=1000, early_stopping_rounds=5
+)
+xgbcv$early_stop$best_iteration
+# [1] 145
+xgbcv$evaluation_log$test_rmse_mean[xgbcv$early_stop$best_iteration]
 # [1] 61.01081
 with(xgbcv$evaluation_log, plot(iter, train_rmse_mean, type='l'))
 with(xgbcv$evaluation_log, lines(iter, test_rmse_mean, lty=2))
-abline(v=xgbcv$best_iteration, lty=3)
+abline(v=xgbcv$early_stop$best_iteration, lty=3)
 ```
 
 ![xgboost 패키지를 이용한 learning curve](imgs/xgboost_cv.svg)
@@ -676,7 +680,7 @@ iteration'인 156회에 해당한다.
 test set에서 예측 성과를 확인하자.
 
 ```R
-xgb <- xgboost(data=X, label=Y, nrounds=xgbcv$best_iteration, max_depth=6, eta=.05, verbose=F)
+xgb <- xgboost(data=X, label=Y, nrounds=xgbcv$early_stop$best_iteration, max_depth=6, eta=.05, verbose=F)
 RMSE(z15$ynext, predict(xgb, X15))
 # [1] 59.51182
 ```
