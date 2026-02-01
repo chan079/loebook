@@ -1,3 +1,5 @@
+데이터는 <a href="20-data.md">여기</a> 참조.
+
 # Class Imbalance 문제
 
 Class imbalance란 목표변수 클래스 크기가 서로간에 크게 다른 것을
