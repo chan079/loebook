@@ -1,4 +1,10 @@
-데이터는 <a href="20-data.md">여기</a> 참조.
+데이터는 <a href="20-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+data(Hmda, package="Ecdat")
+```
 
 # Ridge와 Lasso
 
