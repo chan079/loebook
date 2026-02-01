@@ -50,7 +50,7 @@ Bagging의 경우 학습곡선이 하향만 하지는 않는다(아래의 random
 plot(tr.bag$err.rate[, 'OOB']*100, type = 'l', ylab = 'OOB error rate (%)')
 ```
 
-![Tree Bagging에서 OOB error rate](imgs/treebag_class_ooberr.svg){style="height:350px"}
+![Tree Bagging에서 OOB error rate](imgs/treebag_class_ooberr.svg)
 
 이 treebag의 최종적인 OOB error rate는 다음과 같이 약 2.57%이다(앞의
 `randomForest` 명령 출력물에도 2.57% 값이 있다).
@@ -100,7 +100,7 @@ importance(tr.bag)
 varImpPlot(tr.bag)
 ```
 
-![Tree Bagging에서 변수 중요도](imgs/treebag_class_varimp.svg){style="height:350px"}
+![Tree Bagging에서 변수 중요도](imgs/treebag_class_varimp.svg)
 
 Train set에서 성능을 살펴보자.  '[데이터 준비](20-data.md)' 단원에
 만들어 놓은 `Performance()` 함수는 `randomForest` 객체도 처리하도록
@@ -187,7 +187,7 @@ lines(seq_len(tr.bag$ntree), tr.bag$err.rate[, 'OOB']*100, lty=3)
 legend('topright', c('Random Forest', 'Tree Bag'), lty=c(1,3), bty='n')
 ```
 
-![Random Forest에서 OOB error rate](imgs/rf_class_ooberr.svg){style="height:350px"}
+![Random Forest에서 OOB error rate](imgs/rf_class_ooberr.svg)
 
 Tree bag보다 Random Forest의 학습능력이 더 좋은 것을 알 수 있다.  이
 Random Forest의 최종적인 OOB error rate는 다음과 같이 약 1.85%이다.
@@ -218,7 +218,7 @@ importance(tr.rf)
 varImpPlot(tr.rf)
 ```
 
-![Random Forest에서 변수 중요도](imgs/rf_class_varimp.svg){style="height:350px"}
+![Random Forest에서 변수 중요도](imgs/rf_class_varimp.svg)
 
 Train set에서 성능을 살펴보면 다음과 같다.
 
@@ -359,7 +359,7 @@ barplot(sort(boost$importance), las=1, horiz=TRUE, col='turquoise', space=.75)
 par(opar) # back to default par(mar = c(5,4,4,2)+.1)
 ```
 
-![AdaBoosting 결과에서 변수 중요도](imgs/adabag_class_varimp.svg){style="height:300px"}
+![AdaBoosting 결과에서 변수 중요도](imgs/adabag_class_varimp.svg)
 
 Performance는 다음과 같다.
 
