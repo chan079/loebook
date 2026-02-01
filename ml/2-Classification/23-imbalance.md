@@ -1,4 +1,10 @@
-데이터는 <a href="20-data.md">여기</a> 참조.
+데이터는 <a href="20-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+data(Hmda, package="Ecdat")
+```
 
 # Class Imbalance 문제
 
@@ -468,5 +474,4 @@ c(roc.orig$AUC, roc.wlogit$AUC, roc.over$AUC, roc.rose$AUC, roc.smote$AUC)
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
 [ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
 [SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
-[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
