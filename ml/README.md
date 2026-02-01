@@ -2,7 +2,7 @@
 
 한치록(2024). [계량경제학강의](../README.md), 제5판, 박영사, 19장 ‘머신러닝과 예측’ 부록 예제, 버전 0.3.
 
-이 문서에 제시된 R 명령들은 [James, Witten, Hastie and Tibshirani (2013, An Introduction to Statistical Learning: with Applications in R, Springer)][JWHT2013]를 비롯한 다양한 문서를 참조하였다.
+이 문서에 제시된 R 명령들은 [James, Witten, Hastie and Tibshirani (2013, An Introduction to Statistical Learning: with Applications in R, Springer)][ISLRv2]를 비롯한 다양한 문서를 참조하였다.
 
 ## [회귀(regression)](1-Regression/README.md)
 
@@ -30,4 +30,4 @@
 Neural Networks[](2-Classification/28-nn.md)<br />
 Super Learner[](2-Classification/29-super-learner.md)
 
-[JWHT2013]: https://www.statlearning.com/
+[ISLRv2]: https://www.statlearning.com/
