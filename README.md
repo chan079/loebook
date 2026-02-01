@@ -9,7 +9,7 @@
 install.packages('loedata')
 ```
 
-[오타수정](errata.md)
+[오타수정](errata.md)(중요)
 
 [목차](Table%20of%20Contents.md)
 
