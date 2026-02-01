@@ -11,4 +11,6 @@
 [신경망(neural networks)](18-nn.md)<br />
 [수퍼 러너(super learner)](19-super-learner.md)
 
+# [분류(classification)](../2-Classification/README.md)
+
 [[Up](../README.md)]
