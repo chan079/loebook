@@ -164,3 +164,6 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 }
 ```
 
+[hmda]: https://www.bostonfed.org/home/publications/research-department-working-paper/1992/mortgage-lending-in-boston-interpreting-hmda-data.aspx
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
