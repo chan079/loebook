@@ -317,7 +317,7 @@ Performance(logit.rose, TestSet)
 적용하면 `ROSE` 명령을 사용한 방법이 over-sampling한 방법보다
 예측성과가 더 좋을 것’이라고 일반화시키지는 말기 바란다.
 
-## [Synthetic minority oversampling technique (SMOTE)]{#SMOTE}
+## <a name="#SMOTE">Synthetic minority oversampling technique (SMOTE)</a>
 
 [Karthe (2016)][Karthe2016]에 [Chawla et al. (2002)의 SMOTE][SMOTE]가
 설명되어 있다. 원래 `DMwR` 패키지에 `SMOTE` 명령이 있다고들 하는데
@@ -460,7 +460,9 @@ c(roc.orig$AUC, roc.wlogit$AUC, roc.over$AUC, roc.rose$AUC, roc.smote$AUC)
 [ovun]: https://en.wikipedia.org/wiki/Oversampling_and_undersampling_in_data_analysis
 [ROSE]: https://cran.r-project.org/package=ROSE
 [smotefamily]: https://CRAN.R-project.org/package=smotefamily
+[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
 [ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
 [SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
