@@ -1,3 +1,10 @@
+데이터는 <a href="10-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData"))
+```
+
 # Ridge와 Lasso
 
 이하에서는 회귀(regression) 문제에서 ridge와 lasso 회귀를
@@ -16,7 +23,7 @@
 library(glmnet)
 ## See (데이터 준비) page for Y, X, and X15
 ridge <- glmnet(X,Y,alpha=0)  # alpha=0 for ridge (1=lasso)
-plot(ridge, xvar='lambda', sign=1)
+plot(ridge, xvar='lambda')
 ```
 
 ![lambda에 따른 ridge 계수들. 상단의 '19'는 변수 개수가 19개임을 의미한다.](imgs/ridge_coef.svg)
@@ -31,7 +38,7 @@ plot(ridge, xvar='lambda', sign=1)
 ```R
 set.seed(1)
 cv.ridge <- cv.glmnet(X,Y, alpha=0)  # 0 = ridge, 1 = lasso
-plot(cv.ridge, sign=1)
+plot(cv.ridge)
 ```
 
 ![Ridge CV 결과: 왼쪽의 세로 점선은 CV 오차를 최소화하는
@@ -156,6 +163,7 @@ plotVarimp(bhat.ridge, X)  # try 'horiz = TRUE'
 
 ![Ridge 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/ridge_varimp.svg)
 
+
 ## Lasso
 
 [Lasso]를 위해서는 `glmnet`과 `cv.glmnet`에서 `alpha`를 0에서 1로
@@ -194,7 +202,7 @@ rmspe.rw
 ```
 
 테스트셋에서 lasso의 RMSE는 random walk보다 더 낫고 [Best Subset
-Selection](index12.php)보다도 더 낫다.
+Selection](11-subset-selection.md)보다도 더 낫다.
 
 예측오차 제곱합이 최저인 $\lambda$(`lambda.min`)보다는 “one standard
 error” (1se)를 사용하는 경우도 많다. 이를 위해서는 `'lambda.min'`
@@ -331,7 +339,7 @@ RMSE(z15$ynext, predict(cv.09, X15, 'lambda.min'))
 
 [H2O.ai][h2o] (설치는 [여기][h2o-inst])는 `glmnet` 패키지보다 훨씬
 무겁지만, 방대한 데이터셋을 처리할 수 있고, 더 다양한 옵션을 제공하며,
-특히 나중에 살펴볼 [인공신경망](index19.php) 등을 포함하므로 한번
+특히 나중에 살펴볼 [인공신경망](18-nn.md) 등을 포함하므로 한번
 연습해 보기로 하자. Lasso (alpha = 1)를 고려한다. 다른 elastic net을
 이용하려면 alpha를 바꾸면 된다. Grid search로써 alpha를 정할 수도
 있으나, 여기서는 1로 설정한다.
@@ -398,11 +406,8 @@ elastic net에서 `glmnet`처럼 안정적인 결과를 얻기는 매우 어려�
 한다면 [Elastic net] ([ridge]와 [lasso] 포함)의 경우 `h2o`보다는
 `glmnet` 패키지를 사용하는 것을 추천한다.
 
-[h2o]: https://www.h2o.ai/products/h2o/
-[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
-[h2o-faq]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm-faq/cross_validation.html
-[h2o-dl]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html
 [deep learning]: https://en.wikipedia.org/wiki/Deep_learning
 [ridge]: https://en.wikipedia.org/wiki/Ridge_regression
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 [lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
 [elastic net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
