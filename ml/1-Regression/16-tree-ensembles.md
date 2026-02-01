@@ -785,7 +785,7 @@ xgbcv.full
 ```R
 xgb <- xgboost(X, Y, nrounds = opt$best.iter, max_depth = opt$max_depth, learning_rate = opt$eta)
 RMSE(z15$ynext, predict(xgb, X15))
-# [1] 51.7696
+# [1] 51.87696
 ```
 
 ‘체면’은 차렸다. 변수 중요도는 다음과 같이 시각화해 볼 수 있다.
@@ -907,7 +907,8 @@ boost할수록 학습성과가 좋아지므로 `ntrees`가 너무 크면 overfit
 주어야 한다. 한 가지 방법은 다음과 같이 CV로써 찾는 것이다.
 
 ```R
-b0.h2o <- h2o.gbm(xvar, yvar, z14h, nfolds = 10, ntrees = 250, score_each_iteration = TRUE, max_depth = 2, learn_rate = 0.1, seed = 1)
+b0.h2o <- h2o.gbm(xvar, yvar, z14h, nfolds = 10, ntrees = 250, score_each_iteration = TRUE,
+                  max_depth = 2, learn_rate = 0.1, seed = 1)
 h2o.learning_curve_plot(b0.h2o)
 ```
 
@@ -952,7 +953,8 @@ h2o.performance(b.h2o, newdata = z15h)  # test set
 가능성 $\uparrow$).
 
 ```R
-b2.h2o <- h2o.gbm(xvar, yvar, z14h, nfolds = 10, ntrees = 1000, score_each_iteration = TRUE, max_depth = 2, learn_rate = 0.1, stopping_rounds = 3, seed = 1)
+b2.h2o <- h2o.gbm(xvar, yvar, z14h, nfolds = 10, ntrees = 1000, score_each_iteration = TRUE, max_depth = 2,
+                  learn_rate = 0.1, stopping_rounds = 3, seed = 1)
 b2.h2o@model$model_summary
 # Model Summary: 
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
