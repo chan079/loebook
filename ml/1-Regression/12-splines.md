@@ -7,7 +7,7 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData
 
 ## Natural Cubic Spline
 
-[Best subset selection](../1-Regression/11-subset-selection.md)을 이용하면 [BIC]를 사용하든
+[Best subset selection](11-subset-selection.md)을 이용하면 [BIC]를 사용하든
 [CV]를 사용하든 똑같이 2개의 변수(`deathrate`와 `aged`)가
 선택되었다. 이 두 변수만을 사용하여 회귀를 하는데(머신러닝이 아니라
 휴먼러닝이 많이 가미되었다), 이제는 3차 natural [spline] (NS)을
@@ -26,7 +26,7 @@ rmspe.rw
 # [1] 53.24273
 ```
 
-[Best subset selection](../1-Regression/11-subset-selection.md)에 의하여 선택된 2개의 변수를
+[Best subset selection](11-subset-selection.md)에 의하여 선택된 2개의 변수를
 선형으로 사용한 경우(RMSE = 48.98381)에 비하여 시험 데이터의 예측
 정확성에 개선이 이루어졌다. 이제 두 변수의 `df`를 Adjusted R제곱, [AIC],
 [BIC]를 이용하여 선택해 보자. 먼저 두 변수의 df를 각각 1~4로 설정하는
@@ -137,7 +137,7 @@ dfset[which.min(dfset$cv.error),]
 ```
 
 위에서 BIC를 사용한 경우와 똑같은 결과를 얻었다. NS (natural
-[spline])에서 df가 1이면 선형모형과 똑같으므로 [앞에서](../1-Regression/11-subset-selection.md)
+[spline])에서 df가 1이면 선형모형과 똑같으므로 [앞에서](11-subset-selection.md)
 얻은 결과와 똑같겠지만, 편의상 (앞으로 돌아가서 확인하는 수고를 하고
 싶지 않으므로) 재실행해 보면 결과는 다음과 같다.
 
