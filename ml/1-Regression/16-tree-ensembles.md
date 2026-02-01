@@ -737,7 +737,11 @@ registerDoParallel(cl)
 ## Do parallel processing
 xgbcv.full <- foreach(i = 1:nrow(param), .combine = rbind, .packages = 'xgboost') %dopar% {
   set.seed(1)
-  cv <- xgb.cv(data=xgb.DMatrix(X, label=Y), nfold=10, nrounds=5000, early_stopping_rounds=5, param = xgb.params(max_depth=param$max_depth[i], eta=param$eta[i]), verbose = F)
+  cv <- xgb.cv(
+      data=xgb.DMatrix(X, label=Y), nfold=10, nrounds=5000, early_stopping_rounds=5,
+      param = xgb.params(max_depth=param$max_depth[i], eta=param$eta[i]),
+      verbose = F
+  )
   best.iter <- cv$early_stop$best_iteration
   cv.error <- cv$evaluation_log$test_rmse_mean[best.iter]
   cat('Setting', i, 'done\n')
