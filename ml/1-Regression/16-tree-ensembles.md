@@ -1,4 +1,9 @@
-# Tree Ensembles
+데이터는 <a href="10-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData"))
+```
 
 [Tree]와 관련된 [Bagging], [Random Forest], [Boosting] 방법을 실습해 본다.
 
@@ -122,7 +127,6 @@ plot(y~x, data=smpl)
 ```R
 library(tree)
 tr <- tree(y~x, data=smpl)  # one tree
-plot(y~x, data=smpl)
 points(smpl$x, predict(tr, smpl), col='red')
 ```
 
@@ -142,8 +146,6 @@ Bagging을 하는 것은 토막난 수평선들을 여러 차례 그린 다음 �
 ```R
 set.seed(1)
 trbag <- randomForest(y~x, data=smpl, ntree = 1000)  # tree bag
-plot(y~x, data=smpl)
-points(smpl$x, predict(tr, smpl), col='red')
 points(smpl$x, predict(trbag, smpl), col='blue')
 ```
 
@@ -187,7 +189,7 @@ RMSE(z15$ynext, predict(tr.rf, z15, type="response"))
 # [1] 51.84617
 ```
 
-[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 Tree Bagging보다도
+[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 [Tree Bagging]보다도
 약간 더 낫다.
 
 OOB 관측치들을 이용하여 `mtry`를 CV할 수 있다. 이하에 나오는 `X`와
@@ -240,7 +242,7 @@ RMSE(z15$ynext, predict(tr.rf2, z15, type="response"))
 ```
 
 `mtry`를 아예 CV할 수도 있다. 이하 코드에서는 10-fold CV로 `mtry`를
-튜닝한다. 시간이 걸리겠지만 `mtry`를 3-19에 대하여 CV로 탐색하고자
+튜닝한다. 시간이 걸리겠지만 `mtry`를 3~19에 대하여 CV로 탐색하고자
 한다. CPU 코어가 여럿인 경우 병렬(parallel) 처리하면 더 빨리 할 수
 있으므로 `foreach` 패키지와 `doParallel` 패키지를 이용해서 CV를 병렬로
 진행하고자 한다. 우선 10-fold CV를 위한 그룹 구분을 해 준다.
@@ -255,7 +257,7 @@ table(group)
 ```
 
 다음으로 병렬처리를 위한 함수를 만들고자 한다. 이 함수는 train set과
-validation set을 입력 받아, 3-19까지의 `mtry` 값을 이용하여 train
+validation set을 입력 받아, 3~19까지의 `mtry` 값을 이용하여 train
 set에 대하여 임의의 숲 훈련을 하고 각 결과를 validation set에 적용한
 예측치를 구하여 리턴해 준다. 행은 validation set에 대응하고 열은
 `mtry` 값에 해당한다.
@@ -274,11 +276,11 @@ RFpredFun <- function(DF.train, DF.valid) {
 ```
 
 위 `RFpredFun` 함수를 `RFpredFun(DF1,DF2)`와 같이 사용하면 `DF1`
-데이터셋을 이용하여 `mtry`를 3-19로 설정하여 임의의 숲 훈련을 하고 그
+데이터셋을 이용하여 `mtry`를 3~19로 설정하여 임의의 숲 훈련을 하고 그
 결과를 `DF2` 데이터셋에 적용하여 구한 예측치들의 행렬(행은 `DF2`의 행,
-열은 1-19, 단 1-2는 `NA`로 설정)을 리턴한다.
+열은 1~19, 단 1~2는 `NA`로 설정)을 리턴한다.
 
-이제 1-10 fold 각각에 대하여 병렬 처리를 하자.
+이제 1~10 fold 각각에 대하여 병렬 처리를 하자.
 
 ```R
 library(foreach)
@@ -316,7 +318,7 @@ for (fold in 1:10) {
 
 결과는 앞에서 병렬처리로부터 얻은 것과 동일할 것이다.
 
-위 코딩 결과 그룹 1-10 순서로 행들이 정렬되어(즉, 행들이 뒤섞여서)
+위 코딩 결과 그룹 1~10 순서로 행들이 정렬되어(즉, 행들이 뒤섞여서)
 원래 `z14` 데이터셋의 `ynext` 변수와 그대로 비교할 수 없으므로 행을
 `z14`와 동일하도록 재정리해 주자. 이런 부분을 빠뜨리면 이해하기 어려운
 결과가 나올 것이다.
@@ -516,7 +518,7 @@ gbm.perf(cv4)
 관측치들을 사용한다. 이 `bag.fraction`도 튜닝 대상으로 삼을 수
 있다(여기서는 해 보지 않겠다).
 
-이하에서는 `interaction.depth`를 1-4로 하고 `shrinkage`를 0.01, 0.05, 0.1, 0.2 중
+이하에서는 `interaction.depth`를 1~4로 하고 `shrinkage`를 0.01, 0.05, 0.1, 0.2 중
 하나로 하는 모든 가능한 셋팅에 대하여 “grid search”를 해 본다. 단,
 `bag.fraction`은 1로 설정한다.
 
@@ -979,63 +981,17 @@ TRUE)` 사용), 이 최소 CV MSE가 가장 작은 셋팅을 선택하는 grid s
 h2o.shutdown(prompt = FALSE)
 ```
 
-[book]: https://www.statlearning.com/
-[leaps]: https://cran.r-project.org/package=leaps
-[subset selection]: https://en.wikipedia.org/wiki/Feature_selection#Subset_selection
-[greedy]: https://en.wikipedia.org/wiki/Greedy_algorithm
-[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
-[BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
-[Mallows's Cp]: https://en.wikipedia.org/wiki/Mallows%27s_Cp
-[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
-[spline]: https://en.wikipedia.org/wiki/Spline_(mathematics)
-[h2o]: https://www.h2o.ai/products/h2o/
-[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
-[h2o-faq]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm-faq/cross_validation.html
-[h2o-dl]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html
-[deep learning]: https://en.wikipedia.org/wiki/Deep_learning
-[PCR]: https://en.wikipedia.org/wiki/Principal_component_regression
-[unsupervised learning]: https://en.wikipedia.org/wiki/Unsupervised_learning
-[PLS]: https://en.wikipedia.org/wiki/Partial_least_squares_regression
 [tree]: https://en.wikipedia.org/wiki/Decision_tree_learning
 [bagging]: https://en.wikipedia.org/wiki/Bootstrap_aggregating
 [random forest]: https://en.wikipedia.org/wiki/Random_forest
 [boosting]: https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29
-[gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
 [randomForest-pkg]: https://cran.r-project.org/package=randomForest
-[gbm-pkg]: https://cran.r-project.org/package=gbm
-[xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
-[xgboost-pkg]: https://cran.r-project.org/package=xgboost
-[adabag-pkg]: https://cran.r-project.org/package=adabag
-[SuperLearner-pkg]: https://cran.r-project.org/package=SuperLearner
-[SuperLearner-vignette]: https://cran.r-project.org/web/packages/SuperLearner/vignettes/Guide-to-SuperLearner.html
 [OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
-[SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
-[NN]: https://en.wikipedia.org/wiki/Neural_network
-[dropout]: http://www.cs.toronto.edu/~hinton/absps/dropout.pdf
-[early stopping]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/early_stopping.html
-
-[hmda]: https://www.bostonfed.org/home/publications/research-department-working-paper/1992/mortgage-lending-in-boston-interpreting-hmda-data.aspx
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
-[evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[logit]: https://en.wikipedia.org/wiki/Logistic_regression
-[Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
-[ROCit-pkg]: https://cran.r-project.org/package=ROCit
-[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
-[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
-[ovun]: https://en.wikipedia.org/wiki/Oversampling_and_undersampling_in_data_analysis
-[SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
-[smotefamily]: https://CRAN.R-project.org/package=smotefamily
-[ROSE]: https://cran.r-project.org/package=ROSE
-[ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
-[LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
-[QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
-[ridge]: https://en.wikipedia.org/wiki/Ridge_regression
-[lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
-[glmnet]: https://cran.r-project.org/package=glmnet
-[deviance]: https://en.wikipedia.org/wiki/Deviance_(statistics)
-[elastic net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
-[nnls]: https://en.wikipedia.org/wiki/Non-negative_least_squares
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[gbm-pkg]: https://cran.r-project.org/package=gbm
+[gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
+[book]: https://www.statlearning.com/
+[xgboost-pkg]: https://cran.r-project.org/package=xgboost
+[xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
+[h2o]: https://www.h2o.ai/products/h2o/
+[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
