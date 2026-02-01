@@ -346,7 +346,7 @@ which.min(rmse)
 
 ## Gradient Boosting
 
-[gbm][gbm-pkg] 패키지를 이용하여 [gradient boosting]을 하고자
+[gbm3][gbm3-pkg] 패키지를 이용하여 [gradient boosting]을 하고자
 한다. [James, Witten, Hastie and Tibshirani (2013)][book]을
 참고하였다. 3가지 튜닝 매개변수가 있다. 하나는 나무를 업데이트하는
 횟수 즉 반복 횟수(`n.trees`, 기본값은 100), 다른 하나는 나무 개선 시
@@ -357,34 +357,36 @@ which.min(rmse)
 
 ```R
 ## Gradient boosting
-library(gbm)
+# install.packages('remote')
+# remotes::install_github('gbm-developers/gbm3')
+library(gbm3)
 set.seed(1)
 boost <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.05)
 summary(boost)
-#                 var    rel.inf
-# deathrate deathrate 58.5745386
-# aged           aged 34.3998587
-# regpop       regpop  1.2023047
-# grdp           grdp  0.7583550
-# stratio     stratio  0.7421761
-# medrate     medrate  0.6866381
-# drink         drink  0.4681822
-# deaths       deaths  0.4588440
-# popgrowth popgrowth  0.4013245
-# hdrink       hdrink  0.3827729
-# smoke         smoke  0.3567991
-# gcomp         gcomp  0.3235111
-# accpc         accpc  0.2783915
-# dumppc       dumppc  0.2754177
-# eq5d           eq5d  0.1798527
-# accpv         accpv  0.1773467
-# vehipc       vehipc  0.1720970
-# divorce     divorce  0.1615892
+#                 var    rel_inf
+# deathrate deathrate 64.1159675
+# aged           aged 29.1390291
+# regpop       regpop  1.2129543
+# grdp           grdp  0.7287175
+# stratio     stratio  0.6796908
+# medrate     medrate  0.6279076
+# smoke         smoke  0.4330495
+# accpc         accpc  0.3878920
+# dumppc       dumppc  0.3518975
+# hdrink       hdrink  0.3394256
+# drink         drink  0.3361848
+# deaths       deaths  0.3285514
+# popgrowth popgrowth  0.2896197
+# gcomp         gcomp  0.2857432
+# accpv         accpv  0.2474475
+# eq5d           eq5d  0.2172642
+# divorce     divorce  0.1497517
+# vehipc       vehipc  0.1289061
 # pctmale     pctmale  0.0000000
-RMSE(z15$ynext, predict(boost, z15))
+RMSE(z15$ynext, predict(boost, z15, n.trees=1000))
 # Using 1000 trees...
 #
-# [1] 57.50946
+# [1] 59.68053
 ```
 
 Random Forest에서와는 달리 Boosting에서는 반복할수록 training set의
@@ -409,9 +411,10 @@ plot(boost$train.error, type='l', log='y')
 set.seed(1)
 cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv1))
-# [1] 96
-cv1$cv.error[k]  # square error loss
-# [1] 3753.727
+# Using cv method...
+# [1] 86
+cv1$cv_error[k]  # square error loss
+# [1] 3925.491
 ```
 
 위에서는 10-fold CV로써 `n.fold`를 정한다. 실행 결과에 의하면 96회
@@ -423,7 +426,7 @@ Training set에서의 잔차와 CV 예측오차를 그림으로 표현해 보면
 ```R
 options(scipen = 100)
 plot(cv1$train.error, type='l', log='y')  # CV error
-lines(cv1$cv.error, lty=2)  # train error
+lines(cv1$cv_error, lty=2)  # train error
 abline(v=k, lty=3)
 legend('topright', c('Training error', 'CV error'), lty=1:2)
 ```
@@ -435,12 +438,12 @@ Train error는 boosting을 반복할수록 점점 줄어들지만 CV error는 �
 나중에 살펴볼 [인공신경망](18-nn.md)에서도 이와 유사한 일이
 발생한다.
 
-96회(세로 점선) boost한 결과를 이용한 test set에서의 예측 성과는
+86회(세로 점선) boost한 결과를 이용한 test set에서의 예측 성과는
 개선된 바가 없다.
 
 ```R
 RMSE(z15$ynext, predict(cv1, z15, n.trees=k))
-# [1] 57.50219
+# [1] 57.52794
 ```
 
 위에서는 `shrinkage`를 0.05로 설정하였다. 이 값이 작은 것은 개선의
@@ -452,12 +455,13 @@ RMSE(z15$ynext, predict(cv1, z15, n.trees=k))
 set.seed(1)
 cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.1, cv.folds=10)
 (k <- gbm.perf(cv2, plot=FALSE))
-# [1] 37
-cv2$cv.error[k]
-# [1] 4041.636
+# Using cv method...
+# [1] 42
+cv2$cv_error[k]
+# [1] 4152.718
 ```
 
-최적 횟수(37번) boost한 CV 오차는 4041.636로서 `shrink`가 0.05일
+최적 횟수(42번) boost한 CV 오차는 4152.718로서 `shrink`가 0.05일
 때(`cv1` 참조)보다 더 나쁘다.
 
 `shrinkage`를 0.001로 감소시키면 결과는 다음과 같다. 0.001이 아주 작은
@@ -468,15 +472,15 @@ cv2$cv.error[k]
 set.seed(1)
 cv3 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=10000, interaction.depth=4, shrinkage=0.001, cv.folds=10)
 (k <- gbm.perf(cv3, plot=FALSE))
-# [1] 4421
-cv3$cv.error[k]
-# [1] 3854.501
+# [1] 4642
+cv3$cv_error[k]
+# [1] 3875.732
 ```
 
-이 결과의 최적 CV 오차 정도는 3854.501로서 `shrinkage = 0.05`인
-경우(`cv1`)보다 더 크다. Shrinkage를 0.01로도 해 보았으나 이 경우에도
-최소 CV 오차가 `cv1`의 경우보다 더 큰 것으로 나타났다. (`set.seed`의
-값을 다르게 하면 다른 결과를 얻을 것으로 예상된다.)
+이 결과의 최적 CV 오차 정도는 3875.732로서 `shrinkage = 0.05`인
+경우(`cv1`)보다 약간 작다. Shrinkage를 0.01로 해 보면 약간 더 작은
+값을 갖는다(3857.765). (`set.seed`의 값을 다르게 하면 다른 결과를 얻을
+것으로 예상된다.)
 
 `shrinkage`를 0.05로 설정하고 `interaction.depth`를 2로 낮추면 결과는
 다음과 같다.
@@ -485,18 +489,18 @@ cv3$cv.error[k]
 set.seed(1)
 cv4 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=2, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv4, plot=FALSE))
-# [1] 118
-cv4$cv.error[k]
-# [1] 3717.595
+# [1] 121
+cv4$cv_error[k]
+# [1] 3841.332
 ```
 
 `interaction.depth`가 4인 경우보다 CV 오차가 근소하게 더 낮다. 위의
-`cv4`를 이용하여 `k`번(즉, 118번) 업데이트한 결과를 가지고 test set에
+`cv4`를 이용하여 `k`번(즉, 121번) 업데이트한 결과를 가지고 test set에
 대하여 예측한 후 RMSE를 구하면 결과는 다음과 같다.
 
 ```R
 RMSE(z15$ynext, predict(cv4, z15, n.trees=k))
-# [1] 56.51091
+# [1] 56.05217
 ```
 
 근소하게 개선되었으나 그리 인상적이지는 않다. 여기서도
@@ -506,7 +510,7 @@ RMSE(z15$ynext, predict(cv4, z15, n.trees=k))
 
 ```R
 gbm.perf(cv4)
-# [1] 118
+# [1] 121
 ```
 
 ![Gradient Boosting CV error](imgs/gbm_perf4.svg)
@@ -992,6 +996,7 @@ h2o.shutdown(prompt = FALSE)
 [randomForest-pkg]: https://cran.r-project.org/package=randomForest
 [OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[gbm3-pkg]: https://github.com/gbm-developers/gbm3
 [gbm-pkg]: https://cran.r-project.org/package=gbm
 [gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
 [book]: https://www.statlearning.com/
