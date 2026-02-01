@@ -1,6 +1,6 @@
 # 분류: 데이터 준비
 
-`Ecdat` 패키지를 아직 설치하지 않았으면 설치한다.
+`Ecdat` 패키지를 아직 설치하지 않았으면 설치한다. 이하 전체 코드는 <a href="#allcodes">여기</a>로 이동.
 
 ```r
 install.packages("Ecdat")
@@ -9,7 +9,7 @@ install.packages("Ecdat")
 `Ecdat` 패키지의 `Hmda` 데이터를 이용하고자 한다. 이 데이터셋은
 [Boston HMDA 데이터 셋][hmda]이다(`?Hmda` 참조). 주택담보대출 승인
 여부(`deny` 변수)를 예측하는 것이 목적이다. 데이터셋 취지와 맥락 등에
-대해서는 [계량경제학강의](../){target="_blank"} 17.11절에도 설명하였다.
+대해서는 [계량경제학강의](../) 17.11절에도 설명하였다.
 
 ```R
 data(Hmda, package="Ecdat")
@@ -115,7 +115,7 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 }
 ```
 
-전체 코드는 다음과 같다.
+<a name="allcodes">전체 코드는 다음과 같다.</a>
 
 ```R
 data(Hmda, package="Ecdat")
