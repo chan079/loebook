@@ -1,5 +1,7 @@
 데이터는 <a href="20-data.md">여기</a> 참조.
 
+# Ridge와 Lasso
+
 분류(classification) 문제에서도 [ridge]와 [lasso] 회귀를 할 수 있다.
 회귀에서도 사용한 [glmnet] 패키지를 사용하고자 한다. 훈련은 불균형이
 심한 원래 데이터 대신 random oversample한 데이터(`Over`)를 다음과 같이
