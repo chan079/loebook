@@ -363,30 +363,28 @@ library(gbm3)
 set.seed(1)
 boost <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.05)
 summary(boost)
-#                 var    rel_inf
-# deathrate deathrate 64.1159675
-# aged           aged 29.1390291
-# regpop       regpop  1.2129543
-# grdp           grdp  0.7287175
-# stratio     stratio  0.6796908
-# medrate     medrate  0.6279076
-# smoke         smoke  0.4330495
-# accpc         accpc  0.3878920
-# dumppc       dumppc  0.3518975
-# hdrink       hdrink  0.3394256
-# drink         drink  0.3361848
-# deaths       deaths  0.3285514
-# popgrowth popgrowth  0.2896197
-# gcomp         gcomp  0.2857432
-# accpv         accpv  0.2474475
-# eq5d           eq5d  0.2172642
-# divorce     divorce  0.1497517
-# vehipc       vehipc  0.1289061
-# pctmale     pctmale  0.0000000
+#                 var     rel_inf
+# deathrate deathrate 61.49531129
+# aged           aged 31.64811870
+# regpop       regpop  1.02584938
+# grdp           grdp  0.87589558
+# stratio     stratio  0.72406702
+# medrate     medrate  0.55690232
+# deaths       deaths  0.49314733
+# smoke         smoke  0.44112521
+# hdrink       hdrink  0.42588427
+# drink         drink  0.39235757
+# popgrowth popgrowth  0.38727486
+# accpc         accpc  0.31879766
+# dumppc       dumppc  0.31103433
+# gcomp         gcomp  0.26114571
+# accpv         accpv  0.20539794
+# eq5d           eq5d  0.19116536
+# vehipc       vehipc  0.16723952
+# divorce     divorce  0.07928594
+# pctmale     pctmale  0.00000000
 RMSE(z15$ynext, predict(boost, z15, n.trees=1000))
-# Using 1000 trees...
-#
-# [1] 59.68053
+# [1] 58.66658
 ```
 
 Random Forest에서와는 달리 Boosting에서는 반복할수록 training set의
@@ -409,7 +407,8 @@ plot(boost$train.error, type='l', log='y')
 
 ```R
 set.seed(1)
-cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.05, cv.folds=10)
+cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
+           interaction.depth=4, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv1))
 # Using cv method...
 # [1] 86
@@ -453,7 +452,8 @@ RMSE(z15$ynext, predict(cv1, z15, n.trees=k))
 
 ```R
 set.seed(1)
-cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.1, cv.folds=10)
+cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
+           interaction.depth=4, shrinkage=0.1, cv.folds=10)
 (k <- gbm.perf(cv2, plot=FALSE))
 # Using cv method...
 # [1] 42
@@ -470,7 +470,8 @@ cv2$cv_error[k]
 
 ```R
 set.seed(1)
-cv3 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=10000, interaction.depth=4, shrinkage=0.001, cv.folds=10)
+cv3 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=10000,
+           interaction.depth=4, shrinkage=0.001, cv.folds=10)
 (k <- gbm.perf(cv3, plot=FALSE))
 # [1] 4642
 cv3$cv_error[k]
@@ -487,7 +488,8 @@ cv3$cv_error[k]
 
 ```R
 set.seed(1)
-cv4 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=2, shrinkage=0.05, cv.folds=10)
+cv4 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
+           interaction.depth=2, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv4, plot=FALSE))
 # [1] 121
 cv4$cv_error[k]
@@ -561,7 +563,9 @@ registerDoParallel(cl)
 ## Do parallel processing
 gbmcv <- foreach(i = 1:nrow(param), .combine = rbind, .packages = 'gbm') %dopar% {
   set.seed(1)
-  cv <- gbm(ynext~., data=z14, distribution='gaussian', n.trees = 1000, interaction.depth = param$depth[i], shrinkage = param$shrinkage[i], cv.folds=10, bag.fraction = 1)
+  cv <- gbm(ynext~., data=z14, distribution='gaussian', n.trees = 1000,
+            interaction.depth = param$depth[i],
+            shrinkage = param$shrinkage[i], cv.folds=10, bag.fraction = 1)
   k <- gbm.perf(cv, plot = FALSE)
   cat('Setting', i, 'done\n')
   c(unlist(param[i,]), best.iter = k, cv.error = cv$cv.error[k])
@@ -609,10 +613,9 @@ set에 대한 예측을 하면 결과는 다음과 같다.
 
 ```R
 #set.seed(1)  # unnecessary with bag.fraction = 1
-gb <- gbm(ynext~., data=z14, distribution = 'gaussian', n.trees = opt$best.iter, interaction.depth = opt$depth, shrinkage = opt$shrinkage, bag.fraction = 1)
-RMSE(z15$ynext, predict(gb, z15, type = 'response'))
-# Using 169 trees...
-#
+gb <- gbm(ynext~., data=z14, distribution = 'gaussian', n.trees = opt$best.iter,
+          interaction.depth = opt$depth, shrinkage = opt$shrinkage, bag.fraction = 1)
+RMSE(z15$ynext, predict(gb, z15, n.trees = opt$best.iter, type = 'response'))
 # [1] 52.96056
 ```
 
@@ -669,7 +672,7 @@ xgbcv <- xgb.cv(
 xgbcv$early_stop$best_iteration
 # [1] 145
 xgbcv$evaluation_log$test_rmse_mean[xgbcv$early_stop$best_iteration]
-# [1] 61.01081
+# [1] 61.68765
 with(xgbcv$evaluation_log, plot(iter, train_rmse_mean, type='l'))
 with(xgbcv$evaluation_log, lines(iter, test_rmse_mean, lty=2))
 abline(v=xgbcv$early_stop$best_iteration, lty=3)
@@ -678,15 +681,15 @@ abline(v=xgbcv$early_stop$best_iteration, lty=3)
 ![xgboost 패키지를 이용한 learning curve](imgs/xgboost_cv.svg)
 
 위 그림에서 실선은 training error, 파선은 CV error, 세로 점선은 'best
-iteration'인 156회에 해당한다.
+iteration'인 145회에 해당한다.
 
-최적 반복횟수(156회)를 구하였으므로 다시 Gradient Boosting을 하고,
+최적 반복횟수(145회)를 구하였으므로 다시 Gradient Boosting을 하고,
 test set에서 예측 성과를 확인하자.
 
 ```R
-xgb <- xgboost(data=X, label=Y, nrounds=xgbcv$early_stop$best_iteration, max_depth=6, eta=.05, verbose=F)
+xgb <- xgboost(X, Y, nrounds=xgbcv$early_stop$best_iteration, max_depth=6, learning_rate=.05)
 RMSE(z15$ynext, predict(xgb, X15))
-# [1] 59.51182
+# [1] 58.43749
 ```
 
 결과가 그리 좋지는 않다([xgboost][xgboost-pkg] 패키지가 안 좋다는 뜻이
@@ -734,9 +737,9 @@ registerDoParallel(cl)
 ## Do parallel processing
 xgbcv.full <- foreach(i = 1:nrow(param), .combine = rbind, .packages = 'xgboost') %dopar% {
   set.seed(1)
-  cv <- xgb.cv(data=X, label=Y, nfold=10, nrounds=5000, early_stopping_rounds=5, max_depth=param$max_depth[i], eta=param$eta[i], verbose = F)
-  best.iter <- cv$best_iteration
-  cv.error <- cv$evaluation_log$test_rmse_mean[cv$best_iteration]
+  cv <- xgb.cv(data=xgb.DMatrix(X, label=Y), nfold=10, nrounds=5000, early_stopping_rounds=5, param = xgb.params(max_depth=param$max_depth[i], eta=param$eta[i]), verbose = F)
+  best.iter <- cv$early_stop$best_iteration
+  cv.error <- cv$evaluation_log$test_rmse_mean[best.iter]
   cat('Setting', i, 'done\n')
   c(unlist(param[i,]), best.iter = best.iter, cv.error = cv.error)
 }
@@ -747,26 +750,26 @@ stopCluster(cl) # Don't forget this
 xgbcv.full <- as.data.frame(xgbcv.full) # not necessary but convenient
 xgbcv.full
 #           max_depth  eta best.iter cv.error
-# result.1          2 0.01       562 55.43059
-# result.2          3 0.01       539 58.76363
-# result.3          4 0.01       532 61.01573
-# result.4          5 0.01       540 61.78269
-# result.5          6 0.01       603 61.92822
-# result.6          2 0.05       109 55.47342
-# result.7          3 0.05       101 59.00048
-# result.8          4 0.05        98 61.85777
-# result.9          5 0.05       113 61.91448
-# result.10         6 0.05       156 61.01081
-# result.11         2 0.10        54 55.16352
-# result.12         3 0.10        52 58.89465
-# result.13         4 0.10        51 60.35394
-# result.14         5 0.10        62 61.28542
-# result.15         6 0.10        60 60.96928
-# result.16         2 0.20        27 56.40606
-# result.17         3 0.20        25 59.15859
-# result.18         4 0.20        30 62.68687
-# result.19         5 0.20        30 63.62557
-# result.20         6 0.20        31 64.89133
+# result.1          2 0.01       454 57.23803
+# result.2          3 0.01       414 58.75328
+# result.3          4 0.01       415 60.99047
+# result.4          5 0.01       452 61.47258
+# result.5          6 0.01       465 62.79923
+# result.6          2 0.05        93 57.05568
+# result.7          3 0.05        84 58.73178
+# result.8          4 0.05        93 60.93394
+# result.9          5 0.05       109 61.32557
+# result.10         6 0.05       145 61.68765
+# result.11         2 0.10        44 57.07437
+# result.12         3 0.10        37 58.86685
+# result.13         4 0.10        41 60.23370
+# result.14         5 0.10        65 61.50618
+# result.15         6 0.10        74 61.84863
+# result.16         2 0.20        21 56.83163
+# result.17         3 0.20        22 58.66822
+# result.18         4 0.20        21 61.53252
+# result.19         5 0.20        21 62.90621
+# result.20         6 0.20        34 60.76535
 ```
 
 최적 CV 오차 RMSE가 가장 작은 매개변수 셋팅은 다음과 같다.
@@ -774,15 +777,15 @@ xgbcv.full
 ```R
 (opt <- xgbcv.full[which.min(xgbcv.full$cv.error),])
 #           max_depth eta best.iter cv.error
-# result.11         2 0.1        54 55.16352
+# result.16         2 0.2        21 56.83163
 ```
 
 이 셋팅을 이용하여 Gradient Boosting 하고 예측하면 다음과 같다.
 
 ```R
-xgb <- xgboost(data = X, label = Y, nrounds = opt$best.iter, max_depth = opt$max_depth, eta = opt$eta, verbose = F)
+xgb <- xgboost(X, Y, nrounds = opt$best.iter, max_depth = opt$max_depth, learning_rate = opt$eta)
 RMSE(z15$ynext, predict(xgb, X15))
-# [1] 51.74302
+# [1] 51.7696
 ```
 
 ‘체면’은 차렸다. 변수 중요도는 다음과 같이 시각화해 볼 수 있다.
@@ -791,7 +794,7 @@ RMSE(z15$ynext, predict(xgb, X15))
 xgb.plot.importance(xgb.importance(model = xgb))
 ```
 
-![Gradient Boosting 변수 중요도(xgboost)](imgs/xgboost_varimp.svg){ style="height:400px;" }
+![Gradient Boosting 변수 중요도(xgboost)](imgs/xgboost_varimp.svg)
 
 참고로, `xgboost`에서도 나무를 개선할 때 일부만 사용하도록 할 수 있다.
 `subsample` 옵션을 사용하는데, 기본값은 1이다. 만약 `subsample`을 0.5
