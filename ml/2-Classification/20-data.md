@@ -119,19 +119,13 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 
 ```R
 data(Hmda, package="Ecdat")
-dim(Hmda)
-summary(Hmda$deny)
-which(is.na(Hmda), arr.ind = TRUE)
 Hmda1 <- na.omit(Hmda)
-dim(Hmda1)
-table(Hmda1$deny)
 set.seed(1)
 test.index <- c(sample(which(Hmda1$deny=='yes'), 20), sample(which(Hmda1$deny=='no'), 147))
 train.index <- setdiff(seq_len(nrow(Hmda1)), test.index)
 TrainSet <- Hmda1[train.index, ]
-summary(TrainSet$deny)
 TestSet <- Hmda1[test.index, ]
-summary(TestSet$deny)
+
 SummPred <- function(actual, pred) {
   x <- table(actual, pred)
   se <- x['yes','yes']/sum(x['yes',])
@@ -141,6 +135,7 @@ SummPred <- function(actual, pred) {
   ans <- c(Sensitivity = se, Specificity = sp, Precision = pr, Accuracy = ac)
   list(ConfusionMatrix = x, Summary = ans)
 }
+
 Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
   y <- model.frame(fm, data = DataSet)[, 1]
   if (inherits(object, 'glm')) {
