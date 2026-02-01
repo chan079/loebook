@@ -411,7 +411,7 @@ cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction
 (k <- gbm.perf(cv1))
 # [1] 96
 cv1$cv.error[k]  # square error loss
-# [1] 3736.726
+# [1] 3753.727
 ```
 
 위에서는 10-fold CV로써 `n.fold`를 정한다. 실행 결과에 의하면 96회
