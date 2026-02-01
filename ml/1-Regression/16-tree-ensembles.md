@@ -415,7 +415,7 @@ cv1$cv.error[k]  # square error loss
 ```
 
 위에서는 10-fold CV로써 `n.fold`를 정한다. 실행 결과에 의하면 96회
-boost한 결과에서 CV 오차가 최소화되고, 그 CV 오차는 3736.726이다.
+boost한 결과에서 CV 오차가 최소화되고, 그 CV 오차는 3753.727이다.
 Training set에서의 잔차와 CV 예측오차를 그림으로 표현해 보면 CV의
 의미를 잘 이해할 수 있다. (참고로, `gbm.perf(cv1)`라고 해도 그림을
 얻지만, 로그 스케일로 그리기 위해서 별도 작업을 하였다.)
@@ -454,10 +454,10 @@ cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction
 (k <- gbm.perf(cv2, plot=FALSE))
 # [1] 37
 cv2$cv.error[k]
-# [1] 4060.88
+# [1] 4041.636
 ```
 
-최적 횟수(37번) boost한 CV 오차는 4060.88로서 `shrink`가 0.05일
+최적 횟수(37번) boost한 CV 오차는 4041.636로서 `shrink`가 0.05일
 때(`cv1` 참조)보다 더 나쁘다.
 
 `shrinkage`를 0.001로 감소시키면 결과는 다음과 같다. 0.001이 아주 작은
