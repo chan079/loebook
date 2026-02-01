@@ -3,6 +3,7 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+data(Hmda, package="Ecdat")
 ```
 
 # 로지스틱 회귀
