@@ -1,8 +1,15 @@
+데이터는 <a href="20-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+```
+
 # 로지스틱 회귀
 
 이항반응모형에서 [로지스틱 회귀][logit]가 대표적으로 사용된다.
 
-## <a name="logit-full">Logit: 전체 예측변수 이용</a>
+## <a name="#logit-full">Logit: 전체 예측변수 이용</a>
 
 `TrainSet` 데이터셋에서 목표변수(`deny`)를 제외한 나머지 전체 변수들을
 예측변수로 사용하여 로지스틱 회귀를 한 결과는 다음과 같다.
@@ -66,7 +73,7 @@ str(Hmda$deny)
 ‘설정되었음’을 의미한다. 이에 기초하여 확률 예측값이 0.5보다
 크면('작으면'이 아니라) `"yes"`로 예측하도록 목표변수의 이진적
 예측값을 구하자. 다음의 첫 번째 줄은 확률을 예측하고 두 번째 줄은
-확률예측값이 <a name="half-train">0.5</a>보다 크면 `yes`로 예측한다.
+확률예측값이 <a name="#half-train">0.5</a>보다 크면 `yes`로 예측한다.
 
 ```R
 train.phat.full <- predict(full, TrainSet, type='r')
@@ -140,7 +147,7 @@ Error rate  = (27+182)/(1921+27+182+83) = 0.0944 = 1 - Accuracy
 이처럼 이 예측모델은 train set에 대해서도 positive를 positive로 제대로
 예측해 주지 못하니([sensitivity]가 너무 낮음) test set에 대해서도
 `yes`를 `yes`로 예측할 빈도가 낮을 것으로 예상할 수 있다. 정말 그런지
-한번 해 보자. <a name="half-test">테스트셋</a>에 대해 ‘설정’될(`yes`가 될)
+한번 해 보자. <a name="#half-test">테스트셋</a>에 대해 ‘설정’될(`yes`가 될)
 확률을 우선 예측한 후, 이 확률이 0.5보다 크면 `yes`로, 0.5보다 작거나
 같으면 `no`로 예측한다. 그리고 나서 [confusion matrix]를 구하면 다음과
 같다.
@@ -304,7 +311,7 @@ LDA와 QDA는 예측변수(X)들이 [정규분포][normaldist]를 갖는다는
 [normaldist]: https://en.wikipedia.org/wiki/Normal_distribution
 [SEdum]: https://stats.stackexchange.com/questions/158772/can-we-use-categorical-independent-variable-in-discriminant-analysis
 
-## <a name="LDA">Linear Discriminant Analysis</a>
+## <a name="#LDA">Linear Discriminant Analysis</a>
 
 LDA는 피예측변수(`deny`)가 `yes`인 경우와 `no`인 경우에 X변수들의
 평균이 서로 다르고 분산공분산행렬은 동일한 정규분포를 갖는다고
@@ -373,7 +380,7 @@ Performance(lda.fit, TestSet)
 (=5/20)였다. 여기 LDA에서는 근소하게 상승하나(6/(14+6)=0.3) 낮은 것은
 여전히 마찬가지이다.
 
-## <a name="QDA">Quadratic Discriminant Analysis</a>
+## <a name="#QDA">Quadratic Discriminant Analysis</a>
 
 Quadratic discriminant analysis (QDA)에서는 X의 평균뿐 아니라
 분산공분산행렬도 피예측변수가 `no`인 집단과 `yes`인 집단 간에 서로
@@ -420,12 +427,13 @@ Sensitivity는 full logit = 5/20 &lt; LDA = 6/20 &lt; QDA =
 
 [logit]: https://en.wikipedia.org/wiki/Logistic_regression
 [AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
 [evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
 [QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
 [book]: https://www.statlearning.com/
