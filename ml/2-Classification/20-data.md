@@ -115,7 +115,7 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 }
 ```
 
-<a name="allcodes">전체 코드는 다음과 같다.</a>
+### <a name="allcodes">전체 코드</a>
 
 ```R
 data(Hmda, package="Ecdat")
@@ -157,6 +157,7 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
   yhat <- levels(y)[1 + (phat >= cutoff)]
   SummPred(y, yhat)
 }
+
 ```
 
 [hmda]: https://www.bostonfed.org/home/publications/research-department-working-paper/1992/mortgage-lending-in-boston-interpreting-hmda-data.aspx
