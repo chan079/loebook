@@ -6,7 +6,7 @@
 install.packages("loedata")
 ```
 
-패키지 설치 후 아래와 같이 데이터를 정리한다.
+패키지 설치 후 아래와 같이 데이터를 정리한다. 이하 전체 코드는 <a href="#allcodes">여기</a>로 이동.
 
 ```R
 data(RegkoPanel, package='loedata')
@@ -55,9 +55,10 @@ rmspe.rw # random walk, defined in index11.php
 # [1] 53.24273
 ```
 
-전체 코드는 다음과 같다.
+### <a name="allcodes">전체 코드</a>
 
 ```R
+rm(list=ls(all=TRUE))
 data(RegkoPanel, package='loedata')
 z <- RegkoPanel
 for (v in c("nbirth", "cbrate", "tfrate")) z[[v]] <- NULL
@@ -71,13 +72,12 @@ z15$ynext <- z16[match(z15$id, z16$id), 'deathrate']
 z14 <- na.omit(z14[,-(1:5)])
 z15 <- na.omit(z15[,-(1:5)])
 z.test <- z15
-dim(z14)
-names(z14)
 fm <- ynext~.
 Y <- model.frame(fm, data=z14)[,1]
 X <- model.matrix(fm, data=z14)[,-1]
 X15 <- model.matrix(fm, data=z.test)[,-1]
 RMSE <- function(x,y) sqrt(mean((x-y)^2))
 rmspe.rw <- RMSE(z15$ynext, z15$deathrate)
-rmspe.rw
+
+# save(z14, z15, z.test, X, Y, X15, RMSE, rmspe.rw, file = 'data.RData')
 ```
