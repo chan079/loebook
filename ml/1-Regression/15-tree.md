@@ -1,4 +1,9 @@
-# Decision Tree
+데이터는 <a href="10-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData"))
+```
 
 ## Regression Tree
 
