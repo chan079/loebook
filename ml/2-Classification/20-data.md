@@ -118,6 +118,7 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 ### <a name="allcodes">전체 코드</a>
 
 ```R
+# install.packages('Ecdat')
 data(Hmda, package="Ecdat")
 Hmda1 <- na.omit(Hmda)
 set.seed(1)
