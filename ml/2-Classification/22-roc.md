@@ -1,3 +1,11 @@
+데이터는 <a href="20-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+data(Hmda, package="Ecdat")
+```
+
 이 단원의 실습을 하려면 [데이터 준비](20-data.md)와 [Logit, LDA,
 QDA](21-logit.md) 단원의 코드를 우선 실행시켜야 한다. 아직 하지
 않았으면 해당 페이지들을 방문하여 코드를 클립보드에 복사해서 실행한 후
@@ -10,7 +18,7 @@ QDA](21-logit.md) 단원의 코드를 우선 실행시켜야 한다. 아직 하�
 확률이 0.5 이상이면 `yes`라고 예측한다는 식으로 규칙을 정하여
 적용한다. 확률 0.5라는 경계(cutoff)는 ‘확률이 더 높은 쪽을 고른다’는
 뜻을 가지므로 가장 직관적이다. 그렇다고 하여 반드시 0.5를 기준으로
-해야만 하는 것은 아니고 0~1 사이의 아무 값이든 경계값으로 삼아도 좋다.
+해야만 하는 것은 아니고 0−1 사이의 아무 값이든 경계값으로 삼아도 좋다.
 
 경계(cutoff)값을 0에서 1로 점차 변화시키면서 [TPR][evalbin] (즉,
 sensitivity)과 [FPR][evalbin] (즉, 1-specificity)이 어떻게 바뀌는지
@@ -93,7 +101,7 @@ with(roc.train.full, abline(v = Cutoff[which.max(TPR-FPR)], lty=2))
 ```
 
 이 값을 경계로 `yes`와 `no`로 구분하여 재예측할 경우 train set에서
-[confusion matrix]는 <a name="yo-train">다음</a>과 같다.
+<a name="#yo-train">confusion matrix]는 [다음</a>과 같다.
 
 ```R
 Performance(full, TrainSet, cutoff = cutoff)
@@ -111,7 +119,7 @@ Performance(full, TrainSet, cutoff = cutoff)
 Train set에서 [0.5를 경계로 한 경우](21-logit.md#half-train)에 비하여
 positive (`yes`)라고 훨씬 많이 예측하고, 그러다 보니 [sensitivity]가
 증가하지만 그 대가로 [specificity]는 하락한다.  이 경계값(0.1133907)을
-이용하여 <a name="yo-test">test set에 대해 예측</a>하면 결과는 다음과 같다.
+이용하여 <a name="#yo-test">test set에 대해 예측</a>하면 결과는 다음과 같다.
 
 ```R
 Performance(full, TestSet, cutoff = cutoff)
@@ -126,7 +134,7 @@ Performance(full, TestSet, cutoff = cutoff)
 #   0.6000000   0.8299320   0.3243243   0.8023952 
 ```
 
-경계값으로 [0.5를 사용한 경우 결과(test set)](index22.php#half-test)와
+경계값으로 [0.5를 사용한 경우 결과(test set)](21-logit.md#half-test)와
 비교하면, [sensitivity]가 0.25에서 0.6으로 상승한 대가로
 [specificity]가 0.9932에서 0.8299로 하락하였다. Sensitivity를 높이는
 것이 중요한지(즉, [TPR][evalbin]을 높이는 것이 중요한지) specificity를
@@ -166,7 +174,7 @@ cp <- optimal.cutpoints(pred~truth, data=A, tag.healthy="no", method="MaxEfficie
 
 ### LDA: Youden-optimal Cutoff 값
 
-[LDA 분석](index22.php#LDA)의 경우에 민감도(sensitivity)와
+[LDA 분석](21-logit.md#LDA)의 경우에 민감도(sensitivity)와
 특정도(specificity)의 합을 최대화하는(즉, [Youden Index]를 최대화하는)
 cutoff point를 이용해 보자.
 
@@ -243,7 +251,7 @@ specificity는 Logit의 경우(0.8299320)보다 더 낮다(별 차이는 없다)
 
 ### QDA: Youden-optimal cutoff 값
 
-[QDA](index22.php#QDA)에서 [Youden Index] 기준으로 최적인 cutoff 값을
+[QDA](21-logit.md#QDA)에서 [Youden Index] 기준으로 최적인 cutoff 값을
 찾아 이용하자.
 
 ```R
@@ -293,16 +301,11 @@ Performance(qda.fit, TestSet, cutoff = cutoff)
 지표이며, 그 외에서 수많은 지표가 있다. [OptimalCutpoints] 패키지에
 다양한 지표들에 관한 상세한 설명이 있다.
 
-[logit]: https://en.wikipedia.org/wiki/Logistic_regression
-[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
 [evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
-[QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
-[book]: https://www.statlearning.com/
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
 [OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
+[accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
