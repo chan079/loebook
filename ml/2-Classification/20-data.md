@@ -159,6 +159,8 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
   SummPred(y, yhat)
 }
 
+# save(TrainSet, TestSet, SummPred, Performance, file = 'data.RData')
+
 ```
 
 [hmda]: https://www.bostonfed.org/home/publications/research-department-working-paper/1992/mortgage-lending-in-boston-interpreting-hmda-data.aspx
