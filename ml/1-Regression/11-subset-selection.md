@@ -1,39 +1,51 @@
-# 변수 선택(subset selection)
+데이터는 <a href="10-data.md">여기</a>를 참조하거나 다음 명령 실행.
 
-실습용 데이터 준비는 [여기](10-data.md) 참조.
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData"))
+```
 
 ## 전체 변수를 사용한 OLS
 
-학습용 데이터 셋(`z14`)의 전체 변수들을 예측변수로 사용하여 OLS 추정을 한 결과는 다음과 같다.
+학습용 데이터 셋(`z14`)의 전체 변수들을 예측변수로 사용하여 OLS 추정을
+한 결과는 다음과 같다.
 
 ```R
 ## OLS
 ols <- lm(ynext~., data = z14)
 summary(ols)$r.sq
 # [1] 0.9809264
-RMSE(z15$ynext, predict(ols, z15)) # RMSE() defined in index11.php
+RMSE(z15$ynext, predict(ols, z15))
 # [1] 51.38724
-rmspe.rw # random walk, defined in index11.php
+rmspe.rw
 # [1] 53.24273
 ```
 
-회귀의 R제곱은 0.981로 매우 높고, 시험용 자료(`z15`)에 대한 예측 정확도(RMSE로 측정하며, 작을수록 정확함) 면에서 단순 임의보행 예측 RMSE (53.24273)보다 근소하게 더 낫다(RMSE = 51.38724).
+회귀의 R제곱은 0.981로 매우 높고, 시험용 자료(`z15`)에 대한 예측
+정확도(RMSE로 측정하며, 작을수록 정확함) 면에서 단순 임의보행 예측
+RMSE (53.24273)보다 근소하게 더 낫다(RMSE = 51.38724).
 
 ## 변수 선택(subset selection)
 
-이제 예측변수 부분집합을 선택하는 방법들([subset selection])을 살펴본다. 먼저 BIC에 의한 선택을 살펴보고, 교차검증(CV)은 코딩이 약간 복잡하므로 마지막에 살펴본다.
+이제 예측변수 부분집합을 선택하는 방법들([subset selection])을
+살펴본다. 먼저 BIC에 의한 선택을 살펴보고, 교차검증(CV)은 코딩이 약간 복잡하므로
+마지막에 살펴본다.
 
-### Best subset selection
+### Best Subset Selection
 
-Best Subset Selection은 [leaps] 패키지에 구현되어 있다. `regsubsets` 명령이 각 k에 해당하는 ‘대표선수’를 선발하도록 회귀를 실행한다.
+Best Subset Selection은 [leaps] 패키지에 구현되어 있다. `regsubsets`
+명령이 각 $k$에 해당하는 '대표선수'를 선발하도록 회귀를 실행한다.
 
 ```R
 ## Best Subset Selection
-library(leaps) # install.packages("leaps") if necessary
+library(leaps)
 reg.full <- regsubsets(ynext~., data=z14, nvmax=19)
 ```
 
-‘대표선수’ 모형 중 [BIC]가 가장 작은 모형을 최적으로 간주하고 선택해 보자. 대표선수 모형 각각에 대하여 BIC 등 수치를 구하려면 `summary(reg.full)` 명령을 사용하면 된다. BIC는 그 결과 중 `$bic`에 보관되어 있다. 다음 명령을 보라.
+'대표선수' 모형 중 [BIC]가 가장 작은 모형을 최적으로 간주하고 선택해
+보자. 대표선수 모형 각각에 대하여 BIC 등 수치를 구하려면
+`summary(reg.full)` 명령을 사용하면 된다. BIC는 그 결과 중 `$bic`에
+보관되어 있다. 다음 명령을 보라.
 
 ```R
 reg.summ <- summary(reg.full)
@@ -44,7 +56,8 @@ plot(reg.summ$bic, type='o', ylab = 'BIC')
 
 ![최적 변수집합 선택에서 변수 개수와 BIC](imgs/regfull_bic.svg)
 
-그림에서도 $k=2$가 최적임을 확인할 수 있다. BIC를 최소화하는 k (`k.best`)에 해당하는 계수 추정값들은 다음과 같다.
+그림에서도 $k=2$가 최적임을 확인할 수 있다. BIC를 최소화하는 $k$
+(`k.best`)에 해당하는 계수 추정값들은 다음과 같다.
 
 ```R
 coef(reg.full, k.best)
@@ -52,18 +65,28 @@ coef(reg.full, k.best)
 #  -4.8587439   9.2829695   0.8152651 
 ```
 
-선택된 변수는 `aged`(고령인구비율)와 `deathrate`(2014년 사망률)임을 알 수 있다.
+선택된 변수는 `aged`(고령인구비율)와 `deathrate`(2014년 사망률)임을 알
+수 있다.
 
-이 두 변수를 사용한 모형이 훈련 데이터(train set)를 맞추는 정도(R제곱)은 다음과 같다.
+이 두 변수를 사용한 모형이 훈련 데이터(train set)를 맞추는
+정도(R제곱)은 다음과 같다.
 
 ```R
 reg.summ$rsq[k.best]
 # [1] 0.9786799
 ```
 
-전체 변수를 사용할 때(OLS R제곱 0.9809264)만은 못하지만, 직전 연도 사망률과 고령인구비율 2변수만으로도 학습용 데이터에 대하여 매우 높은 설명력(R제곱 0.9786799)을 제공한다.
+전체 변수를 사용할 때(OLS R제곱 0.9809264)만은 못하지만, 직전 연도
+사망률과 고령인구비율 2변수만으로도 학습용 데이터에 대하여 매우 높은
+설명력(R제곱 0.9786799)을 제공한다.
 
-이 모형선택 결과를 이용하여 test set (2015년 데이터)의 목표변수를 예측하는 방법으로는, 중복 작업이기는 하나 `lm`을 이용하여 다시 회귀한 후 예측하거나, 아니면 `reg.full`로부터 k=2에 해당하는 계수를 추출하여 $X\hat\beta$ 공식에 맞추어 계산하는 법이 있다. 첫 번째 방법은 중복 작업이므로, 불편하지만 `regsubsets`에 의하여 이미 추정된 계수들을 사용하여 예측을 하고자 한다. 이 예측은 이 실습에서 반복적으로 등장할 것이므로 다음 함수를 만들어 사용하겠다.
+이 모형선택 결과를 이용하여 test set (2015년 데이터)의 목표변수를
+예측하는 방법으로는, 중복 작업이기는 하나 `lm`을 이용하여 다시 회귀한
+후 예측하거나, 아니면 `reg.full`로부터 $k=2$에 해당하는 계수를
+추출하여 $X\hat\beta$ 공식에 맞추어 계산하는 법이 있다. 첫 번째
+방법은 중복 작업이므로, 불편하지만 `regsubsets`에 의하여 이미 추정된 계수들을 사용하여
+예측을 하고자 한다. 이 예측은 이 실습에서 반복적으로 등장할
+것이므로 다음 함수를 만들어 사용하겠다.
 
 ```R
 predict.regsubsets <- function(x, newdata, id) {
@@ -73,15 +96,16 @@ predict.regsubsets <- function(x, newdata, id) {
 }
 ```
 
-이제 `k.best`를 결정한 후 곧바로 `predict(reg.full, z15, k.best)`처럼 사용할 수 있다.
+이제 `k.best`를 결정한 후 곧바로 `predict(reg.full, z15, k.best)`처럼
+사용할 수 있다.
 
 ```R
-RMSE(z15$ynext, predict(reg.full, z15, k.best)) # RMSE() defined in index11.php
+RMSE(z15$ynext, predict(reg.full, z15, k.best))
 # [1] 48.98381
 ```
 
-위 코드가 맞는지 확인하기 위해서 `ynext`를 `aged`와 `deathrate`에 대하여 다시 OLS 회귀를 하고 그 결과를 이용하여 예측하면 똑같은 결과를 얻는다.
-
+위 코드가 맞는지 확인하기 위해서 `ynext`를 `aged`와 `deathrate`에
+대하여 다시 OLS 회귀를 하고 그 결과를 이용하여 예측하면 똑같은 결과를 얻는다.
 
 ```R
 reg <- lm(ynext~aged+deathrate, data=z14)
@@ -262,6 +286,5 @@ RMSE(z15$ynext, predict(regs, z15, k.cv.best))
 [subset selection]: https://en.wikipedia.org/wiki/Feature_selection#Subset_selection
 [leaps]: https://cran.r-project.org/package=leaps
 [BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
-[Mallows's Cp]: https://en.wikipedia.org/wiki/Mallows%27s_Cp
 [greedy]: https://en.wikipedia.org/wiki/Greedy_algorithm
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
