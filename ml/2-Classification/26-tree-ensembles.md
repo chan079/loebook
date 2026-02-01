@@ -3,6 +3,7 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
+data(Hmda, package="Ecdat")
 ```
 
 # Tree Ensemble
@@ -268,7 +269,7 @@ head(tr.rf$err.rate, 3)
 # [3,] 0.08189357 0.1189488 0.04488950
 ```
 
-`mtry`를 1~12까지 변화시키면서 평균 OOB error rate를 구해 보면 다음과
+`mtry`를 1−12까지 변화시키면서 평균 OOB error rate를 구해 보면 다음과
 같다. 11번 해야 하므로 병렬처리를 하자.
 
 ```R
@@ -313,9 +314,9 @@ which.min(cvrf)
 plot(cvrf, type='o')
 ```
 
-![임의의 숲에서 mtry 탐색: 1~12 중 4가 가장 좋음](imgs/rf_class_cv_mtry.svg)
+![임의의 숲에서 mtry 탐색: 1−12 중 4가 가장 좋음](imgs/rf_class_cv_mtry.svg)
 
-1~12 중 mtry = 4가 가장 최적이라는 결과를 얻었다.  참고로, 앞의
+1−12 중 mtry = 4가 가장 최적이라는 결과를 얻었다.  참고로, 앞의
 `tr.rf`에서 `mtry`는 3이 사용되었다.  `mtry`를 4로 설정한 임의의 숲을
 학습하여 train set과 test set에 적용하면 다음 결과를 얻는다.
 
@@ -401,6 +402,5 @@ Sensitivity는 약간 증가하고 Specificity는 현저하게 감소하였다.
 [bagging]: https://en.wikipedia.org/wiki/Bootstrap_aggregating
 [random forest]: https://en.wikipedia.org/wiki/Random_forest
 [boosting]: https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29
-[bagging]: https://en.wikipedia.org/wiki/Bootstrap_aggregating
 [randomForest-pkg]: https://cran.r-project.org/package=randomForest
 [adabag-pkg]: https://cran.r-project.org/package=adabag
