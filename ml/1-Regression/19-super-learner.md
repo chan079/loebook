@@ -1,3 +1,10 @@
+데이터는 <a href="10-data.md">여기</a>를 참조하거나 다음 명령 실행.
+
+```R
+rm(list=ls(all=TRUE))
+load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData"))
+```
+
 # Super Learner
 
 Breiman (1996)의 [Stacked Regressions][Breiman96], Kennedy (2017)의
@@ -56,9 +63,6 @@ Polley and van der Laan (2010)과 Naimi and Balzer (2018)에 설명에
 5. 가중치를 얻으면, 각각의 알고리즘으로 전체 학습용 데이터셋에 대하여
    학습한 예측치들을 가중치에 따라 가중평균내어 최종 예측치를 구한다.
 
-### 데이터 읽기
-
-시작하기 전에, (아직 실행하지 않았으면) [데이터 준비](10-data.md) 페이지 마지막의 코드를 한꺼번에 실행해서 데이터를 준비하라.
 
 ## Discrete Super Learner
 
@@ -148,7 +152,7 @@ myfun <- function(DF.train, DF.pred) {
 ```
 
 이 함수를 호출할 때에는, 예를 들어 `myfun(z14[group!=1,],
-z14[group==1,])`이라고 하면 그룹1을 제외한 그룹2~10의
+z14[group==1,])`이라고 하면 그룹1을 제외한 그룹2−10의
 자료(`z14[group!=1,]`)를 이용하여 훈련한 결과를 그룹1
 자료(`z14[group==1,]`)에 적용하여 구한 예측치들을 얻게 된다. 다음과
 같이 하여 10개 그룹에 대하여 모두 순차적으로 시행하고 결과를 세로로
@@ -323,4 +327,5 @@ RMSE(superpred, z15$ynext)
 나을지 알 수 없다.  CV 예측치의 경우 Super Learner가 더 나았으니까
 다른 데이터셋에서도 Super Learner가 더 나을 것이라고 믿을 뿐이다.
 
+[SuperLearner-pkg]: https://cran.r-project.org/package=SuperLearner
 [nnls]: https://en.wikipedia.org/wiki/Non-negative_least_squares
