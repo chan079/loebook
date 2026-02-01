@@ -957,8 +957,10 @@ h2o.performance(b.h2o, newdata = z15h)  # test set
 가능성 $\uparrow$).
 
 ```R
-b2.h2o <- h2o.gbm(xvar, yvar, z14h, nfolds = 10, ntrees = 1000, score_each_iteration = TRUE, max_depth = 2,
-                  learn_rate = 0.1, stopping_rounds = 3, seed = 1)
+b2.h2o <- h2o.gbm(
+    xvar, yvar, z14h, nfolds = 10, ntrees = 1000, score_each_iteration = TRUE,
+    max_depth = 2, learn_rate = 0.1, stopping_rounds = 3, seed = 1
+)
 b2.h2o@model$model_summary
 # Model Summary: 
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
