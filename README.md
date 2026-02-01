@@ -24,7 +24,7 @@ install.packages('loedata')
 이 책에서 사용된 데이터를 `loedata`라는 R 패키지로 정리하여 [CRAN][loedata]에
 등록하였다. 독자들은 이제 간단히
 `install.packages("loedata")`로써 데이터 패키지를 설치할 수
-있다. [파이썬(python) 코드](python)와 [19장 머신러닝 예제][mlex]는 이 책의 웹페이지에
+있다. [파이썬(python) 코드](python)와 [19장 머신러닝 예제](ml)는 이 책의 웹페이지에
 제공하고 앞으로 지속적으로 업데이트하고자 한다.
 
 제5판에서는 이전 판본의 오타를 수정하고 논의를 명료화한 이외에도,
@@ -46,4 +46,3 @@ install.packages('loedata')
 [home]: https://chan079.github.io
 [pybook]: https://www.pybook.co.kr/mall/book/field?goodsno=2198
 [loedata]: https://cran.r-project.org/package=loedata
-[mlex]: http://econ.korea.ac.kr/~chirokhan/book/mlex/
