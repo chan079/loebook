@@ -348,7 +348,7 @@ Performance(tr.rf4, TestSet)
 
 ## AdaBoosting
 
-이 부분은 [Alfaro, Gámez, and García (2013, <i>Journal of Statistical Software</i>) 논문](https://www.jstatsoft.org/article/view/v054i02){target="_blank"}을
+이 부분은 [Alfaro, Gámez, and García (2013, <i>Journal of Statistical Software</i>) 논문](https://www.jstatsoft.org/article/view/v054i02)을
 참조하였다.  패키지로 [adabag][adabag-pkg]을 사용한다.
 
 ```R
