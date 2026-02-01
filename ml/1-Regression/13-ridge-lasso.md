@@ -406,6 +406,8 @@ elastic net에서 `glmnet`처럼 안정적인 결과를 얻기는 매우 어려�
 한다면 [Elastic net] ([ridge]와 [lasso] 포함)의 경우 `h2o`보다는
 `glmnet` 패키지를 사용하는 것을 추천한다.
 
+[h2o]: https://www.h2o.ai/products/h2o/
+[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
 [deep learning]: https://en.wikipedia.org/wiki/Deep_learning
 [ridge]: https://en.wikipedia.org/wiki/Ridge_regression
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
