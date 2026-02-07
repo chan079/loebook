@@ -124,9 +124,9 @@ plot(reg.summ$cp, type='o', ylab = 'Cp')
 
 ```R
 (k.cp <- which.min(reg.summ$cp))
-# [1] 5
+# [1] 6
 RMSE(z15$ynext, predict(reg.full, z15, k.cp))
-# [1] 49.37972
+# [1] 46.46588
 ```
 
 Adjusted R-squared를 비교하면 다음과 같다.
@@ -139,9 +139,9 @@ plot(reg.summ$adjr2, type='o', ylab = 'Adj. R-squared')
 
 ```R
 (k.adjr2 <- which.max(reg.summ$adjr2))  # Maximize adjusted R-squared
-# [1] 15
+# [1] 12
 RMSE(z15$ynext, predict(reg.full, z15, k.adjr2))
-# [1] 51.46263
+# [1] 46.58692
 ```
 
 ### Forward Stepwise Selection
@@ -189,8 +189,8 @@ coef(reg.full.fwd, 3)
 # (Intercept)       smoke        aged   deathrate 
 # -65.9705911   2.7054220   9.9856840   0.7939802 
 coef(reg.full.bwd, 3)
-# (Intercept)      hdrink        aged   deathrate 
-# -39.3482555   1.9475844   9.7985234   0.8001178 
+# (Intercept)        aged   deathrate      tfrate 
+# -25.0105463  10.0206393   0.7927852  18.0995346 
 ```
 
 $k=3$에서 Best SS = Forward SS ≠ Backward SS 이다.
