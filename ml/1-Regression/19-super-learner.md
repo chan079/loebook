@@ -258,11 +258,9 @@ sum(super$x)
 
 ```R
 wgt <- setNames(super$x, colnames(super$r))
-wgt
-#        ols        bss      ridge      lasso        pcr        pls        svm 
-# 0.00000000 0.81497985 0.02265473 0.00000000 0.07548504 0.00000000 0.00000000 
-#         rf 
-# 0.08688038 
+round(wgt,3)
+#   ols   bss ridge lasso   pcr   pls   svm    rf 
+# 0.000 0.815 0.023 0.000 0.075 0.000 0.000 0.087 
 ```
 
 CV를 이용하여 구한 Super Learner는 0.815×(Best subset selection) + 0.023×(Ridge) +
