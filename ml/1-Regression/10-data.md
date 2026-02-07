@@ -11,8 +11,9 @@ install.packages("loedata")
 ```R
 data(RegkoPanel, package='loedata')
 z <- RegkoPanel
-for (v in c("nbirth", "cbrate", "tfrate")) z[[v]] <- NULL # for backward compatibility
-for (v in c('grdp', 'regpop')) z[[v]] <- z[[v]]/1e6
+z$lngrdppc <- log(z$grdp/z$regpop)
+z$lnpop <- log(z$regpop)
+for (v in c("grdp", "regpop", "nbirth", "deaths", "gcomp")) z[[v]] <- NULL
 z$eq5d <- z$eq5d*100
 
 z14 <- subset(z, year==2014)
@@ -29,10 +30,10 @@ z.test <- z15
 dim(z14)
 # [1] 223  20
 names(z14)
-#  [1] "grdp"      "regpop"    "popgrowth" "eq5d"      "deaths"    "drink"    
-#  [7] "hdrink"    "smoke"     "aged"      "divorce"   "medrate"   "gcomp"    
-# [13] "vehipc"    "accpv"     "dumppc"    "stratio"   "deathrate" "pctmale"  
-# [19] "accpc"     "ynext"
+#  [1] "popgrowth" "eq5d"      "drink"     "hdrink"    "smoke"     "aged"
+#  [7] "divorce"   "medrate"   "gcomp"     "vehipc"    "accpv"     "dumppc"
+# [13] "stratio"   "deathrate" "cbrate"    "tfrate"    "pctmale"   "accpc"
+# [19] "lngrdppc"  "lnpop"     "ynext"
 ```
 
 `z14` 데이터에서 `ynext` 변수는 2015년 `deathrate`이고, z15 데이터에서 `ynext` 변수는 2016년 `deathrate`이다. `z14` 데이터를 이용하여 머신러닝을 실습해 본다(train set). 목표변수는 이듬해 사망률(`ynext`), 예측변수들은 당해 연도의 모든 변수들이다. `z15` (`z.test`) 데이터는 시험용으로 사용한다(test set).
@@ -61,8 +62,9 @@ rmspe.rw # random walk, defined in index11.php
 rm(list=ls(all=TRUE))
 data(RegkoPanel, package='loedata')
 z <- RegkoPanel
-for (v in c("nbirth", "cbrate", "tfrate")) z[[v]] <- NULL
-for (v in c('grdp', 'regpop')) z[[v]] <- z[[v]]/1e6
+z$lngrdppc <- log(z$grdp/z$regpop)
+z$lnpop <- log(z$regpop)
+for (v in c("grdp", "regpop", "nbirth", "deaths", "gcomp")) z[[v]] <- NULL
 z$eq5d <- z$eq5d*100
 z14 <- subset(z, year==2014)
 z15 <- subset(z, year==2015)
