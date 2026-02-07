@@ -194,9 +194,9 @@ test set (`z15`)에 적용하여 사망률을 예측한 성과는 다음과 같�
 
 ```R
 (best.lambda <- cv.lasso$lambda.min)
-# [1] 4.193873
+# [1] 3.485563
 RMSE(z15$ynext, predict(cv.lasso, X15, s = 'lambda.min'))
-# [1] 47.75449
+## [1] 47.81821
 rmspe.rw
 # [1] 53.24273
 ```
@@ -218,27 +218,27 @@ Ridge와 달리 lasso는 변수선택도 해 준다. Lasso에 의하여 선택�
 bhat.lasso <- coef(cv.lasso, s = 'lambda.min')
 cbind(bhat.lasso, bhat.lasso * c(1, apply(X, 2, sd)))
 # 20 x 2 sparse Matrix of class "dgCMatrix"
-#                         1            1
-# (Intercept) -21.597694166 -21.59769417
-# grdp         -0.378493197  -2.99282738
-# regpop        .             .         
-# popgrowth    -0.611976373  -1.20823481
-# eq5d          .             .         
-# deaths        .             .         
-# drink         .             .         
-# hdrink        0.473597293   1.68087485
-# smoke         0.883223640   2.32382574
-# aged          9.192892015  71.09715744
-# divorce       .             .         
-# medrate       0.006258674   0.05661216
-# gcomp         .             .         
-# vehipc       15.166516844   1.29061308
-# accpv         .             .         
-# dumppc        .             .         
-# stratio       .             .         
-# deathrate     0.794543587 256.28361133
-# pctmale       .             .         
-# accpc         .             .         
+#              lambda.min lambda.min
+# (Intercept) -18.9529194 -18.952919
+# popgrowth    -1.4354163  -2.833965
+# eq5d          .           .       
+# drink         .           .       
+# hdrink        0.6850722   2.431434
+# smoke         1.0264634   2.700700
+# aged          9.3142746  72.035922
+# divorce       .           .       
+# medrate       0.1354862   1.225525
+# vehipc        7.6476377   0.650785
+# accpv         .           .       
+# dumppc        .           .       
+# stratio       .           .       
+# deathrate     0.7900151 254.822942
+# cbrate        .           .       
+# tfrate        9.3802666   2.503173
+# pctmale       .           .       
+# accpc         .           .       
+# lngrdppc      .           .       
+# lnpop        -1.8537565  -1.902328
 
 plotVarimp(bhat.lasso, X)  # defined above
 ```
