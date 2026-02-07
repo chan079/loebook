@@ -23,6 +23,7 @@ Linear 커널을 사용한 SVR 결과는 다음과 같다(cost = 1).
 library(e1071)
 svmfit0 <- svm(ynext~., data=z14, kernel = 'linear')
 summary(svmfit0)
+
 # Call:
 # svm(formula = ynext ~ ., data = z14, kernel = "linear")
 # 
@@ -35,24 +36,24 @@ summary(svmfit0)
 #     epsilon:  0.1 
 # 
 # 
-# Number of Support Vectors:  86
+# Number of Support Vectors:  88
 ```
 
 Train Set의 설명 정도는 다음과 같다.
 
 ```R
 RMSE(z14$ynext, predict(svmfit0, z14, type='response'))
-# [1] 47.33744
+# [1] 47.35984
 ```
 
 Test Set 예측 성능은 다음과 같다.
 
 ```R
 RMSE(z15$ynext, predict(svmfit0, z15, type='response'))
-# [1] 55.02433
+# [1] 51.52811
 ```
 
-전혀 인상적이지 않다.
+그리 인상적이지 않다.
 
 커널이 주어질 때, [SVM]의 주요 튜닝 매개변수는 `cost`이고, 디폴트 값은
 1이다. 이제 여러 cost 값을 고려하고 10-fold [CV]를 이용하여 최적
@@ -71,29 +72,26 @@ summary(tune.out)
 # 
 # - best parameters:
 #  cost
-#   0.1
+#     1
 # 
-# - best performance: 2710.426 
+# - best performance: 2649.135 
 # 
 # - Detailed performance results:
 #      cost     error dispersion
-# 1   0.001 25951.266 10290.9325
-# 2   0.010  3961.079  1217.0956
-# 3   0.100  2710.426   980.4872
-# 4   1.000  2743.499  1006.4024
-# 5   5.000  2742.039  1131.7863
-# 6  10.000  2791.526  1209.1412
-# 7 100.000  2806.500  1248.2878
+# 1   0.001 20238.847  9812.8138
+# 2   0.010  3783.161  1462.0512
+# 3   0.100  2898.436  1089.8265
+# 4   1.000  2649.135  1025.5508
+# 5   5.000  2682.268  1004.7396
+# 6  10.000  2682.982   999.6104
+# 7 100.000  2684.648  1001.7048
 ```
 
-위 10-fold CV 결과에 의하면 최적의 `cost` 매개변수는 0.1이다(random
-seed를 1로 하면 5를 선택하고, 또 다른 random seed에서는 결과가 또
-다르다). 이를 이용하여 Test Set의 목표변수를 예측하여 성과 지표를
-구하면 다음과 같다.
+위 10-fold CV 결과에 의하면 최적의 `cost` 매개변수는 1이다. 이를 이용하여 Test Set의 목표변수를 예측하여 성과 지표를 구하면 다음과 같다.
 
 ```R
 RMSE(z15$ynext, predict(tune.out$best.model, z15, type='response'))
-# [1] 48.9914
+# [1] 51.52811
 ```
 
 [SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
