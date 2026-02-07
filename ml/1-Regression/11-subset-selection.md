@@ -14,16 +14,16 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData
 ## OLS
 ols <- lm(ynext~., data = z14)
 summary(ols)$r.sq
-# [1] 0.9809264
+# [1] 0.9808557
 RMSE(z15$ynext, predict(ols, z15))
-# [1] 51.38724
+# [1] 49.60315
 rmspe.rw
 # [1] 53.24273
 ```
 
 회귀의 R제곱은 0.981로 매우 높고, 시험용 자료(`z15`)에 대한 예측
 정확도(RMSE로 측정하며, 작을수록 정확함) 면에서 단순 임의보행 예측
-RMSE (53.24273)보다 근소하게 더 낫다(RMSE = 51.38724).
+RMSE (53.24273)보다 더 낫다(RMSE = 49.60315).
 
 ## 변수 선택(subset selection)
 
