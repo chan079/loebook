@@ -1,4 +1,5 @@
 /ml/transit.R
+/ml/**/figure.R
 .DS_Store
 python/.ipynb_checkpoints/00 Get Ready-checkpoint.ipynb
 /python/csv
