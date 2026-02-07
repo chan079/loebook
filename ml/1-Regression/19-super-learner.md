@@ -174,9 +174,9 @@ for (fold in 1:10) {
 cvpreds <- cvpreds[rownames(z14), ] # important!
 head(cvpreds, 3)
 #        ols      bss    ridge    lasso      pcr      pls      svm       rf
-# 1 612.0279 600.7213 612.8286 602.8878 614.6901 604.5204 612.0749 592.9033
-# 2 581.5426 586.1364 583.4614 575.4188 608.6897 577.8710 575.3670 592.7779
-# 3 515.7194 532.9504 525.3181 535.8068 543.0980 512.9284 538.0901 521.6021
+# 1 622.2996 600.7213 626.2197 607.7039 661.7590 622.5561 629.5229 599.9335
+# 2 592.9763 586.1364 593.3452 591.3954 505.6294 592.9782 587.0150 595.5665
+# 3 511.1349 532.9504 514.7722 534.0204 557.5251 511.2264 526.0893 523.4720
 ```
 
 8개 방법 각각의 CV RMSE는 다음과 같다.
@@ -184,7 +184,7 @@ head(cvpreds, 3)
 ```R
 apply(cvpreds, 2, function(x) RMSE(x, z14$ynext)) # sequential
 #      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 51.69413 49.86573 51.73498 50.61905 53.95436 51.61936 52.85023 55.01927 
+# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117 
 ```
 
 결과 설명에 앞서, 앞의 순차적(sequential)인 시행 방법은 하나의 CPU
@@ -203,7 +203,10 @@ cl <- makeCluster(cores[1]-1) # fast, so redirect output to null device
 registerDoParallel(cl)
 
 ## Parallel processing
-cvpreds <- foreach(fold = 1:10, .combine = rbind, .packages = c('glmnet', 'leaps', 'pls', 'e1071', 'randomForest')) %dopar% {
+cvpreds <- foreach(
+    fold = 1:10, .combine = rbind,
+    .packages = c('glmnet', 'leaps', 'pls', 'e1071', 'randomForest')
+) %dopar% {
   cat('Work for fold', fold, '\n') # quiet
   myfun(z14[group!=fold,], z14[group==fold,])
 }
@@ -221,7 +224,7 @@ stopCluster(cl) # Don't forget this
 cvpreds <- cvpreds[rownames(z14), ] # important!
 apply(cvpreds, 2, function(x) RMSE(x, z14$ynext)) # CV pred error
 #      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 51.69413 49.86573 51.73498 50.61905 53.95436 51.61936 52.85023 55.01927 
+# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117 
 ```
 
 앞의 순차(sequential) 시행 시 결과와 동일한 것을 확인할 수 있다.
@@ -257,20 +260,20 @@ sum(super$x)
 wgt <- setNames(super$x, colnames(super$r))
 wgt
 #        ols        bss      ridge      lasso        pcr        pls        svm 
-# 0.00000000 0.69281541 0.00000000 0.00000000 0.00000000 0.14967827 0.06447699 
+# 0.00000000 0.81497985 0.02265473 0.00000000 0.07548504 0.00000000 0.00000000 
 #         rf 
-# 0.09302933 
+# 0.08688038 
 ```
 
-CV를 이용하여 구한 Super Learner는 0.693×(Best subset selection) +
-0.150×(PLS) + 0.064×(SVM) + 0.093×(Random Forest)이다.
+CV를 이용하여 구한 Super Learner는 0.815×(Best subset selection) + 0.023×(Ridge) +
+0.075×(PCR) + 0.087×(Random Forest)이다.
 
 이 Super Learner를 train set CV 예측치에 적용하여 구한 예측치의
 RMSE는 다음과 같다.
 
 ```R
 RMSE(as.matrix(cvpreds) %*% wgt, z14$ynext)
-# [1] 49.59206
+# [1] 49.57661
 ```
 
 이 RMSE는 앞에서 구한 8개 방법들로부터의 CV 예측치 RMSE들 중 가장 작은
@@ -294,12 +297,12 @@ weighting이기 때문에 당연한 결과이다.
 testp <- myfun(z14, z15)
 head(testp)
 #          ols      bss    ridge    lasso      pcr      pls      svm       rf
-# 269 571.8592 591.7046 572.9674 585.3675 581.6550 577.6366 578.7972 589.7740
-# 270 597.8058 600.8355 598.3856 590.4644 614.2575 596.4543 608.0084 596.1170
-# 271 522.9258 538.2746 531.8178 542.3065 547.7498 526.3882 538.8058 506.8312
-# 272 434.6552 461.8369 437.2974 460.2935 455.8359 434.2788 446.4369 448.1672
-# 273 421.6089 435.1991 422.1376 436.0459 420.6601 422.0230 424.2278 426.9244
-# 274 530.7625 550.6181 529.6336 551.4492 543.1088 535.6742 536.0981 516.9408
+# 283 579.6738 591.7046 584.2965 591.5958 624.6588 579.4769 590.3399 583.1362
+# 284 608.1588 600.8355 609.4063 604.6865 567.2087 608.2090 613.1647 588.4386
+# 285 519.0937 538.2746 523.2038 541.3832 570.8328 518.9966 526.2810 509.9773
+# 286 424.4785 461.8369 426.9756 457.1415 430.4697 424.4970 433.7641 445.0293
+# 287 408.7738 435.1991 407.3368 430.5907 410.3449 408.7635 410.9964 426.7364
+# 288 521.1656 550.6181 520.8365 549.4115 492.0980 520.9378 520.4192 517.5654
 ```
 
 각각의 test set RMSE는 다음과 같다.
@@ -307,7 +310,7 @@ head(testp)
 ```R
 apply(testp, 2, function(x) RMSE(x, z15$ynext))
 #      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 51.38724 48.98381 49.72394 47.75449 47.95138 51.50172 48.99140 50.64245 
+# 49.60315 48.98381 48.44003 47.81821 61.58840 49.59406 47.60550 49.69079 
 ```
 
 앞에서 구한 Discrete Super Learner (best subset selection)의 test set
@@ -316,16 +319,16 @@ RMSE는 48.98381이다. Super Learner 예측치와 RMSE는 다음과 같다.
 ```R
 superpred <- as.numeric(as.matrix(testp) %*% wgt)
 RMSE(superpred, z15$ynext)
-# [1] 48.54089
+# [1] 47.88699
 ```
 
 앞에서 train set의 CV 예측치의 경우와 달리 test set에서는 개별
 방법보다 Super Learner가 반드시 더 좋은 성과를 보여야 할 이유가 없다.
-실제로 lasso의 test set RMSE가 47.75449로서 Super Learner의 RMSE
-48.54089보다 오히려 더 작다. 이는 이 test set에 대해 해 보니 그렇다는
-것이며, 현실에서 실제 적용할 때에는 test란 없으므로 어느 편이 더
-나을지 알 수 없다.  CV 예측치의 경우 Super Learner가 더 나았으니까
-다른 데이터셋에서도 Super Learner가 더 나을 것이라고 믿을 뿐이다.
+실제로 lasso와 SVN의 test set RMSE가 Super Learner의 RMSE보다 오히려
+더 작다. 이는 이 test set에 대해 해 보니 그렇다는 것이며, 현실에서
+실제 적용할 때에는 test란 없으므로 어느 편이 더 나을지 알 수 없다. CV
+예측치의 경우 Super Learner가 더 나았으니까 다른 데이터셋에서도 Super
+Learner가 더 나을 것이라고 믿을 뿐이다.
 
 [SuperLearner-pkg]: https://cran.r-project.org/package=SuperLearner
 [nnls]: https://en.wikipedia.org/wiki/Non-negative_least_squares
