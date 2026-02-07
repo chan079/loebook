@@ -97,7 +97,6 @@ RMSE(z14$ynext, z14$deathrate)  # Random Walk
 # [1] 57.12526
 ```
 
-이 문제는 [bagging](16-tree-ensembles.md)과 [random forest](16-tree-ensembles.md)에서
-상당 부분 해결된다.
+이 문제는 [bagging](16-tree-ensembles.md)과 [random forest](16-tree-ensembles.md)에서 상당 부분 해결된다.
 
 [tree]: https://en.wikipedia.org/wiki/Decision_tree_learning

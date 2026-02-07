@@ -23,38 +23,38 @@ dim(z14)  # p = ncol(dataset) - 1
 set.seed(1)
 tr.bag <- randomForest(ynext~., data=z14, mtry=19, importance=TRUE) # mtry=19 for treebag; 500 trees
 RMSE(z15$ynext, predict(tr.bag, z15)) # bagging
-# [1] 52.20014
+# [1] 52.28714
 rmspe.rw
 # [1] 53.24273
 ```
 
-Test set에서 RMSE는 52.20014로, 앞의 가지치기된 [나무 한
+Test set에서 RMSE는 52.28714로, 앞의 가지치기된 [나무 한
 그루](15-tree.md)(RMSE = 71.22396)에 비하여 큰 개선이 이루어진 것을
-볼 수 있다. [Lasso](13-ridge-lasso.md) (RMSE = 47.75)보다는 못하지만
+볼 수 있다. [Lasso](13-ridge-lasso.md) (RMSE = 47.82)보다는 못하지만
 임의보행 결과(53.24273)보다는 낫다. 변수 중요도는 다음과 같다.
 
 ```R
 importance(tr.bag)
 #              %IncMSE IncNodePurity
-# grdp       4.14643938      17881.77
-# regpop     3.64682270      23244.42
-# popgrowth -0.51396422      28830.06
-# eq5d      -2.07628674      19738.18
-# deaths    -0.73762568      21655.24
-# drink      2.13062639      19275.66
-# hdrink    -1.40168066      26605.05
-# smoke     -0.46163688      20722.22
-# aged      16.94874268    6834906.70
-# divorce    4.00092212      30791.70
-# medrate   -0.28777961      18528.55
-# gcomp     -0.05347892      10686.13
-# vehipc    -1.50337961      17421.78
-# accpv     -1.40684012      12708.01
-# dumppc    -0.36283830      19869.18
-# stratio   -2.14823035      29466.98
-# deathrate 44.31904874   17878644.80
-# pctmale   -0.41336720      10890.20
-# accpc      4.16383701      18820.55
+# popgrowth -1.9202927      26707.19
+# eq5d      -0.8643056      18637.14
+# drink     -0.1678988      17255.20
+# hdrink    -2.7152782      24795.60
+# smoke     -0.0299227      19007.98
+# aged      18.4896150    7825000.00
+# divorce    1.3240276      32165.36
+# medrate    1.0195872      17116.51
+# vehipc    -0.2568773      16076.83
+# accpv      0.6016087      13182.29
+# dumppc    -1.1603052      17857.50
+# stratio   -1.6214547      27089.90
+# deathrate 40.9015505   16822535.86
+# cbrate     1.7799114      14516.19
+# tfrate     2.5731176      15831.60
+# pctmale    0.5416199      16738.71
+# accpc      0.4822489      17557.93
+# lngrdppc   1.9733756      32287.49
+# lnpop      4.2053159      31470.85
 ```
 
 위에 2가지 '변수 중요도' 척도가 제시되어 있다. `%IncMSE` 열은 각
@@ -95,7 +95,7 @@ varImpPlot(tr.bag)
 
 ```R
 mean(tr.bag$rsq)
-# [1] 0.9723799
+# [1] 0.9722569
 ```
 
 [randomForest][randomForest-pkg] 패키지는 회귀의 경우 OOB 오차를
@@ -176,8 +176,8 @@ tr.rf
 #                      Number of trees: 500
 # No. of variables tried at each split: 6
 #
-#           Mean of squared residuals: 3708.214
-#                     % Var explained: 96.73
+#           Mean of squared residuals: 3715.939
+#                     % Var explained: 96.72
 ```
 
 부트스트랩 표본 개수는 500개, 나뭇가지 분기 시 고려한 변수
@@ -186,7 +186,7 @@ tr.rf
 
 ```R
 RMSE(z15$ynext, predict(tr.rf, z15, type="response"))
-# [1] 51.84617
+# [1] 50.78013
 ```
 
 [나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 [Tree Bagging]보다도
@@ -238,7 +238,7 @@ varImpPlot(tr.rf2)
 
 ```R
 RMSE(z15$ynext, predict(tr.rf2, z15, type="response"))
-# [1] 49.29249
+# [1] 49.65055
 ```
 
 `mtry`를 아예 CV할 수도 있다. 이하 코드에서는 10-fold CV로 `mtry`를
@@ -332,17 +332,17 @@ cvrf <- cvrf[rownames(z14), ] # Important!
 ```R
 rmse <- apply(cvrf, 2, function(x) RMSE(x, z14$ynext))
 rmse
-#  [1]       NA       NA 77.15646 69.51262 64.14057 61.30463 59.44525 57.50600
-#  [9] 55.98502 55.50474 55.04596 54.67698 54.77896 54.73767 54.98873 55.41734
-# [17] 55.40551 55.89370 55.98228
+#  [1]       NA       NA 75.83599 68.69237 64.05685 61.12784 58.74429 57.29122
+#  [9] 56.37807 55.60709 55.77512 55.27465 54.89790 55.57927 55.32026 54.64461
+# [17] 55.22011 55.74380 56.00762
 plot(rmse, type='o', ylab = 'RMSE from 10-fold CV')
 which.min(rmse)
-# [1] 12
+# [1] 16
 ```
 
 ![임의의 숲 CV로 mtry 탐색](imgs/rf_cv_full.svg)
 
-운좋게도, 이렇게 탐색을 해도 `mtry=12`가 최적으로 판명되었다.
+이렇게 탐색을 하니까 12가 아니라 `mtry=16`이 최적인 것으로 결정되었다.
 
 ## Gradient Boosting
 
@@ -364,27 +364,27 @@ set.seed(1)
 boost <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000, interaction.depth=4, shrinkage=0.05)
 summary(boost)
 #                 var     rel_inf
-# deathrate deathrate 61.49531129
-# aged           aged 31.64811870
-# regpop       regpop  1.02584938
-# grdp           grdp  0.87589558
-# stratio     stratio  0.72406702
-# medrate     medrate  0.55690232
-# deaths       deaths  0.49314733
-# smoke         smoke  0.44112521
-# hdrink       hdrink  0.42588427
-# drink         drink  0.39235757
-# popgrowth popgrowth  0.38727486
-# accpc         accpc  0.31879766
-# dumppc       dumppc  0.31103433
-# gcomp         gcomp  0.26114571
-# accpv         accpv  0.20539794
-# eq5d           eq5d  0.19116536
-# vehipc       vehipc  0.16723952
-# divorce     divorce  0.07928594
-# pctmale     pctmale  0.00000000
+# deathrate deathrate 62.11925204
+# aged           aged 31.52863094
+# lnpop         lnpop  1.02304795
+# stratio     stratio  0.64037789
+# medrate     medrate  0.54826844
+# cbrate       cbrate  0.52643133
+# drink         drink  0.41833350
+# popgrowth popgrowth  0.40240541
+# tfrate       tfrate  0.38532525
+# smoke         smoke  0.37556831
+# hdrink       hdrink  0.34954368
+# dumppc       dumppc  0.27757972
+# accpv         accpv  0.27402715
+# pctmale     pctmale  0.25865945
+# lngrdppc   lngrdppc  0.22380130
+# accpc         accpc  0.20940941
+# eq5d           eq5d  0.20821882
+# vehipc       vehipc  0.13608037
+# divorce     divorce  0.09503904
 RMSE(z15$ynext, predict(boost, z15, n.trees=1000))
-# [1] 58.66658
+# [1] 57.38945
 ```
 
 Random Forest에서와는 달리 Boosting에서는 반복할수록 training set의
@@ -411,9 +411,9 @@ cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
            interaction.depth=4, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv1))
 # Using cv method...
-# [1] 86
+# [1] 113
 cv1$cv_error[k]  # square error loss
-# [1] 3925.491
+# [1] 3884.541
 ```
 
 위에서는 10-fold CV로써 `n.fold`를 정한다. 실행 결과에 의하면 96회
@@ -442,7 +442,7 @@ Train error는 boosting을 반복할수록 점점 줄어들지만 CV error는 �
 
 ```R
 RMSE(z15$ynext, predict(cv1, z15, n.trees=k))
-# [1] 57.52794
+# [1] 56.76636
 ```
 
 위에서는 `shrinkage`를 0.05로 설정하였다. 이 값이 작은 것은 개선의
@@ -456,9 +456,9 @@ cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
            interaction.depth=4, shrinkage=0.1, cv.folds=10)
 (k <- gbm.perf(cv2, plot=FALSE))
 # Using cv method...
-# [1] 42
+# [1] 47
 cv2$cv_error[k]
-# [1] 4152.718
+# [1] 4007.547
 ```
 
 최적 횟수(42번) boost한 CV 오차는 4152.718로서 `shrink`가 0.05일
@@ -473,14 +473,13 @@ set.seed(1)
 cv3 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=10000,
            interaction.depth=4, shrinkage=0.001, cv.folds=10)
 (k <- gbm.perf(cv3, plot=FALSE))
-# [1] 4642
+# [1] 5107
 cv3$cv_error[k]
-# [1] 3875.732
+# [1] 3768.519
 ```
 
-이 결과의 최적 CV 오차 정도는 3875.732로서 `shrinkage = 0.05`인
-경우(`cv1`)보다 약간 작다. Shrinkage를 0.01로 해 보면 약간 더 작은
-값을 갖는다(3857.765). (`set.seed`의 값을 다르게 하면 다른 결과를 얻을
+이 결과의 최적 CV 오차 정도는 3768.519로서 `shrinkage = 0.05`인
+경우(`cv1`)보다 약간 작다. (`set.seed`의 값을 다르게 하면 다른 결과를 얻을
 것으로 예상된다.)
 
 `shrinkage`를 0.05로 설정하고 `interaction.depth`를 2로 낮추면 결과는
@@ -491,18 +490,18 @@ set.seed(1)
 cv4 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
            interaction.depth=2, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv4, plot=FALSE))
-# [1] 121
+# [1] 146
 cv4$cv_error[k]
-# [1] 3841.332
+# [1] 3700.452
 ```
 
 `interaction.depth`가 4인 경우보다 CV 오차가 근소하게 더 낮다. 위의
-`cv4`를 이용하여 `k`번(즉, 121번) 업데이트한 결과를 가지고 test set에
+`cv4`를 이용하여 `k`번(즉, 146번) 업데이트한 결과를 가지고 test set에
 대하여 예측한 후 RMSE를 구하면 결과는 다음과 같다.
 
 ```R
 RMSE(z15$ynext, predict(cv4, z15, n.trees=k))
-# [1] 56.05217
+# [1] 55.09341
 ```
 
 근소하게 개선되었으나 그리 인상적이지는 않다. 여기서도
@@ -512,7 +511,7 @@ RMSE(z15$ynext, predict(cv4, z15, n.trees=k))
 
 ```R
 gbm.perf(cv4)
-# [1] 121
+# [1] 146
 ```
 
 ![Gradient Boosting CV error](imgs/gbm_perf4.svg)
@@ -581,22 +580,22 @@ stopCluster(cl) # Don't forget this
 gbmcv <- as.data.frame(gbmcv)
 gbmcv
 #           depth shrinkage best.iter cv.error
-# result.1  1     0.01      859       3658.911
-# result.2  2     0.01      501       3723.234
-# result.3  3     0.01      526       3829.116
-# result.4  4     0.01      442       3812.664
-# result.5  1     0.05      169       3648.469
-# result.6  2     0.05      99        3754.657
-# result.7  3     0.05      90        3812.563
-# result.8  4     0.05      96        3763.043
-# result.9  1     0.1       84        3754.808
-# result.10 2     0.1       49        3809.053
-# result.11 3     0.1       45        3754.504
-# result.12 4     0.1       44        3865.514
-# result.13 1     0.2       37        3785.591
-# result.14 2     0.2       23        3775.115
-# result.15 3     0.2       21        3671.347
-# result.16 4     0.2       21        3818.903
+# result.1      1      0.01       998 3630.006
+# result.2      2      0.01       582 3720.937
+# result.3      3      0.01       490 3729.329
+# result.4      4      0.01       535 3726.609
+# result.5      1      0.05       229 3615.427
+# result.6      2      0.05       123 3755.437
+# result.7      3      0.05        98 3695.825
+# result.8      4      0.05       106 3711.570
+# result.9      1      0.10       102 3733.403
+# result.10     2      0.10        57 3818.618
+# result.11     3      0.10        43 3692.883
+# result.12     4      0.10        45 3750.950
+# result.13     1      0.20        56 3678.420
+# result.14     2      0.20        31 3749.144
+# result.15     3      0.20        23 3696.403
+# result.16     4      0.20        22 3839.775
 ```
 
 CV 오차도가 가장 낮은 셋팅은 다음과 같다.
@@ -604,11 +603,11 @@ CV 오차도가 가장 낮은 셋팅은 다음과 같다.
 ```R
 (opt <- gbmcv[which.min(gbmcv$cv.error),])
 #          depth shrinkage best.iter cv.error
-# result.5     1      0.05       169 3648.469
+# result.5     1      0.05       229 3615.427
 ```
 
 위 결과에 의하면 `interaction.depth`는 1, `shrinkage`는 0.05인
-경우이며, 이때 최적 개선(boosting) 횟수는 169이다. 이를 이용하여 test
+경우이며, 이때 최적 개선(boosting) 횟수는 229이다. 이를 이용하여 test
 set에 대한 예측을 하면 결과는 다음과 같다.
 
 ```R
@@ -616,7 +615,7 @@ set에 대한 예측을 하면 결과는 다음과 같다.
 gb <- gbm(ynext~., data=z14, distribution = 'gaussian', n.trees = opt$best.iter,
           interaction.depth = opt$depth, shrinkage = opt$shrinkage, bag.fraction = 1)
 RMSE(z15$ynext, predict(gb, z15, n.trees = opt$best.iter, type = 'response'))
-# [1] 52.96056
+# [1] 52.51224
 ```
 
 약간 개선이 되기는 했는데, 여기서 서술하지 않은 여러 실험 결과들에
@@ -670,9 +669,9 @@ xgbcv <- xgb.cv(
     nfold=10, nrounds=1000, early_stopping_rounds=5
 )
 xgbcv$early_stop$best_iteration
-# [1] 145
+# [1] 133
 xgbcv$evaluation_log$test_rmse_mean[xgbcv$early_stop$best_iteration]
-# [1] 61.68765
+# [1] 60.14897
 with(xgbcv$evaluation_log, plot(iter, train_rmse_mean, type='l'))
 with(xgbcv$evaluation_log, lines(iter, test_rmse_mean, lty=2))
 abline(v=xgbcv$early_stop$best_iteration, lty=3)
@@ -689,7 +688,7 @@ test set에서 예측 성과를 확인하자.
 ```R
 xgb <- xgboost(X, Y, nrounds=xgbcv$early_stop$best_iteration, max_depth=6, learning_rate=.05)
 RMSE(z15$ynext, predict(xgb, X15))
-# [1] 58.43749
+# [1] 61.46164
 ```
 
 결과가 그리 좋지는 않다([xgboost][xgboost-pkg] 패키지가 안 좋다는 뜻이
@@ -754,26 +753,26 @@ stopCluster(cl) # Don't forget this
 xgbcv.full <- as.data.frame(xgbcv.full) # not necessary but convenient
 xgbcv.full
 #           max_depth  eta best.iter cv.error
-# result.1          2 0.01       454 57.23803
-# result.2          3 0.01       414 58.75328
-# result.3          4 0.01       415 60.99047
-# result.4          5 0.01       452 61.47258
-# result.5          6 0.01       465 62.79923
-# result.6          2 0.05        93 57.05568
-# result.7          3 0.05        84 58.73178
-# result.8          4 0.05        93 60.93394
-# result.9          5 0.05       109 61.32557
-# result.10         6 0.05       145 61.68765
-# result.11         2 0.10        44 57.07437
-# result.12         3 0.10        37 58.86685
-# result.13         4 0.10        41 60.23370
-# result.14         5 0.10        65 61.50618
-# result.15         6 0.10        74 61.84863
-# result.16         2 0.20        21 56.83163
-# result.17         3 0.20        22 58.66822
-# result.18         4 0.20        21 61.53252
-# result.19         5 0.20        21 62.90621
-# result.20         6 0.20        34 60.76535
+# result.1          2 0.01       492 57.11302
+# result.2          3 0.01       471 58.25906
+# result.3          4 0.01       440 60.20988
+# result.4          5 0.01       453 60.67408
+# result.5          6 0.01       480 60.61594
+# result.6          2 0.05       100 56.80632
+# result.7          3 0.05        91 57.95773
+# result.8          4 0.05        78 60.84517
+# result.9          5 0.05       113 59.92145
+# result.10         6 0.05       133 60.14897
+# result.11         2 0.10        42 57.14876
+# result.12         3 0.10        42 57.95161
+# result.13         4 0.10        38 60.41400
+# result.14         5 0.10        52 60.76555
+# result.15         6 0.10        72 60.47089
+# result.16         2 0.20        29 56.54282
+# result.17         3 0.20        24 57.39540
+# result.18         4 0.20        21 59.08269
+# result.19         5 0.20        21 62.93482
+# result.20         6 0.20        35 61.50288
 ```
 
 최적 CV 오차 RMSE가 가장 작은 매개변수 셋팅은 다음과 같다.
@@ -781,7 +780,7 @@ xgbcv.full
 ```R
 (opt <- xgbcv.full[which.min(xgbcv.full$cv.error),])
 #           max_depth eta best.iter cv.error
-# result.16         2 0.2        21 56.83163
+# result.16         2 0.2        29 56.54282
 ```
 
 이 셋팅을 이용하여 Gradient Boosting 하고 예측하면 다음과 같다.
@@ -789,7 +788,7 @@ xgbcv.full
 ```R
 xgb <- xgboost(X, Y, nrounds = opt$best.iter, max_depth = opt$max_depth, learning_rate = opt$eta)
 RMSE(z15$ynext, predict(xgb, X15))
-# [1] 51.87696
+# [1] 52.9766
 ```
 
 ‘체면’은 차렸다. 변수 중요도는 다음과 같이 시각화해 볼 수 있다.
@@ -850,28 +849,28 @@ OOB training sample들의 RMSE는 `rf.h2o`라고 하면 바로 화면에 표시�
 rf.h2o
 # Model Details:
 # ==============
-#
+# 
 # H2ORegressionModel: drf
-# Model ID:  DRF_model_R_1632619166365_5 
+# Model ID:  DRF_model_R_1770480045723_1 
 # Model Summary: 
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1             500                      500              912692        11
+# 1             500                      500              913248        10
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
-# 1        18   13.26200        123        161   140.72200
-#
-#
+# 1        17   13.18200        122        161   140.78600
+# 
+# 
 # H2ORegressionMetrics: drf
 # ** Reported on training data. **
 # ** Metrics reported on Out-Of-Bag training samples **
-#
-# MSE:  3528.036
-# RMSE:  59.39727
-# MAE:  42.41623
-# RMSLE:  0.07142407
-# Mean Residual Deviance :  3528.036
-#
+# 
+# MSE:  3517.533
+# RMSE:  59.3088
+# MAE:  42.15535
+# RMSLE:  0.06999919
+# Mean Residual Deviance :  3517.533
+
 h2o.rmse(rf.h2o)  # OOB
-# [1] 59.39727
+# [1] 59.3088
 ```
 
 Test set에 학습 결과를 적용하여 예측 성능을 구하면 다음과 같다.
@@ -880,30 +879,30 @@ Test set에 학습 결과를 적용하여 예측 성능을 구하면 다음과 �
 h2o.performance(rf.h2o, newdata = z15h)
 # H2ORegressionMetrics: drf
 # 
-# MSE:  2596.366
-# RMSE:  50.95455
-# MAE:  36.51445
-# RMSLE:  0.06642564
-# Mean Residual Deviance :  2596.366
+# MSE:  2606.404
+# RMSE:  51.05295
+# MAE:  36.15251
+# RMSLE:  0.06786916
+# Mean Residual Deviance :  2606.404
 ```
 
-RMSE는 50.95455로서 앞에서 `randomForest` 패키지를 활용한 경우와
+RMSE는 51.05295로서 앞에서 `randomForest` 패키지를 활용한 경우와
 유사하다. 참고로, `mtries`를 12로 설정하면 결과는 다음과 같다.
 
 ```R
 rf2.h2o <- h2o.randomForest(xvar, yvar, z14h, ntrees = 500, mtries = 12, seed = 1)
-h2o.performance(rf2.h2o, newdata = z15h)
+# h2o.performance(rf2.h2o, newdata = z15h)
 # H2ORegressionMetrics: drf
 # 
-# MSE:  2520.726
-# RMSE:  50.20683
-# MAE:  35.97571
-# RMSLE:  0.06004474
-# Mean Residual Deviance :  2520.726
+# MSE:  2553.612
+# RMSE:  50.53328
+# MAE:  36.19486
+# RMSLE:  0.06119575
+# Mean Residual Deviance :  2553.612
 ```
 
 Random number가 발생되는 방식이 달라서 `randomForest` 패키지의
-경우(RMSE는 49.29249)와 근소하게 다르다.
+경우와 근소하게 다르다.
 
 **Gradient Boosting**을 하려면 `h2o.gbm` 명령을 사용한다. Boosting은
 boost할수록 학습성과가 좋아지므로 `ntrees`가 너무 크면 overfitting
@@ -926,24 +925,24 @@ cv.mse <- sapply(b0.h2o@model$cv_scoring_history, function(x) x$validation_rmse^
 dim(cv.mse)  # (iter = 0, 1, ..., 250) x (nfolds = 10)
 # [1] 251   10
 (n <- which.min(rowMeans(cv.mse))-1)
-# [1] 48
+# [1] 56
 ```
 
-위에서 48개라고 하였으므로 48개 tree를 만드는 Gradient Boosting을
+위에서 56개라고 하였으므로 56개 tree를 만드는 Gradient Boosting을
 학습하고 test set에 적용하면 다음 결과를 얻는다.
 
 ```R
 b.h2o <- h2o.gbm(xvar, yvar, z14h, ntrees = n, max_depth = 2, learn_rate = 0.1, seed = 1)
 h2o.rmse(b.h2o, train = TRUE)  # train set
-# [1] 38.87085
+# [1] 35.91896
 h2o.performance(b.h2o, newdata = z15h)  # test set
 # H2ORegressionMetrics: gbm
 # 
-# MSE:  2792.558
-# RMSE:  52.84466
-# MAE:  37.81112
-# RMSLE:  0.06441821
-# Mean Residual Deviance :  2792.558
+# MSE:  2680.628
+# RMSE:  51.77478
+# MAE:  37.67609
+# RMSLE:  0.06348479
+# Mean Residual Deviance :  2680.628
 ```
 
 **Early stopping**을 사용할 수도 있다. 아래 명령에서는
@@ -964,9 +963,9 @@ b2.h2o <- h2o.gbm(
 b2.h2o@model$model_summary
 # Model Summary: 
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1              40                       40                4325         2
+# 1              42                       42                4552         2
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
-# 1         2    2.00000          3          4     3.95000
+# 1         2    2.00000          3          4     3.97619
 h2o.learning_curve_plot(b2.h2o)
 ```
 
@@ -976,14 +975,14 @@ h2o.learning_curve_plot(b2.h2o)
 h2o.performance(b2.h2o, newdata = z15h)
 # H2ORegressionMetrics: gbm
 # 
-# MSE:  2754.549
-# RMSE:  52.4838
-# MAE:  37.70973
-# RMSLE:  0.06577292
-# Mean Residual Deviance :  2754.549
+# MSE:  2664.973
+# RMSE:  51.62337
+# MAE:  37.39238
+# RMSLE:  0.06494159
+# Mean Residual Deviance :  2664.973
 ```
 
-Test set RMSE는 52.4838이다.
+Test set RMSE는 51.62337이다.
 
 위에서는 `max_depth`와 `learn_rate`를 2와 0.1로 설정한 상태에서
 10-fold CV에 의하여 최적의 `ntrees` (boosting 횟수, 혹은 나무 개수)를
