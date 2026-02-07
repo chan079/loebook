@@ -54,7 +54,7 @@ set (`z15`)에 대하여 CV를 이용한 최적 ridge를 적용한 예측의 성
 # [1] 33.27139
 RMSE(z15$ynext, predict(cv.ridge, newx = X15, s = 'lambda.min'))
 ## RMSE(z15$ynext, predict(ridge, newx = X15, s = best.lambda)) # same
-# [1] 53.99689
+# [1] 52.89465
 rmspe.rw
 # [1] 53.24273
 ```
@@ -89,18 +89,18 @@ $\lambda$ 값들을 더 촘촘히 하기 위해 `nlambda` 옵션(기본값은 10
 set.seed(1)
 cv.ridge2 <- cv.glmnet(X,Y,alpha=0, lambda.min.ratio=1e-6, nlambda=200)
 cv.ridge2$lambda.min
-# [1] 0.8204098
+# [1] 1.160873
 tail(cv.ridge2$lambda)
-# [1] 1.0103761 0.9426106 0.8793901 0.8204098 0.7653852 0.7140511
+# [1] 1.3337856 1.2443292 1.1608725 1.0830133 1.0103760 0.9426105
 ```
 
-선택된 $\lambda$ 값은 전체 200개 중 3번째로 작은 값이어서 여전히
+선택된 $\lambda$ 값은 전체 200개 중 4번째로 작은 값이어서 여전히
 불만스러우나, 어쨌든 가장 작은 값은 아니니 됐다. 이 `lambda` 값을
 이용한 test set 예측의 성능은 다음과 같다.
 
 ```R
 RMSE(z15$ynext, predict(cv.ridge2, X15, s = 'lambda.min'))
-# [1] 49.72394
+# [1] 48.44003
 rmspe.rw
 # [1] 53.24273
 ```
@@ -113,27 +113,27 @@ bhat.ridge <- coef(cv.ridge2, s = 'lambda.min')
 options(scipen=1)  # fixed digits (not exponential notation)
 cbind(bhat.ridge, bhat.ridge * c(1, apply(X, 2, sd)))
 # 20 x 2 sparse Matrix of class "dgCMatrix"
-#                         1           1
-# (Intercept) -282.50349431 -282.503494
-# grdp          -1.17756612   -9.311269
-# regpop        86.84145413   18.055504
-# popgrowth     -2.68510803   -5.301252
-# eq5d          -2.05815174   -2.097936
-# deaths        -0.01410179  -10.733191
-# drink         -1.39124153   -6.211952
-# hdrink         2.22434327    7.894561
-# smoke          2.34114522    6.159724
-# aged          10.99928869   85.067698
-# divorce      -14.02562562   -5.159043
-# medrate        0.80357585    7.268658
-# gcomp         -4.54592170  -23.546566
-# vehipc        76.94518991    6.547744
-# accpv         -1.34752466   -3.625625
-# dumppc        21.42175764    8.453333
-# stratio       -0.62597700   -2.995986
-# deathrate      0.73503960  237.090334
-# pctmale       18.81388329   23.451831
-# accpc         -1.20022043   -1.563887
+#              lambda.min  lambda.min
+# (Intercept) 427.3731595 427.3731595
+# popgrowth    -2.1311480  -4.2075599
+# eq5d         -2.5673891  -2.6170167
+# drink        -1.1608903  -5.1834246
+# hdrink        1.9486274   6.9159998
+# smoke         3.0193400   7.9441034
+# aged         11.0668967  85.5905732
+# divorce     -13.7939226  -5.0738156
+# medrate       0.8686251   7.8570536
+# vehipc       40.7325593   3.4661864
+# accpv        -1.0510679  -2.8279840
+# dumppc       16.5451066   6.5289368
+# stratio      -0.5908660  -2.8279410
+# deathrate     0.6685108 215.6311573
+# cbrate       -9.1567315 -18.7147502
+# tfrate       77.9290362  20.7957729
+# pctmale      -3.0883658  -3.8497013
+# accpc        -1.9060060  -2.4835253
+# lngrdppc     -3.4760336  -1.9237153
+# lnpop        -0.3998120  -0.4102878
 ```
 
 위에서 첫 번째 칼럼은 계수, 두 번째 칼럼은 표준화 계수이다(상수항은
