@@ -275,14 +275,14 @@ set.seed(1)
 cv.enet <- cv.glmnet(X,Y,alpha=0.5, lambda.min.ratio=1e-6, nlambda=200)
 plot(cv.enet)
 RMSE(z15$ynext, predict(cv.enet, X15, s = 'lambda.min'))
-# [1] 46.18572
+# [1] 45.79635
 bhat.enet <- coef(cv.enet, s='lambda.min')
 plotVarimp(bhat.enet, X)
 ```
 
 ![Elastic Net 표준화 계수들의 상대적 크기. 클수록 변수중요도가 높다.](imgs/enet_varimp.svg)
 
-예측 오차가 아주 작은데(RMSE = 46.06922), 이는 우연히 그런 것이다.
+예측 오차가 상당히 작은데(RMSE = 45.79635), 이는 어쩌다 보니 그렇게 된 것이다.
 $\alpha=0.5$는 체계적인 방법으로 최적화하여 정한 것이 아니라, 한번
 시도해 본 것뿐이다. 그 대신 $\alpha$를 CV 방법으로 정할 수도 있다.
 
@@ -307,31 +307,32 @@ for (i in 1:nrow(pset)) {
 }
 pset
 #    alpha lambda.min   cv.err
-# 1    0.0  0.8204098 2714.922
-# 2    0.1  0.8016422 2708.978
-# 3    0.2  1.7223300 2689.722
-# 4    0.3  1.4140911 2682.232
-# 5    0.4  5.6125048 2662.508
-# 6    0.5  5.5296669 2642.683
-# 7    0.6  4.6080558 2630.376
-# 8    0.7  4.2337157 2622.856
-# 9    0.8  4.5622807 2617.291
-# 10   0.9  4.3469058 2613.710
-# 11   1.0  3.9122153 2615.097
+# 1    0.0   1.160873 2737.451
+# 2    0.1   1.396968 2711.637
+# 3    0.2   1.499046 2698.585
+# 4    0.3   1.414091 2690.938
+# 5    0.4   1.218541 2687.450
+# 6    0.5   5.927202 2669.477
+# 7    0.6   4.939335 2655.753
+# 8    0.7   4.233715 2647.576
+# 9    0.8   3.970822 2642.779
+# 10   0.9   3.783369 2638.401
+# 11   1.0   3.405032 2638.283
 which.min(pset$cv.err)
-# [1] 10
+# [1] 11
 ```
 
-위 결과에 의하면 $\alpha=0.9$일 때 CV error (MSE)가 가장 작고, 이때 최적
-$\lambda$는 4.3469058이다. (앞에서 최적 $\alpha$에 해당하는 `cv.glmnet`
-결과를 저장해 놓을 수도 있었으나 시간이 얼마 걸리지 않으므로)
-$\alpha=0.9$로 다시 한번 elastic net을 실행하면 결과는 다음과 같다.
+위 결과에 의하면 $\alpha=1.0$일 때 CV error (MSE)가 가장 작고, 이때 최적
+$\lambda$는 3.405032이다. 이는 lasso에 해당한다.
+$\alpha=1.0$으로 다시 한번 elastic net을 실행하면 결과는 다음과 같다.
 
 ```R
-cv.09 <- cv.glmnet(X, Y, alpha = 0.9, lambda.min.ratio = 1e-6, nlambda = 200)
-RMSE(z15$ynext, predict(cv.09, X15, 'lambda.min'))
-# [1] 47.30136
+cv.10 <- cv.glmnet(X, Y, alpha = 1.0, lambda.min.ratio = 1e-6, nlambda = 200)
+RMSE(z15$ynext, predict(cv.10, X15, 'lambda.min'))
+# [1] 48.12504
 ```
+
+위에서 $\alpha=0.5$를 한번 사용해 본 것과 비교하면, `z14` 데이터를 이용하여 $\alpha$를 CV로 결정한 값($\alpha=1.0$)을 사용하면 오히려 test set (`z15`)에서 예측 성능이 더 나쁜데, 그럴 수도 있다. CV는 `z14` 데이터를 사용하여 수행하였고, 거기서 CV 예측성능이 좋다고 하여 반드시 다른 데이터셋(`z15`)에서도 예측성능이 좋으란 법은 없다.
 
 <a name="h2o.lasso"></a>
 
@@ -360,51 +361,53 @@ z15h <- as.h2o(z15) # h2o's data format
 ## lasso with cross validation
 glm <- h2o.glm(xvar, yvar, z14h, alpha=1, nfolds=10, lambda_search = TRUE, early_stopping = FALSE, seed=1)
 glm@model$lambda_best
-# [1] 5.285855
+# [1] 6.366831
 glm@model$coefficients_table
 # Coefficients: glm coefficients
 #        names coefficients standardized_coefficients
-# 1  Intercept    -8.857370                769.412108
-# 2       grdp    -0.310505                 -2.455230
-# 3     regpop     0.000000                  0.000000
-# 4  popgrowth     0.000000                  0.000000
-# 5       eq5d     0.000000                  0.000000
-# 6     deaths     0.000000                  0.000000
-# 7      drink     0.000000                  0.000000
-# 8     hdrink     0.279261                  0.991143
-# 9      smoke     0.716354                  1.884778
-# 10      aged     9.214701                 71.265826
-# 11   divorce     0.000000                  0.000000
-# 12   medrate     0.000000                  0.000000
-# 13     gcomp     0.000000                  0.000000
-# 14    vehipc     1.009409                  0.085897
-# 15     accpv     0.000000                  0.000000
-# 16    dumppc     0.000000                  0.000000
-# 17   stratio     0.000000                  0.000000
-# 18 deathrate     0.794411                256.240748
-# 19   pctmale     0.000000                  0.000000
-# 20     accpc     0.000000                  0.000000
+# 1  Intercept    18.425039                769.412108
+# 2  popgrowth     0.000000                  0.000000
+# 3       eq5d     0.000000                  0.000000
+# 4      drink     0.000000                  0.000000
+# 5     hdrink     0.112275                  0.398484
+# 6      smoke     0.501666                  1.319919
+# 7       aged     8.976927                 69.426897
+# 8    divorce     0.000000                  0.000000
+# 9    medrate     0.000000                  0.000000
+# 10    vehipc     0.000000                  0.000000
+# 11     accpv     0.000000                  0.000000
+# 12    dumppc     0.000000                  0.000000
+# 13   stratio     0.000000                  0.000000
+# 14 deathrate     0.797443                257.218739
+# 15    cbrate     0.000000                  0.000000
+# 16    tfrate     0.000000                  0.000000
+# 17   pctmale     0.000000                  0.000000
+# 18     accpc     0.000000                  0.000000
+# 19  lngrdppc     0.000000                  0.000000
+# 20     lnpop    -1.572211                 -1.613405
+
 ## h2o.std_coef_plot(glm)  # xlim bug?
 h2o.varimp_plot(glm)
 RMSE(z15$ynext, as.vector(h2o.predict(glm, z15h)))
-# [1] 47.86051
+# [1] 48.09701
 h2o.shutdown(prompt = FALSE)
 ```
 
 ![H2O 패키지 이용 시 lasso 표준화 계수들의 상대적 크기](imgs/h2o.lasso_varimp.svg)
 
-참고로, `glmnet`과 `h2o`의 변수 표준화 방식에 약간 차이가 있다.
-`glmnet`은 표본표준편차를 구할 때 분모를 $n-1$이 아니라 $n$으로 나누는
-반면 `h2o`에서는 $n-1$로 나눈다. 또한, `glmnet`의 $\lambda$를 $y$의
-표본표준편차로 나누어야 `h2o`의 $\lambda$와 유사한 값이 되는 것으로
-보인다. `lambda_min_ratio` (디폴트는 $n>p$이면 0.0001), `nlambdas`,
-`solver` 등을 잘 지정할 필요가 있어 보이지만, 특이하게도 일반적인
-elastic net에서 `glmnet`처럼 안정적인 결과를 얻기는 매우 어려웠다. 또,
-`glmnet` 패키지는 grid search에 사용한 $\lambda$ 값들을 리턴해 주지만
-`h2o.glm`은 최적 $\lambda$만 리턴하는 것 같다(필자가 잘 모르는 것일
-수도 있다). 데이터셋이 웬만한 크기여서 `glmnet`에서도 잘 돌아가기만
-한다면 [Elastic net] ([ridge]와 [lasso] 포함)의 경우 `h2o`보다는
-`glmnet` 패키지를 사용하는 것을 추천한다.
+`glmnet`과 `h2o`에서 구한 최적 lasso가 서로 다를 수 있다. `glmnet`과
+`h2o`의 변수 표준화 방식에 약간 차이가 있다. `glmnet`은 표본표준편차를
+구할 때 분모를 $n-1$이 아니라 $n$으로 나누는 반면 `h2o`에서는 $n-1$로
+나눈다. 또한, `glmnet`의 $\lambda$를 $y$의 표본표준편차로 나누어야
+`h2o`의 $\lambda$와 유사한 값이 되는 것으로 보인다. `lambda_min_ratio`
+(디폴트는 $n>p$이면 0.0001), `nlambdas`, `solver` 등을 잘 지정할
+필요가 있어 보이지만, 특이하게도 일반적인 elastic net에서 `glmnet`처럼
+안정적인 결과를 얻기는 매우 어려웠다. 또, `glmnet` 패키지는 grid
+search에 사용한 $\lambda$ 값들을 리턴해 주지만 `h2o.glm`은 최적
+$\lambda$만 리턴하는 것 같다(필자가 잘 모르는 것일 수도 있다).
+데이터셋이 웬만한 크기여서 `glmnet`에서도 잘 돌아가기만 한다면
+[Elastic net] ([ridge]와 [lasso] 포함)의 경우 `h2o`보다는 `glmnet`
+패키지를 사용하는 것을 추천한다.
 
 [h2o]: https://www.h2o.ai/products/h2o/
 [h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
