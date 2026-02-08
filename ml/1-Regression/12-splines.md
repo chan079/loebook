@@ -165,7 +165,7 @@ RMSE(z15$ynext, predict(reg.ns2, z15))
 정의되어 있으므로 위와 같이 R로 하여금 자동으로 정하도록 하는 것도
 문제될 것은 없다는 생각도 든다.
 
+[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
 [BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 [spline]: https://en.wikipedia.org/wiki/Spline_(mathematics)
-[AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
