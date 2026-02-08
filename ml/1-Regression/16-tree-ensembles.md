@@ -169,13 +169,12 @@ piecewise constant여서 제대로 맞추지 못하나 1000개 tree를 평균냄
 set.seed(1)
 tr.rf <- randomForest(ynext~., data=z14)
 tr.rf
-# 
 # Call:
-#  randomForest(formula = ynext ~ ., data = z14, importance = TRUE) 
+#  randomForest(formula = ynext ~ ., data = z14)
 #                Type of random forest: regression
 #                      Number of trees: 500
 # No. of variables tried at each split: 6
-#
+# 
 #           Mean of squared residuals: 3715.939
 #                     % Var explained: 96.72
 ```
@@ -200,20 +199,20 @@ OOB 관측치들을 이용하여 `mtry`를 CV할 수 있다. 이하에 나오는
 ```R
 set.seed(1)
 tuneRF(X,Y, ntreeTry = 500, stepFactor = 2, improve=.005) # X,Y: 데이터 준비 page
-# mtry = 6  OOB error = 3708.214 
+# mtry = 6  OOB error = 3715.939
 # Searching left ...
-# mtry = 3 	OOB error = 6063.54 
-# -0.6351645 0.005 
+# mtry = 3 	OOB error = 5600.388
+# -0.5071262 0.005
 # Searching right ...
-# mtry = 12 	OOB error = 3020.347 
-# 0.1854981 0.005 
-# mtry = 19 	OOB error = 3174.927 
-# -0.0511793 0.005 
+# mtry = 12 	OOB error = 2910.553
+# 0.2167381 0.005
+# mtry = 19 	OOB error = 3133.347
+# -0.07654708 0.005
 #    mtry OOBError
-# 3     3 6063.540
-# 6     6 3708.214
-# 12   12 3020.347
-# 19   19 3174.927
+# 3     3 5600.388
+# 6     6 3715.939
+# 12   12 2910.553
+# 19   19 3133.347
 ```
 
 ![임의의 숲에서 mtry 탐색: 3, 6, 12, 19 중 12가 가장 좋음](imgs/rf_tuneRF.svg)
@@ -252,8 +251,8 @@ set.seed(1)
 group <- sample(1:10, nrow(z14), replace = TRUE)
 table(group)
 # group
-#  1  2  3  4  5  6  7  8  9 10 
-# 21 17 22 21 23 24 22 21 28 24 
+#  1  2  3  4  5  6  7  8  9 10
+# 21 17 22 21 23 24 22 21 28 24
 ```
 
 다음으로 병렬처리를 위한 함수를 만들고자 한다. 이 함수는 train set과
@@ -410,7 +409,6 @@ set.seed(1)
 cv1 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
            interaction.depth=4, shrinkage=0.05, cv.folds=10)
 (k <- gbm.perf(cv1))
-# Using cv method...
 # [1] 113
 cv1$cv_error[k]  # square error loss
 # [1] 3884.541
@@ -455,7 +453,6 @@ set.seed(1)
 cv2 <- gbm(ynext~., data=z14, distribution='gaussian', n.trees=1000,
            interaction.depth=4, shrinkage=0.1, cv.folds=10)
 (k <- gbm.perf(cv2, plot=FALSE))
-# Using cv method...
 # [1] 47
 cv2$cv_error[k]
 # [1] 4007.547
@@ -851,10 +848,10 @@ rf.h2o
 # ==============
 # 
 # H2ORegressionModel: drf
-# Model ID:  DRF_model_R_1770480045723_1 
-# Model Summary: 
+# Model ID:  DRF_model_R_1770563210756_1
+# Model Summary:
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1             500                      500              913248        10
+# 1             500                      500              913244        10
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
 # 1        17   13.18200        122        161   140.78600
 # 
@@ -891,14 +888,28 @@ RMSE는 51.05295로서 앞에서 `randomForest` 패키지를 활용한 경우와
 
 ```R
 rf2.h2o <- h2o.randomForest(xvar, yvar, z14h, ntrees = 500, mtries = 12, seed = 1)
-# h2o.performance(rf2.h2o, newdata = z15h)
-# H2ORegressionMetrics: drf
+rf2.h2o
+# Model Details:
+# ==============
 # 
-# MSE:  2553.612
-# RMSE:  50.53328
-# MAE:  36.19486
-# RMSLE:  0.06119575
-# Mean Residual Deviance :  2553.612
+# H2ORegressionModel: drf
+# Model ID:  DRF_model_R_1770563210756_2
+# Model Summary:
+#   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
+# 1             500                      500              911113        10
+#   max_depth mean_depth min_leaves max_leaves mean_leaves
+# 1        18   12.49200        121        162   140.44800
+# 
+# 
+# H2ORegressionMetrics: drf
+# ** Reported on training data. **
+# ** Metrics reported on Out-Of-Bag training samples **
+# 
+# MSE:  2929.8
+# RMSE:  54.12763
+# MAE:  38.54589
+# RMSLE:  0.06213601
+# Mean Residual Deviance :  2929.8
 ```
 
 Random number가 발생되는 방식이 달라서 `randomForest` 패키지의
@@ -923,7 +934,7 @@ h2o.learning_curve_plot(b0.h2o)
 ```R
 cv.mse <- sapply(b0.h2o@model$cv_scoring_history, function(x) x$validation_rmse^2)
 dim(cv.mse)  # (iter = 0, 1, ..., 250) x (nfolds = 10)
-# [1] 251   10
+# [1] 251  10
 (n <- which.min(rowMeans(cv.mse))-1)
 # [1] 56
 ```
@@ -961,9 +972,9 @@ b2.h2o <- h2o.gbm(
     max_depth = 2, learn_rate = 0.1, stopping_rounds = 3, seed = 1
 )
 b2.h2o@model$model_summary
-# Model Summary: 
+# Model Summary:
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1              42                       42                4552         2
+# 1              42                       42                4554         2
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
 # 1         2    2.00000          3          4     3.97619
 h2o.learning_curve_plot(b2.h2o)
@@ -999,18 +1010,16 @@ TRUE)` 사용), 이 최소 CV MSE가 가장 작은 셋팅을 선택하는 grid s
 h2o.shutdown(prompt = FALSE)
 ```
 
+[book]: https://www.statlearning.com/
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[h2o]: https://www.h2o.ai/products/h2o/
+[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
 [tree]: https://en.wikipedia.org/wiki/Decision_tree_learning
 [bagging]: https://en.wikipedia.org/wiki/Bootstrap_aggregating
 [random forest]: https://en.wikipedia.org/wiki/Random_forest
 [boosting]: https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29
-[randomForest-pkg]: https://cran.r-project.org/package=randomForest
-[OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
-[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
-[gbm3-pkg]: https://github.com/gbm-developers/gbm3
-[gbm-pkg]: https://cran.r-project.org/package=gbm
 [gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
-[book]: https://www.statlearning.com/
-[xgboost-pkg]: https://cran.r-project.org/package=xgboost
+[randomForest-pkg]: https://cran.r-project.org/package=randomForest
 [xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
-[h2o]: https://www.h2o.ai/products/h2o/
-[h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
+[xgboost-pkg]: https://cran.r-project.org/package=xgboost
+[OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
