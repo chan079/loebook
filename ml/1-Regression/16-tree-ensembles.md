@@ -1023,3 +1023,4 @@ h2o.shutdown(prompt = FALSE)
 [xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
 [xgboost-pkg]: https://cran.r-project.org/package=xgboost
 [OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
+[gbm3-pkg]: https://github.com/gbm-developers/gbm3
