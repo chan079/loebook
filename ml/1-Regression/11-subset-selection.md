@@ -61,8 +61,8 @@ plot(reg.summ$bic, type='o', ylab = 'BIC')
 
 ```R
 coef(reg.full, k.best)
-# (Intercept)        aged   deathrate 
-#  -4.8587439   9.2829695   0.8152651 
+# (Intercept)        aged   deathrate
+#  -4.8587439   9.2829695   0.8152651
 ```
 
 선택된 변수는 `aged`(고령인구비율)와 `deathrate`(2014년 사망률)임을 알
@@ -141,7 +141,7 @@ plot(reg.summ$adjr2, type='o', ylab = 'Adj. R-squared')
 (k.adjr2 <- which.max(reg.summ$adjr2))  # Maximize adjusted R-squared
 # [1] 12
 RMSE(z15$ynext, predict(reg.full, z15, k.adjr2))
-# [1] 46.58692
+# [1] 49.58692
 ```
 
 ### Forward Stepwise Selection
@@ -156,8 +156,8 @@ RMSE(z15$ynext, predict(reg.full, z15, k.adjr2))
 reg.full.fwd <- regsubsets(ynext~., data=z14, nvmax=19, method='forward')
 reg.summ.fwd <- summary(reg.full.fwd)
 coef(reg.full.fwd, which.min(reg.summ.fwd$bic))
-# (Intercept)        aged   deathrate 
-#  -4.8587439   9.2829695   0.8152651 
+# (Intercept)        aged   deathrate
+#  -4.8587439   9.2829695   0.8152651
 ```
 
 ### Backward Stepwise Selection
@@ -172,8 +172,8 @@ coef(reg.full.fwd, which.min(reg.summ.fwd$bic))
 reg.full.bwd <- regsubsets(ynext~., data=z14, nvmax=19, method='backward')
 reg.summ.bwd <- summary(reg.full.bwd)
 coef(reg.full.bwd, which.min(reg.summ.bwd$bic))
-# (Intercept)        aged   deathrate 
-#  -4.8587439   9.2829695   0.8152651 
+# (Intercept)        aged   deathrate
+#  -4.8587439   9.2829695   0.8152651
 ```
 
 참고로, $k=2$인 경우에는 best subset selection, forward stepwise
@@ -183,14 +183,14 @@ selection, backward stepwise selection에서 선택된 모형들이
 ```R
 ## Compare Best SS, Forward SS, Backward SS
 coef(reg.full, 3)
-# (Intercept)       smoke        aged   deathrate 
-# -65.9705911   2.7054220   9.9856840   0.7939802 
+# (Intercept)       smoke        aged   deathrate
+# -65.9705911   2.7054220   9.9856840   0.7939802
 coef(reg.full.fwd, 3)
-# (Intercept)       smoke        aged   deathrate 
-# -65.9705911   2.7054220   9.9856840   0.7939802 
+# (Intercept)       smoke        aged   deathrate
+# -65.9705911   2.7054220   9.9856840   0.7939802
 coef(reg.full.bwd, 3)
-# (Intercept)        aged   deathrate      tfrate 
-# -25.0105463  10.0206393   0.7927852  18.0995346 
+# (Intercept)        aged   deathrate      tfrate
+# -25.0105463  10.0206393   0.7927852  18.0995346
 ```
 
 $k=3$에서 Best SS = Forward SS ≠ Backward SS 이다.
@@ -211,8 +211,8 @@ group <- sample(1:10, nrow(z14), replace = TRUE)
 ```R
 table(group)
 # group
-#  1  2  3  4  5  6  7  8  9 10 
-# 21 17 22 21 23 24 22 21 28 24 
+#  1  2  3  4  5  6  7  8  9 10
+# 21 17 22 21 23 24 22 21 28 24
 ```
 
 다음으로 CV error들을 저장할 공간을 마련한다. 전체 변수 개수가
@@ -274,8 +274,8 @@ $k=2$를 결정하였으므로 이제 **전체 학습용 데이터를 사용**�
 ```R
 regs <- regsubsets(ynext~., data=z14, nvmax = k.cv.best)
 coef(regs, k.cv.best)
-# (Intercept)        aged   deathrate 
-#  -4.8587439   9.2829695   0.8152651 
+# (Intercept)        aged   deathrate
+#  -4.8587439   9.2829695   0.8152651
 RMSE(z15$ynext, predict(regs, z15, k.cv.best))
 # [1] 48.98381
 ```
@@ -283,8 +283,9 @@ RMSE(z15$ynext, predict(regs, z15, k.cv.best))
 수학적으로 보면 우변에 상수항만 있는 null 모형도 고려하여야 할 것이나, 실질적으로는
 무의미하므로 고려하지 않고자 한다.
 
-[subset selection]: https://en.wikipedia.org/wiki/Feature_selection#Subset_selection
 [leaps]: https://cran.r-project.org/package=leaps
-[BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
+[subset selection]: https://en.wikipedia.org/wiki/Feature_selection#Subset_selection
 [greedy]: https://en.wikipedia.org/wiki/Greedy_algorithm
+[BIC]: https://en.wikipedia.org/wiki/Bayesian_information_criterion
+[Mallows's Cp]: https://en.wikipedia.org/wiki/Mallows%27s_Cp
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
