@@ -29,11 +29,11 @@ summary(svmfit0)
 # 
 # 
 # Parameters:
-#    SVM-Type:  eps-regression 
-#  SVM-Kernel:  linear 
-#        cost:  1 
-#       gamma:  0.05263158 
-#     epsilon:  0.1 
+#    SVM-Type:  eps-regression
+#  SVM-Kernel:  linear
+#        cost:  1
+#       gamma:  0.05263158
+#     epsilon:  0.1
 # 
 # 
 # Number of Support Vectors:  88
@@ -68,13 +68,13 @@ summary(tune.out)
 
 # Parameter tuning of ‘svm’:
 # 
-# - sampling method: 10-fold cross validation 
+# - sampling method: 10-fold cross validation
 # 
 # - best parameters:
 #  cost
 #     1
 # 
-# - best performance: 2649.135 
+# - best performance: 2649.135
 # 
 # - Detailed performance results:
 #      cost     error dispersion
@@ -94,5 +94,5 @@ RMSE(z15$ynext, predict(tune.out$best.model, z15, type='response'))
 # [1] 51.52811
 ```
 
-[SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
 [CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[SVM]: https://en.wikipedia.org/wiki/Support-vector_machine
