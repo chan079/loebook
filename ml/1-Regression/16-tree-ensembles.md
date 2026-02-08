@@ -188,7 +188,7 @@ RMSE(z15$ynext, predict(tr.rf, z15, type="response"))
 # [1] 50.78013
 ```
 
-[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 [Tree Bagging]보다도
+[나무 한 그루](15-tree.md)보다는 훨씬 낫고 앞의 [Tree Bagging](#Tree-Bagging)보다도
 약간 더 낫다.
 
 OOB 관측치들을 이용하여 `mtry`를 CV할 수 있다. 이하에 나오는 `X`와
