@@ -458,7 +458,7 @@ cv2$cv_error[k]
 # [1] 4007.547
 ```
 
-최적 횟수(42번) boost한 CV 오차는 4152.718로서 `shrink`가 0.05일
+최적 횟수(47번) boost한 CV 오차는 4007.547로서 `shrink`가 0.05일
 때(`cv1` 참조)보다 더 나쁘다.
 
 `shrinkage`를 0.001로 감소시키면 결과는 다음과 같다. 0.001이 아주 작은
@@ -551,20 +551,22 @@ param
 parallel processing을 하면 상당한 시간 절약이 가능하다.
 
 ```R
+library(foreach)
+library(doParallel)
 ## Prepare parallel processing
 cores <- detectCores()
 cl <- makeCluster(cores[1]-1, outfile="")
 registerDoParallel(cl)
 
 ## Do parallel processing
-gbmcv <- foreach(i = 1:nrow(param), .combine = rbind, .packages = 'gbm') %dopar% {
+gbmcv <- foreach(i = 1:nrow(param), .combine = rbind, .packages = 'gbm3') %dopar% {
   set.seed(1)
   cv <- gbm(ynext~., data=z14, distribution='gaussian', n.trees = 1000,
             interaction.depth = param$depth[i],
             shrinkage = param$shrinkage[i], cv.folds=10, bag.fraction = 1)
   k <- gbm.perf(cv, plot = FALSE)
   cat('Setting', i, 'done\n')
-  c(unlist(param[i,]), best.iter = k, cv.error = cv$cv.error[k])
+  c(unlist(param[i,]), best.iter = k, cv.error = cv$cv_error[k])
 }
 
 ## Clean up
@@ -580,7 +582,7 @@ gbmcv
 # result.1      1      0.01       998 3630.006
 # result.2      2      0.01       582 3720.937
 # result.3      3      0.01       490 3729.329
-# result.4      4      0.01       535 3726.609
+# result.4      4      0.01       535 3727.126
 # result.5      1      0.05       229 3615.427
 # result.6      2      0.05       123 3755.437
 # result.7      3      0.05        98 3695.825
@@ -725,6 +727,8 @@ param
 `nrounds`를 최적으로 선택한다는 뜻).
 
 ```R
+library(foreach)
+library(doParallel)
 ## Prepare parallel processing
 cores <- detectCores()
 cl <- makeCluster(cores[1]-1, outfile="")
@@ -848,10 +852,10 @@ rf.h2o
 # ==============
 # 
 # H2ORegressionModel: drf
-# Model ID:  DRF_model_R_1770563210756_1
+# Model ID:  DRF_model_R_1770566550344_1
 # Model Summary:
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1             500                      500              913244        10
+# 1             500                      500              913248        10
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
 # 1        17   13.18200        122        161   140.78600
 # 
@@ -893,10 +897,10 @@ rf2.h2o
 # ==============
 # 
 # H2ORegressionModel: drf
-# Model ID:  DRF_model_R_1770563210756_2
+# Model ID:  DRF_model_R_1770566550344_2
 # Model Summary:
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1             500                      500              911113        10
+# 1             500                      500              911111        10
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
 # 1        18   12.49200        121        162   140.44800
 # 
@@ -974,7 +978,7 @@ b2.h2o <- h2o.gbm(
 b2.h2o@model$model_summary
 # Model Summary:
 #   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-# 1              42                       42                4554         2
+# 1              42                       42                4555         2
 #   max_depth mean_depth min_leaves max_leaves mean_leaves
 # 1         2    2.00000          3          4     3.97619
 h2o.learning_curve_plot(b2.h2o)
@@ -1020,7 +1024,7 @@ h2o.shutdown(prompt = FALSE)
 [boosting]: https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29
 [gradient boosting]: https://en.wikipedia.org/wiki/Gradient_boosting
 [randomForest-pkg]: https://cran.r-project.org/package=randomForest
+[gbm3-pkg]: https://github.com/gbm-developers/gbm3
 [xgboost-paper]: https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf
 [xgboost-pkg]: https://cran.r-project.org/package=xgboost
 [OOB]: https://en.wikipedia.org/wiki/Out-of-bag_error
-[gbm3-pkg]: https://github.com/gbm-developers/gbm3
