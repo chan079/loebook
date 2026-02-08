@@ -53,7 +53,6 @@ set (`z15`)에 대하여 CV를 이용한 최적 ridge를 적용한 예측의 성
 (best.lambda <- cv.ridge$lambda.min)
 # [1] 33.27139
 RMSE(z15$ynext, predict(cv.ridge, newx = X15, s = 'lambda.min'))
-## RMSE(z15$ynext, predict(ridge, newx = X15, s = best.lambda)) # same
 # [1] 52.89465
 rmspe.rw
 # [1] 53.24273
@@ -196,7 +195,7 @@ test set (`z15`)에 적용하여 사망률을 예측한 성과는 다음과 같�
 (best.lambda <- cv.lasso$lambda.min)
 # [1] 3.485563
 RMSE(z15$ynext, predict(cv.lasso, X15, s = 'lambda.min'))
-## [1] 47.81821
+# [1] 47.81821
 rmspe.rw
 # [1] 53.24273
 ```
@@ -221,23 +220,23 @@ cbind(bhat.lasso, bhat.lasso * c(1, apply(X, 2, sd)))
 #              lambda.min lambda.min
 # (Intercept) -18.9529194 -18.952919
 # popgrowth    -1.4354163  -2.833965
-# eq5d          .           .       
-# drink         .           .       
+# eq5d          .           .
+# drink         .           .
 # hdrink        0.6850722   2.431434
 # smoke         1.0264634   2.700700
 # aged          9.3142746  72.035922
-# divorce       .           .       
+# divorce       .           .
 # medrate       0.1354862   1.225525
 # vehipc        7.6476377   0.650785
-# accpv         .           .       
-# dumppc        .           .       
-# stratio       .           .       
+# accpv         .           .
+# dumppc        .           .
+# stratio       .           .
 # deathrate     0.7900151 254.822942
-# cbrate        .           .       
+# cbrate        .           .
 # tfrate        9.3802666   2.503173
-# pctmale       .           .       
-# accpc         .           .       
-# lngrdppc      .           .       
+# pctmale       .           .
+# accpc         .           .
+# lngrdppc      .           .
 # lnpop        -1.8537565  -1.902328
 
 plotVarimp(bhat.lasso, X)  # defined above
@@ -409,10 +408,10 @@ $\lambda$만 리턴하는 것 같다(필자가 잘 모르는 것일 수도 있�
 [Elastic net] ([ridge]와 [lasso] 포함)의 경우 `h2o`보다는 `glmnet`
 패키지를 사용하는 것을 추천한다.
 
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 [h2o]: https://www.h2o.ai/products/h2o/
 [h2o-inst]: https://docs.h2o.ai/h2o/latest-stable/h2o-docs/downloading.html
 [deep learning]: https://en.wikipedia.org/wiki/Deep_learning
 [ridge]: https://en.wikipedia.org/wiki/Ridge_regression
-[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 [lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
 [elastic net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
