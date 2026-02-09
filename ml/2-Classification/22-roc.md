@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # Receiver Operating Characteristic (ROC) 곡선
@@ -96,7 +95,7 @@ with(roc.train.full, abline(v = Cutoff[which.max(TPR-FPR)], lty=2))
 ```
 
 이 값을 경계로 `yes`와 `no`로 구분하여 재예측할 경우 train set에서
-<a name="#yo-train">confusion matrix]는 [다음</a>과 같다.
+<a name="#yo-train">[confusion matrix]는 다음</a>과 같다.
 
 ```R
 Performance(full, TrainSet, cutoff = cutoff)
@@ -107,8 +106,8 @@ Performance(full, TrainSet, cutoff = cutoff)
 #    yes   74  191
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.7207547   0.8023614   0.3315972   0.7925892 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.7207547   0.8023614   0.3315972   0.7925892
 ```
 
 Train set에서 [0.5를 경계로 한 경우](21-logit.md#half-train)에 비하여
@@ -125,8 +124,8 @@ Performance(full, TestSet, cutoff = cutoff)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8299320   0.3243243   0.8023952 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8299320   0.3243243   0.8023952
 ```
 
 경계값으로 [0.5를 사용한 경우 결과(test set)](21-logit.md#half-test)와
@@ -216,8 +215,8 @@ Performance(lda.fit, TrainSet, cutoff = cutoff)
 #    yes   72  193
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.7283019   0.7967146   0.3276740   0.7885224 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.7283019   0.7967146   0.3276740   0.7885224
 ```
 
 [Logit에서 Youden-Index 최대화 cutoff 값 사용 시 결과와
@@ -236,8 +235,8 @@ Performance(lda.fit, TestSet, cutoff = cutoff)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8163265   0.3076923   0.7904192 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8163265   0.3076923   0.7904192
 ```
 
 Test set의 경우 [Logit에서 Youden Index를 최대화하는 cutoff point
@@ -281,8 +280,8 @@ Performance(qda.fit, TestSet, cutoff = cutoff)
 #    yes   6  14
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.7000000   0.7210884   0.2545455   0.7185629 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.7000000   0.7210884   0.2545455   0.7185629
 ```
 
 [Full logit](#yo-test)과 LDA에 비하여 QDA에서는 [sensitivity]가 더
@@ -296,11 +295,11 @@ Performance(qda.fit, TestSet, cutoff = cutoff)
 지표이며, 그 외에서 수많은 지표가 있다. [OptimalCutpoints] 패키지에
 다양한 지표들에 관한 상세한 설명이 있다.
 
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
 [evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
-[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
 [accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
+[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
+[OptimalCutpoints]: https://cran.r-project.org/package=OptimalCutpoints
