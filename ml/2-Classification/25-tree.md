@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 ## Decision Tree
@@ -19,8 +18,8 @@ idx1 <- which(TrainSet$deny=='no')
 idx2 <- with(TrainSet, sample(which(deny=='yes'), sum(deny=='no'), replace=TRUE))
 Over <- TrainSet[c(idx1,idx2), ]
 summary(Over$deny)
-#   no  yes 
-# 1948 1948 
+#   no  yes
+# 1948 1948
 ```
 
 ### 큰 나무
@@ -87,8 +86,8 @@ Performance(tr.pruned, TrainSet)
 #    yes   68  197
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.7433962   0.8157084   0.3543165   0.8070493 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.7433962   0.8157084   0.3543165   0.8070493
 ```
 
 [전체 변수를 사용한 로짓(`Over` 데이터 사용)](23-imbalance.md)과 [ROC] 곡선을 비교하자.
@@ -116,12 +115,12 @@ sensitivitiy와 specificity의 합의 최댓값은 나무의 경우가 더 크�
 ```R
 table(phat.ptree)
 # phat.ptree
-# 0.171647509578544 0.323340471092077 0.333333333333333  0.65962441314554 
-#              1113               338               206               184 
-# 0.724137931034483 0.771428571428571 0.824039653035936 0.851063829787234 
-#                22                11               226                11 
-# 0.886904761904762 0.976377952755906 
-#                82                20 
+# 0.171647509578544 0.323340471092077 0.333333333333333  0.65962441314554
+#              1113               338               206               184
+# 0.724137931034483 0.771428571428571 0.824039653035936 0.851063829787234
+#                22                11               226                11
+# 0.886904761904762 0.976377952755906
+#                82                20
 ```
 
 그리고 `roc.ptree`가 고려하는 cutoff 값도 10개뿐이다.
@@ -162,8 +161,8 @@ Performance(tr.pruned, TestSet)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8163265   0.3076923   0.7904192 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8163265   0.3076923   0.7904192
 ```
 
 ### Original train set 사용하고 cutoff 조정
@@ -174,11 +173,11 @@ Over-sample된 데이터가 아니라 원래 `TrainSet` 데이터를 사용하�
 
 ```R
 summary(Over$deny) # random over-sampling
-#   no  yes 
-# 1948 1948 
+#   no  yes
+# 1948 1948
 summary(TrainSet$deny) # original train set
-#   no  yes 
-# 1948  265 
+#   no  yes
+# 1948  265
 ```
 
 우선 큰 나무를 만들면 다음과 같다.
@@ -225,8 +224,8 @@ Performance(tr.pruned.orig, TrainSet)
 #    yes  174   91
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3433962   0.9738193   0.6408451   0.8983281 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3433962   0.9738193   0.6408451   0.8983281
 ```
 
 예상한 대로 specificity는 높고 sensitivity는 낮다.  이는 0.5 임계값이
@@ -255,8 +254,8 @@ Performance(tr.pruned.orig, TrainSet, cutoff = cutoff)
 #    yes  112  153
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.5773585   0.9194045   0.4935484   0.8784455 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.5773585   0.9194045   0.4935484   0.8784455
 ```
 
 여전히 sensitivity가 낮다.  3개의 ROC를 그림으로 그려서 좀 더 살펴보자.
@@ -265,7 +264,11 @@ Performance(tr.pruned.orig, TrainSet, cutoff = cutoff)
 plot(roc.ptree.orig, YIndex=T, col=3)
 with(roc.ptree, lines(TPR~FPR, col=2))
 with(roc.logit, lines(TPR~FPR, col=1))
-legend('right', c('Logit (oversampling)', 'Tree (oversampling)', 'Tree (original train set)'), lty=1, col=1:3, bty='n', cex=.75)
+legend(
+    'right',
+    c('Logit (oversampling)', 'Tree (oversampling)', 'Tree (original train set)'),
+    lty=1, col=1:3, bty='n', cex=.75
+)
 ```
 
 ![ROC 곡선의 비교](imgs/roc_over_comp3.svg)
@@ -285,10 +288,10 @@ Performance(tr.pruned.orig, TestSet, cutoff = cutoff)
 #    yes  11   9
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.4500000   0.9047619   0.3913043   0.8502994 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.4500000   0.9047619   0.3913043   0.8502994
 ```
 
 [tree]: https://en.wikipedia.org/wiki/Decision_tree_learning
-[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
+[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
