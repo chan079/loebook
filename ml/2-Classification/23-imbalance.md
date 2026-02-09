@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # Class Imbalance 문제
@@ -63,8 +62,8 @@ regression](21-logit.md#logit-full)에 국한하고자 한다.
 
 ```R
 table(TrainSet$deny)
-#   no  yes 
-# 1948  265 
+#   no  yes
+# 1948  265
 wgt <- ifelse(TrainSet$deny=='no', 3, 22)  # 265:1948 ~= 3:22
 ```
 
@@ -81,7 +80,7 @@ Performance(wlogit, TrainSet)
 #    yes   79  186
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
+# Sensitivity Specificity   Precision    Accuracy
 #   0.7018868   0.8141684   0.3394161   0.8007230
 ```
 
@@ -102,8 +101,8 @@ Performance(wlogit, TestSet)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8503401   0.3529412   0.8203593 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8503401   0.3529412   0.8203593
 ```
 
 Sensitivity (`yes` 중 `yes`로 예측된 비율)는 0.6으로 상승했고(원래는
@@ -156,8 +155,8 @@ set에서 `yes`와 `no` 개수를 보자.
 
 ```R
 summary(TrainSet$deny)
-#   no  yes 
-# 1948  265 
+#   no  yes
+# 1948  265
 ```
 
 `no` 클래스 관측치 수가 1,948개이므로 `yes` 클래스 265개로부터
@@ -174,8 +173,8 @@ idx1 <- which(TrainSet$deny=='no')  # "no"
 idx2 <- with(TrainSet, sample(which(deny=='yes'), sum(deny=='no'), replace=TRUE)) # to duplicate "yes"
 Over <- TrainSet[c(idx1,idx2),]
 summary(Over$deny)
-#   no  yes 
-# 1948 1948 
+#   no  yes
+# 1948 1948
 ```
 
 이제 `yes`와 `no` 클래스의 표본크기가 같다.
@@ -184,7 +183,7 @@ summary(Over$deny)
 Over-Sampling Examples) 패키지의 `ovun.sample` 명령을 사용해서 똑같이
 구할 수도 있다. 패키지에 관한 자세한 설명은 [논문][12] (The R Journal,
 2014, 6:1, 79-89)을 참조하라. 사용자 측면에서 `ROSE` 패키지는 사용하기
-매우 간편하다(반면 아래 [SMOTE](#SMOTE) 용 [smotefamily] 패키지는
+매우 간편하다(반면 아래 [SMOTE](#synthetic-minority-oversampling-technique-smote) 용 [smotefamily] 패키지는
 사용하기 매우 번거롭다).
 
 [11]: https://journal.r-project.org/archive/2014/RJ-2014-008/index.php
@@ -195,15 +194,15 @@ library(ROSE)
 n.max <- max(table(TrainSet$deny))
 Over2 <- ovun.sample(deny~., TrainSet, method="over", N=n.max*2, seed=1)$data
 summary(Over2$deny)
-#   no  yes 
+#   no  yes
 # 1948 1948
 mapply(identical, Over, Over2)
-#         dir         hir         lvr         ccs         mcs        pbcr 
-#        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
-#         dmi        self      single        uria condominium       black 
-#        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
-#        deny 
-#        TRUE 
+#         dir         hir         lvr         ccs         mcs        pbcr
+#        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE
+#         dmi        self      single        uria condominium       black
+#        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE
+#        deny
+#        TRUE
 ```
 
 마지막 명령 결과를 보면 앞에 직접 무작위 복원추출하여 균형화한
@@ -228,8 +227,8 @@ Performance(logit.over, TrainSet)
 #    yes   79  186
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.7018868   0.8172485   0.3431734   0.8034343 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.7018868   0.8172485   0.3431734   0.8034343
 ```
 
 [Sensitivity]와 [specificity]가 더 균형잡혀
@@ -245,8 +244,8 @@ Performance(logit.over, TestSet)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8367347   0.3333333   0.8083832 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8367347   0.3333333   0.8083832
 ```
 
 Sensitivity는 0.6, specificity는 0.8367이다. [Precision]은 0.333밖에 되지 않는다.
@@ -281,7 +280,7 @@ described in Menardi and Torelli (2013).&quot; 도움말의
 library(ROSE)
 Rose <- ROSE(deny~., data=TrainSet, seed=1)$data
 table(Rose$deny)
-#   no  yes 
+#   no  yes
 # 1148 1065
 ```
 
@@ -301,8 +300,8 @@ Performance(logit.rose, TrainSet)
 #    yes   85  180
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6792453   0.8182752   0.3370787   0.8016268 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6792453   0.8182752   0.3370787   0.8016268
 ```
 
 대동소이하다. `TestSet`에 적용하면 결과는 다음과 같다.
@@ -316,8 +315,8 @@ Performance(logit.rose, TestSet)
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8435374   0.3428571   0.8143713 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8435374   0.3428571   0.8143713
 ```
 
 앞의 완전한 over-sampling에 비하면 `no` 행이 (122,25)에서 (124,23)으로
@@ -325,7 +324,7 @@ Performance(logit.rose, TestSet)
 적용하면 `ROSE` 명령을 사용한 방법이 over-sampling한 방법보다
 예측성과가 더 좋을 것’이라고 일반화시키지는 말기 바란다.
 
-## <a name="#SMOTE">Synthetic minority oversampling technique (SMOTE)</a>
+## Synthetic minority oversampling technique (SMOTE)
 
 [Karthe (2016)][Karthe2016]에 [Chawla et al. (2002)의 SMOTE][SMOTE]가
 설명되어 있다. 원래 `DMwR` 패키지에 `SMOTE` 명령이 있다고들 하는데
@@ -352,8 +351,8 @@ Smote <- smotefamily::SMOTE(as.data.frame(X),Y)$data # install smotefamily
 ```R
 Smote$class <- as.factor(Smote$class)
 table(Smote$class)
-#   no  yes 
-# 1948 1855 
+#   no  yes
+# 1948 1855
 ```
 
 이상에서 SMOTE를 사용하여 `yes` 클래스를 oversample한 데이터를
@@ -376,8 +375,8 @@ SummPred(TrainSet$deny, yhat.smote)
 #    yes   80  185
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6981132   0.8270021   0.3544061   0.8115680 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6981132   0.8270021   0.3544061   0.8115680
 ```
 
 앞에 random oversampling (ROSE)한 결과는 다음과 같았다.
@@ -401,12 +400,12 @@ SummPred(TestSet$deny, yhat)
 # $ConfusionMatrix
 #       pred
 # actual  no yes
-#    no  126  21
+#    no  125  22
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8503401   0.3529412   0.8203593 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8503401   0.3529412   0.8203593
 ```
 
 코딩이 복잡하다.
@@ -446,7 +445,11 @@ with(roc.over, lines(FPR, TPR, col=3))
 with(roc.rose, lines(FPR, TPR, col=4))
 with(roc.smote, lines(FPR, TPR, col=5))
 with(roc.wlogit, lines(FPR, TPR, col=2))
-legend('right', c('Original train set', 'Weighted logit', 'Random oversampling', 'ROSE', 'SMOTE'), lty=1, col=1:5, bty='n', cex=.75)
+legend(
+    'right',
+    c('Original train set', 'Weighted logit', 'Random oversampling', 'ROSE', 'SMOTE'),
+    lty=1, col=1:5, bty='n', cex=.75
+)
 ```
 
 ![원래 train set, 가중 로짓, random하게 oversample된 데이터, ROSE 데이터를
@@ -465,13 +468,13 @@ c(roc.orig$AUC, roc.wlogit$AUC, roc.over$AUC, roc.rose$AUC, roc.smote$AUC)
 조정하는 것에 비하여) 별 도움이 되지 않는 것으로 나타났으나, 다른
 데이터에서는 다를 수 있다고 한다([Karthe, 2016][Karthe2016]).
 
-[ovun]: https://en.wikipedia.org/wiki/Oversampling_and_undersampling_in_data_analysis
-[ROSE]: https://cran.r-project.org/package=ROSE
-[smotefamily]: https://CRAN.R-project.org/package=smotefamily
 [sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [Youden Index]: https://en.wikipedia.org/wiki/Youden%27s_J_statistic
-[ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
-[SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
 [ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
+[ovun]: https://en.wikipedia.org/wiki/Oversampling_and_undersampling_in_data_analysis
+[SMOTE]: https://www.jair.org/index.php/jair/article/view/10302
+[smotefamily]: https://CRAN.R-project.org/package=smotefamily
+[ROSE]: https://cran.r-project.org/package=ROSE
+[ROSE-help]: https://www.rdocumentation.org/packages/ROSE/versions/0.0-4/topics/ROSE
