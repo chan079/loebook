@@ -24,7 +24,7 @@ Over <- overSample(TrainSet)
 ```
 
 `e1071` 패키지의 `svm()` 명령을 사용한다.
-커널(kernel)로는 선형(linear) 커널을 사용한다.
+커널(kernel)로는 선형(linear) 커널을 사용한다(다른 커널을 사용해도 된다).
 
 ```R
 svmfit0 <- svm(deny~., data=Over, kernel="linear")
