@@ -160,7 +160,10 @@ plotVarimp <- function(bhat, X, horiz = FALSE) {
   bstd <- bstd[order(abs(bstd), decreasing = !horiz)]  # sort
   colors <- c('royalblue', 'darkorange')
   par(mar=if (horiz) c(5,6,4,1) else c(6.5,3,4,1), lend=1)  # need more space for variable names
-  barplot(abs(bstd), names=names(bstd), col=colors[1+(bstd<0)], horiz=horiz, las=if (horiz) 1 else 2, main='Relative importance of variables')
+  barplot(
+      abs(bstd), names=names(bstd), col=colors[1+(bstd<0)], horiz=horiz,
+      las=if (horiz) 1 else 2, main='Relative importance of variables'
+  )
   legend(if (horiz) 'bottomright' else 'topright', c('positive','negative'), lty=1, lwd=8, col=colors, bty='n')
 }
 plotVarimp(bhat.ridge, X)  # try 'horiz = TRUE'
