@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # Support Vector Machines
@@ -35,18 +34,18 @@ summary(svmfit0)
 # 
 # 
 # Parameters:
-#    SVM-Type:  C-classification 
-#  SVM-Kernel:  linear 
-#        cost:  1 
+#    SVM-Type:  C-classification
+#  SVM-Kernel:  linear
+#        cost:  1
 # 
 # Number of Support Vectors:  2181
 # 
 #  ( 1090 1091 )
 # 
 # 
-# Number of Classes:  2 
+# Number of Classes:  2
 # 
-# Levels: 
+# Levels:
 #  no yes
 ```
 
@@ -61,8 +60,8 @@ SummPred(Over$deny, predict(svmfit0, Over))
 #    yes  618 1330
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6827515   0.8264887   0.7973621   0.7546201 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6827515   0.8264887   0.7973621   0.7546201
 ```
 
 별로 인상적이지 않다. `TestSet`에 적용한 예측 성능은 다음과 같다.
@@ -76,8 +75,8 @@ SummPred(TestSet$deny, predict(svmfit0, TestSet))
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8435374   0.3428571   0.8143713 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8435374   0.3428571   0.8143713
 ```
 
 Lasso보다 약간 낫다.
@@ -91,13 +90,13 @@ tune.out <- tune(svm, deny~., data=Over, kernel='linear', ranges = list(cost = 1
 summary(tune.out)
 # Parameter tuning of ‘svm’:
 # 
-# - sampling method: 10-fold cross validation 
+# - sampling method: 10-fold cross validation
 # 
 # - best parameters:
 #  cost
-#   100
+#    10
 # 
-# - best performance: 0.2461499 
+# - best performance: 0.2464063
 # 
 # - Detailed performance results:
 #     cost     error dispersion
@@ -122,8 +121,8 @@ SummPred(TestSet$deny, predict(tune.out$best.model, TestSet))
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8435374   0.3428571   0.8143713 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8435374   0.3428571   0.8143713
 ```
 
 Cost를 1에서 100으로 증가시켰는데 결과에는 아무런 차이도 없다.
@@ -139,7 +138,7 @@ Cost를 1에서 100으로 증가시켰는데 결과에는 아무런 차이도 �
 ```R
 ## Manual 5-fold CV
 summary(TrainSet$deny)
-#   no  yes 
+#   no  yes
 # 1948  265
 TS.y <- subset(TrainSet, deny=='yes')  # TS: TrainSet
 TS.n <- subset(TrainSet, deny=='no')
@@ -150,15 +149,15 @@ set.seed(1)
 TS.y$index <- sample(1:folds, nrow(TS.y), replace = TRUE)
 TS.n$index <- sample(1:folds, nrow(TS.n), replace = TRUE)
 table(TS.y$index)
-#  1  2  3  4  5 
-# 61 52 43 56 53 
+#  1  2  3  4  5
+# 61 52 43 56 53
 table(TS.n$index)
-#   1   2   3   4   5 
-# 384 409 362 385 408 
+#   1   2   3   4   5
+# 384 409 362 385 408
 TrainSet2 <- rbind(TS.y, TS.n)
 table(TrainSet2$index)
-#   1   2   3   4   5 
-# 445 461 405 441 461 
+#   1   2   3   4   5
+# 445 461 405 441 461
 ```
 
 이제 `TrainSet2`에는 `index`라는 변수가 있어서 1−5 중 하나의 값을
@@ -202,11 +201,6 @@ cverrs <- foreach(fold = 1:folds, .combine = rbind, .packages = c('e1071')) %dop
   cat('Work for fold', fold, '\n') # quiet
   myfun(TrainSet2, fold)
 }
-# Work for fold 1 
-# Work for fold 2 
-# Work for fold 4 
-# Work for fold 3 
-# Work for fold 5 
 
 ## Clean up
 stopCluster(cl) # Don't forget this
@@ -217,7 +211,7 @@ cverrs
 # result.1  196  196  192  193  194  194
 # result.2  222  226  221  218  218  218
 # result.3  146  148  152  151  151  151
-# result.4  196  175  182  181  183  183
+# result.4  196  175  182  183  183  183
 # result.5  257  255  254  255  255  255
 ```
 
@@ -251,8 +245,8 @@ SummPred(TestSet$deny, predict(svmfit1, TestSet))
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8435374   0.3428571   0.8143713 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8435374   0.3428571   0.8143713
 ```
 
 성능에는 아무런 차이도 없다.
