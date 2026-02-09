@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # 로지스틱 회귀
@@ -21,24 +20,20 @@ summary(full)
 # Call:
 # glm(formula = deny ~ ., family = binomial, data = TrainSet)
 # 
-# Deviance Residuals: 
-#     Min       1Q   Median       3Q      Max  
-# -2.6580  -0.4182  -0.3067  -0.2214   3.0105  
-# 
 # Coefficients:
-#             Estimate Std. Error z value Pr(>|z|)    
+#             Estimate Std. Error z value Pr(>|z|)
 # (Intercept) -7.16606    0.57680 -12.424  < 2e-16 ***
 # dir          4.56694    1.07889   4.233 2.31e-05 ***
-# hir         -0.07120    1.29376  -0.055 0.956109    
+# hir         -0.07120    1.29376  -0.055 0.956109
 # lvr          1.81944    0.51468   3.535 0.000408 ***
 # ccs          0.30188    0.04108   7.348 2.02e-13 ***
-# mcs          0.23081    0.14776   1.562 0.118268    
+# mcs          0.23081    0.14776   1.562 0.118268
 # pbcryes      1.24497    0.21237   5.862 4.57e-09 ***
 # dmiyes       4.45624    0.55904   7.971 1.57e-15 ***
-# selfyes      0.58139    0.22057   2.636 0.008394 ** 
-# singleyes    0.42718    0.16191   2.638 0.008330 ** 
-# uria         0.07359    0.03463   2.125 0.033571 *  
-# condominium -0.10736    0.17705  -0.606 0.544277    
+# selfyes      0.58139    0.22057   2.636 0.008394 **
+# singleyes    0.42718    0.16191   2.638 0.008330 **
+# uria         0.07359    0.03463   2.125 0.033571 *
+# condominium -0.10736    0.17705  -0.606 0.544277
 # blackyes     0.71092    0.18717   3.798 0.000146 ***
 # ---
 # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -66,7 +61,7 @@ Train set에서 학습이 얼마나 잘 이루어졌는지 살펴보자. 목표�
 `deny` 변수는 `"no"` 또는 `"yes"`의 `factor` 변수이다.
 
 ```R
-str(Hmda$deny)
+str(TrainSet$deny)
 #  Factor w/ 2 levels "no","yes": 1 1 1 1 1 1 1 1 2 1 ...
 ```
 
@@ -93,8 +88,8 @@ SummPred(TrainSet$deny, train.denyhat.full)
 #    yes  182   83
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3132075   0.9861396   0.7545455   0.9055581 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3132075   0.9861396   0.7545455   0.9055581
 ```
 
 이상의 절차는 '[데이터 준비](20-data.md)' 단원에 만들어 놓은
@@ -109,8 +104,8 @@ Performance(full, TrainSet)
 #    yes  182   83
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3132075   0.9861396   0.7545455   0.9055581 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3132075   0.9861396   0.7545455   0.9055581
 ```
 
 결과를 설명하면, 학습 데이터셋에서 실제로 거절되지 않은(truth가 `no`,
@@ -162,8 +157,8 @@ Performance(full, TestSet)
 #    yes  15   5
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.2500000   0.9931973   0.8333333   0.9041916 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.2500000   0.9931973   0.8333333   0.9041916
 ```
 
 예상대로 “no”를 “no”로 제대로 예측한 비율인 [specificity]는 146 /
@@ -197,17 +192,17 @@ target="_blank">`confusionMatrix()`</a> 함수로도 간편하게 구할 수
 ```R
 backward <- step(full, direction = 'backward', trace = 0)
 backward
-# Call:  glm(formula = deny ~ dir + lvr + ccs + mcs + pbcr + dmi + self + 
+# Call:  glm(formula = deny ~ dir + lvr + ccs + mcs + pbcr + dmi + self +
 #     single + uria + black, family = binomial, data = TrainSet)
 # 
 # Coefficients:
-# (Intercept)          dir          lvr          ccs          mcs      pbcryes  
-#    -7.19496      4.54731      1.81017      0.30115      0.22937      1.24642  
-#      dmiyes      selfyes    singleyes         uria     blackyes  
-#     4.46472      0.58426      0.40419      0.07597      0.69080  
+# (Intercept)          dir          lvr          ccs          mcs      pbcryes
+#    -7.19496      4.54731      1.81017      0.30115      0.22937      1.24642
+#      dmiyes      selfyes    singleyes         uria     blackyes
+#     4.46472      0.58426      0.40419      0.07597      0.69080
 # 
 # Degrees of Freedom: 2212 Total (i.e. Null);  2202 Residual
-# Null Deviance:	    1622 
+# Null Deviance:	    1622
 # Residual Deviance: 1179 	AIC: 1201
 ```
 
@@ -230,8 +225,8 @@ Performance(backward, TestSet)
 #    yes  15   5
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.2500000   0.9931973   0.8333333   0.9041916 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.2500000   0.9931973   0.8333333   0.9041916
 ```
 
 결과는 full logit의 경우와 동일하다(다른 데이터에서는 그렇지 않을 수도
@@ -255,17 +250,17 @@ null <- glm(deny~1, data=TrainSet, family=binomial)
 ```R
 step(null, scope = list(formula(null), upper = formula(full)), direction = 'forward', trace = 0)
 
-# Call:  glm(formula = deny ~ dmi + ccs + dir + pbcr + black + lvr + self + 
+# Call:  glm(formula = deny ~ dmi + ccs + dir + pbcr + black + lvr + self +
 #     single + uria + mcs, family = binomial, data = TrainSet)
 # 
 # Coefficients:
-# (Intercept)       dmiyes          ccs          dir      pbcryes     blackyes  
-#    -7.19496      4.46472      0.30115      4.54731      1.24642      0.69080  
-#         lvr      selfyes    singleyes         uria          mcs  
-#     1.81017      0.58426      0.40419      0.07597      0.22937  
+# (Intercept)       dmiyes          ccs          dir      pbcryes     blackyes
+#    -7.19496      4.46472      0.30115      4.54731      1.24642      0.69080
+#         lvr      selfyes    singleyes         uria          mcs
+#     1.81017      0.58426      0.40419      0.07597      0.22937
 # 
 # Degrees of Freedom: 2212 Total (i.e. Null);  2202 Residual
-# Null Deviance:	    1622 
+# Null Deviance:	    1622
 # Residual Deviance: 1179 	AIC: 1201
 ```
 
@@ -280,17 +275,17 @@ Backward stepwise selection과 forward stepwise selection을 결합할 수도
 ```R
 step(null, scope = list(lower = formula(null), upper = formula(full)), direction = 'both', trace = 0)
 
-# Call:  glm(formula = deny ~ dmi + ccs + dir + pbcr + black + lvr + self + 
+# Call:  glm(formula = deny ~ dmi + ccs + dir + pbcr + black + lvr + self +
 #     single + uria + mcs, family = binomial, data = TrainSet)
 # 
 # Coefficients:
-# (Intercept)       dmiyes          ccs          dir      pbcryes     blackyes  
-#    -7.19496      4.46472      0.30115      4.54731      1.24642      0.69080  
-#         lvr      selfyes    singleyes         uria          mcs  
-#     1.81017      0.58426      0.40419      0.07597      0.22937  
+# (Intercept)       dmiyes          ccs          dir      pbcryes     blackyes
+#    -7.19496      4.46472      0.30115      4.54731      1.24642      0.69080
+#         lvr      selfyes    singleyes         uria          mcs
+#     1.81017      0.58426      0.40419      0.07597      0.22937
 # 
 # Degrees of Freedom: 2212 Total (i.e. Null);  2202 Residual
-# Null Deviance:	    1622 
+# Null Deviance:	    1622
 # Residual Deviance: 1179 	AIC: 1201
 ```
 
@@ -328,8 +323,8 @@ lda.fit
 # lda(deny ~ ., data = TrainSet)
 # 
 # Prior probabilities of groups:
-#        no       yes 
-# 0.8802531 0.1197469 
+#        no       yes
+# 0.8802531 0.1197469
 # 
 # Group means:
 #           dir       hir       lvr      ccs      mcs    pbcryes      dmiyes
@@ -372,8 +367,8 @@ Performance(lda.fit, TestSet)
 #    yes  14   6
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3000000   0.9863946   0.7500000   0.9041916 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3000000   0.9863946   0.7500000   0.9041916
 ```
 
 위 ‘[Logit: 전체 예측변수 이용](#logit-full)’ 소절로부터의 결과와
@@ -381,7 +376,7 @@ Performance(lda.fit, TestSet)
 (=5/20)였다. 여기 LDA에서는 근소하게 상승하나(6/(14+6)=0.3) 낮은 것은
 여전히 마찬가지이다.
 
-## <a name="#QDA">Quadratic Discriminant Analysis</a>
+## Quadratic Discriminant Analysis
 
 Quadratic discriminant analysis (QDA)에서는 X의 평균뿐 아니라
 분산공분산행렬도 피예측변수가 `no`인 집단과 `yes`인 집단 간에 서로
@@ -396,8 +391,8 @@ qda.fit
 # qda(deny ~ ., data = TrainSet)
 # 
 # Prior probabilities of groups:
-#        no       yes 
-# 0.8802531 0.1197469 
+#        no       yes
+# 0.8802531 0.1197469
 # 
 # Group means:
 #           dir       hir       lvr      ccs      mcs    pbcryes      dmiyes
@@ -419,22 +414,22 @@ Performance(qda.fit, TestSet)
 #    yes  13   7
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3500000   0.9387755   0.4375000   0.8682635 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3500000   0.9387755   0.4375000   0.8682635
 ```
 
 Sensitivity는 full logit = 5/20 &lt; LDA = 6/20 &lt; QDA =
 7/20이다. 하지만 0.35는 여전히 낮은 값이다.
 
-[logit]: https://en.wikipedia.org/wiki/Logistic_regression
+[book]: https://www.statlearning.com/
 [AIC]: https://en.wikipedia.org/wiki/Akaike_information_criterion
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
 [evalbin]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [sensitivity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
+[specificity]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [accuracy]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
 [precision]: https://en.wikipedia.org/wiki/Evaluation_of_binary_classifiers
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[logit]: https://en.wikipedia.org/wiki/Logistic_regression
 [ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [LDA]: https://en.wikipedia.org/wiki/Linear_discriminant_analysis
 [QDA]: https://en.wikipedia.org/wiki/Quadratic_classifier
-[book]: https://www.statlearning.com/
