@@ -340,6 +340,7 @@ Performance(logit.rose, TestSet)
 fm <- deny~.
 X <- model.matrix(fm, TrainSet)[,-1]
 Y <- model.frame(fm, TrainSet)[,1]
+# install.packages('smotefamily')
 set.seed(1)
 Smote <- smotefamily::SMOTE(as.data.frame(X),Y)$data # install smotefamily
 ```
