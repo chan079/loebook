@@ -16,8 +16,8 @@ data(Hmda, package="Ecdat")
 dim(Hmda)
 # [1] 2381   13
 summary(Hmda$deny)
-#   no  yes 
-# 2096  285 
+#   no  yes
+# 2096  285
 ```
 
 전체 관측치 수는 2,381개이다. 목표변수 `deny`는 2,096개 관측치에서
@@ -39,8 +39,8 @@ Hmda1 <- na.omit(Hmda)
 dim(Hmda1)
 # [1] 2380   13
 table(Hmda1$deny)
-#   no  yes 
-# 2095  285 
+#   no  yes
+# 2095  285
 ```
 
 남은 관측치 수는 2,380개이다. 그 중 2,095개의 `deny`가 `"no"`이고
@@ -55,12 +55,12 @@ test.index <- c(sample(which(Hmda1$deny=='yes'), 20), sample(which(Hmda1$deny=='
 train.index <- setdiff(seq_len(nrow(Hmda1)), test.index)
 TrainSet <- Hmda1[train.index, ]
 summary(TrainSet$deny)
-#   no  yes 
+#   no  yes
 # 1948  265
 TestSet <- Hmda1[test.index, ]
 summary(TestSet$deny)
-#  no yes 
-# 147  20 
+#  no yes
+# 147  20
 ```
 
 이제 `TrainSet`은 학습용 데이터셋, `TestSet`은 테스트용 데이터셋이다.
@@ -160,7 +160,6 @@ Performance <- function(object, DataSet, cutoff = 0.5, fm = deny~., ...) {
 }
 
 # save(TrainSet, TestSet, SummPred, Performance, file = 'data.RData')
-
 ```
 
 [hmda]: https://www.bostonfed.org/home/publications/research-department-working-paper/1992/mortgage-lending-in-boston-interpreting-hmda-data.aspx
