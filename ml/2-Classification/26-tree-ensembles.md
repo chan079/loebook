@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # Tree Ensemble
@@ -17,7 +16,7 @@ idx1 <- which(TrainSet$deny=='no')
 idx2 <- with(TrainSet, sample(which(deny=='yes'), sum(deny=='no'), replace=TRUE))
 Over <- TrainSet[c(idx1,idx2), ]
 summary(Over$deny)
-#   no  yes 
+#   no  yes
 # 1948 1948
 dim(Over)
 # [1] 3896   13
@@ -36,7 +35,7 @@ set.seed(1)
 tr.bag <- randomForest(deny~., data=Over, mtry=12, importance = TRUE)
 tr.bag
 # Call:
-#  randomForest(formula = deny ~ ., data = Over, mtry = 12, importance = TRUE) 
+#  randomForest(formula = deny ~ ., data = Over, mtry = 12, importance = TRUE)
 #                Type of random forest: classification
 #                      Number of trees: 500
 # No. of variables tried at each split: 12
@@ -121,8 +120,8 @@ Performance(tr.bag, TrainSet)
 #    yes    0  265
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#           1           1           1           1 
+# Sensitivity Specificity   Precision    Accuracy
+#           1           1           1           1
 ```
 
 100% 깔끔하게 맞추었다.  참고로, over-sample된 훈련 데이터셋(`Over`)의
@@ -130,14 +129,15 @@ Performance(tr.bag, TrainSet)
 
 ```R
 Performance(tr.bag, Over)
+# $ConfusionMatrix
 #       pred
 # actual   no  yes
 #    no  1948    0
 #    yes    0 1948
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#           1           1           1           1 
+# Sensitivity Specificity   Precision    Accuracy
+#           1           1           1           1
 ```
 
 사실 over-sample되는 경우 원래 표본 내 관측치들이 반복하여 사용되는
@@ -155,8 +155,8 @@ Performance(tr.bag, TestSet)
 #    yes  17   3
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.1500000   0.9115646   0.1875000   0.8203593 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.1500000   0.9115646   0.1875000   0.8203593
 ```
 
 Sensitivity가 매우 낮다(`yes`를 거의 맞추지 못한다).
@@ -172,7 +172,7 @@ set.seed(1)
 tr.rf <- randomForest(deny~., data=Over, importance = TRUE)
 tr.rf
 # Call:
-#  randomForest(formula = deny ~ ., data = Over, importance = TRUE) 
+#  randomForest(formula = deny ~ ., data = Over, importance = TRUE)
 #                Type of random forest: classification
 #                      Number of trees: 500
 # No. of variables tried at each split: 3
@@ -237,8 +237,8 @@ Performance(tr.rf, TrainSet)
 #    yes    0  265
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   1.0000000   0.9994867   0.9962406   0.9995481 
+# Sensitivity Specificity   Precision    Accuracy
+#   1.0000000   0.9994867   0.9962406   0.9995481
 ```
 
 1건만 빼고 완벽히 맞추었다. 반면, test set에서 성능은 (sensitivity
@@ -253,8 +253,8 @@ Performance(tr.rf, TestSet)
 #    yes  13   7
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3500000   0.9455782   0.4666667   0.8742515 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3500000   0.9455782   0.4666667   0.8742515
 ```
 
 `mtry` 매개변수를 OOB 관측치들의 오차 측면에서 CV해 보자. `tr.rf`에는
@@ -289,18 +289,6 @@ cvrf <- foreach(m = 1:12, .combine = c, .packages = 'randomForest') %dopar% {
   cat(sprintf('OOB error rate for mtry %2d = %5.2f%%\n', m, with(rf, err.rate[ntree])*100))
   with(rf, err.rate[ntree])
 }
-# OOB error rate for mtry  1 = 18.10%
-# OOB error rate for mtry  2 =  5.26%
-# OOB error rate for mtry  3 =  1.85%
-# OOB error rate for mtry  6 =  1.95%
-# OOB error rate for mtry  4 =  1.75%
-# OOB error rate for mtry  5 =  2.00%
-# OOB error rate for mtry  7 =  2.05%
-# OOB error rate for mtry  8 =  2.18%
-# OOB error rate for mtry  9 =  2.31%
-# OOB error rate for mtry 10 =  2.39%
-# OOB error rate for mtry 11 =  2.26%
-# OOB error rate for mtry 12 =  2.57%
 
 ## Clean up
 stopCluster(cl)
@@ -330,8 +318,9 @@ Performance(tr.rf4, TrainSet)
 #    yes    0  265
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#           1           1           1           1 
+# Sensitivity Specificity   Precision    Accuracy
+#           1           1           1           1
+
 Performance(tr.rf4, TestSet)
 # $ConfusionMatrix
 #       pred
@@ -340,8 +329,8 @@ Performance(tr.rf4, TestSet)
 #    yes  14   6
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3000000   0.9455782   0.4285714   0.8682635 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3000000   0.9455782   0.4285714   0.8682635
 ```
 
 결과는 대동소이하다.
@@ -357,7 +346,7 @@ library(adabag)
 set.seed(1)
 boost <- boosting(deny~., data=Over, boos=TRUE, mfinal = 50)
 names(boost)
-# [1] "formula"    "trees"      "weights"    "votes"      "prob"      
+# [1] "formula"    "trees"      "weights"    "votes"      "prob"
 # [6] "class"      "importance" "terms"      "call"
 
 opar <- par(mar=c(3,7,.1,1)+.1) # need more left margin for "condominium"
@@ -378,8 +367,8 @@ Performance(boost, TrainSet)
 #    yes    5  260
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.9811321   0.9579055   0.7602339   0.9606869 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.9811321   0.9579055   0.7602339   0.9606869
 
 Performance(boost, TestSet)
 # $ConfusionMatrix
@@ -389,8 +378,8 @@ Performance(boost, TestSet)
 #    yes  13   7
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.3500000   0.8843537   0.2916667   0.8203593 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.3500000   0.8843537   0.2916667   0.8203593
 
 ## caret::confusionMatrix(factor(predict(boost, TestSet)$class), TestSet$deny, positive = 'yes')
 ```
