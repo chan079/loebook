@@ -9,9 +9,7 @@ install.packages("loedata")
 설치한 상태라면 최신 버전인지 확인하고 필요하면 업데이트한다.
 
 ```R
-"loedata" %in% old.packages()
-# [1] FALSE
-# update.packages(oldPkgs = "loedata") # if TRUE
+if ("loedata" %in% old.packages()) update.packages(oldPkgs = "loedata")
 ```
 
 패키지 설치 후 아래와 같이 데이터를 정리한다. 이하 전체 코드는 <a href="#allcodes">여기</a>로 이동.
