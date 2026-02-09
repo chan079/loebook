@@ -9,7 +9,7 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.R
 
 이항반응모형에서 [로지스틱 회귀][logit]가 대표적으로 사용된다.
 
-## <a name="#logit-full">Logit: 전체 예측변수 이용</a>
+## Logit: 전체 예측변수 이용
 
 `TrainSet` 데이터셋에서 목표변수(`deny`)를 제외한 나머지 전체 변수들을
 예측변수로 사용하여 로지스틱 회귀를 한 결과는 다음과 같다.
@@ -371,7 +371,7 @@ Performance(lda.fit, TestSet)
 #   0.3000000   0.9863946   0.7500000   0.9041916
 ```
 
-위 ‘[Logit: 전체 예측변수 이용](#logit-full)’ 소절로부터의 결과와
+위 ‘[Logit: 전체 예측변수 이용](#Logit:-전체-예측변수-이용)’ 소절로부터의 결과와
 비교하자면, full logistic regression에서 sensitivity가 0.25
 (=5/20)였다. 여기 LDA에서는 근소하게 상승하나(6/(14+6)=0.3) 낮은 것은
 여전히 마찬가지이다.
