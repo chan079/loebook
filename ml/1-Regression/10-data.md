@@ -6,6 +6,14 @@
 install.packages("loedata")
 ```
 
+설치한 상태라면 최신 버전인지 확인하고 필요하면 업데이트한다.
+
+```R
+"loedata" %in% old.packages()
+# [1] FALSE
+# update.packages(oldPkgs = "loedata") # if TRUE
+```
+
 패키지 설치 후 아래와 같이 데이터를 정리한다. 이하 전체 코드는 <a href="#allcodes">여기</a>로 이동.
 
 ```R
@@ -31,9 +39,9 @@ dim(z14)
 # [1] 223  20
 names(z14)
 #  [1] "popgrowth" "eq5d"      "drink"     "hdrink"    "smoke"     "aged"
-#  [7] "divorce"   "medrate"   "gcomp"     "vehipc"    "accpv"     "dumppc"
-# [13] "stratio"   "deathrate" "cbrate"    "tfrate"    "pctmale"   "accpc"
-# [19] "lngrdppc"  "lnpop"     "ynext"
+#  [7] "divorce"   "medrate"   "vehipc"    "accpv"     "dumppc"    "stratio"
+# [13] "deathrate" "cbrate"    "tfrate"    "pctmale"   "accpc"     "lngrdppc"
+# [19] "lnpop"     "ynext"
 ```
 
 `z14` 데이터에서 `ynext` 변수는 2015년 `deathrate`이고, z15 데이터에서 `ynext` 변수는 2016년 `deathrate`이다. `z14` 데이터를 이용하여 머신러닝을 실습해 본다(train set). 목표변수는 이듬해 사망률(`ynext`), 예측변수들은 당해 연도의 모든 변수들이다. `z15` (`z.test`) 데이터는 시험용으로 사용한다(test set).
@@ -51,8 +59,8 @@ X15 <- model.matrix(fm, data=z.test)[,-1]
 
 ```R
 RMSE <- function(x,y) sqrt(mean((x-y)^2))
-rmspe.rw <- RMSE(z15$ynext, z15$deathrate)
-rmspe.rw # random walk, defined in index11.php
+rmspe.rw <- RMSE(z15$ynext, z15$deathrate) # random walk
+rmspe.rw
 # [1] 53.24273
 ```
 
@@ -80,6 +88,7 @@ X <- model.matrix(fm, data=z14)[,-1]
 X15 <- model.matrix(fm, data=z.test)[,-1]
 RMSE <- function(x,y) sqrt(mean((x-y)^2))
 rmspe.rw <- RMSE(z15$ynext, z15$deathrate)
-
 # save(z14, z15, z.test, X, Y, X15, RMSE, rmspe.rw, file = 'data.RData')
 ```
+
+: 
