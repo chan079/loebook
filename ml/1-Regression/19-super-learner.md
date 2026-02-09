@@ -103,7 +103,7 @@ set.seed(1)
 group <- sample(rep(1:10, nrow(z14)), nrow(z14)) # same grouping as before
 table(group)
 # group
-#  1  2  3  4  5  6  7  8  9 10 
+#  1  2  3  4  5  6  7  8  9 10
 # 26 21 17 22 24 23 20 23 24 23
 ```
 
@@ -183,8 +183,8 @@ head(cvpreds, 3)
 
 ```R
 apply(cvpreds, 2, function(x) RMSE(x, z14$ynext)) # sequential
-#      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117 
+#      ols      bss    ridge    lasso      pcr      pls      svm       rf
+# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117
 ```
 
 결과 설명에 앞서, 앞의 순차적(sequential)인 시행 방법은 하나의 CPU
@@ -223,8 +223,8 @@ stopCluster(cl) # Don't forget this
 ```R
 cvpreds <- cvpreds[rownames(z14), ] # important!
 apply(cvpreds, 2, function(x) RMSE(x, z14$ynext)) # CV pred error
-#      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117 
+#      ols      bss    ridge    lasso      pcr      pls      svm       rf
+# 52.43068 49.86573 52.30950 50.93330 67.55433 52.44091 54.14822 54.73117
 ```
 
 앞의 순차(sequential) 시행 시 결과와 동일한 것을 확인할 수 있다.
@@ -259,8 +259,8 @@ sum(super$x)
 ```R
 wgt <- setNames(super$x, colnames(super$r))
 round(wgt,3)
-#   ols   bss ridge lasso   pcr   pls   svm    rf 
-# 0.000 0.815 0.023 0.000 0.075 0.000 0.000 0.087 
+#   ols   bss ridge lasso   pcr   pls   svm    rf
+# 0.000 0.815 0.023 0.000 0.075 0.000 0.000 0.087
 ```
 
 CV를 이용하여 구한 Super Learner는 0.815×(Best subset selection) + 0.023×(Ridge) +
@@ -307,8 +307,8 @@ head(testp)
 
 ```R
 apply(testp, 2, function(x) RMSE(x, z15$ynext))
-#      ols      bss    ridge    lasso      pcr      pls      svm       rf 
-# 49.60315 48.98381 48.44003 47.81821 61.58840 49.59406 47.60550 49.69079 
+#      ols      bss    ridge    lasso      pcr      pls      svm       rf
+# 49.60315 48.98381 48.44003 47.81821 61.58840 49.59406 47.60550 49.69079
 ```
 
 앞에서 구한 Discrete Super Learner (best subset selection)의 test set
