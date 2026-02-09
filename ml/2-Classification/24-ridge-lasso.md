@@ -3,7 +3,6 @@
 ```R
 rm(list=ls(all=TRUE))
 load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.RData"))
-data(Hmda, package="Ecdat")
 ```
 
 # Ridge와 Lasso
@@ -19,8 +18,8 @@ idx1 <- which(TrainSet$deny=='no')
 idx2 <- with(TrainSet, sample(which(deny=='yes'), sum(deny=='no'), replace=TRUE))
 Over <- TrainSet[c(idx1,idx2), ]
 summary(Over$deny)
-#   no  yes 
-# 1948 1948 
+#   no  yes
+# 1948 1948
 ```
 
 ## 데이터 준비
@@ -98,8 +97,8 @@ Performance(cv.ridge2, TestSet, s='lambda.1se')
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8435374   0.3428571   0.8143713 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8435374   0.3428571   0.8143713
 ```
 
 이 데이터의 경우 `lambda.1se` 대신 `lambda.min`을 사용하면 아래와
@@ -115,8 +114,8 @@ Performance(cv.ridge2, TestSet, s='lambda.min')
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8367347   0.3333333   0.8083832 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8367347   0.3333333   0.8083832
 ```
 
 `lambda.1se`를 사용한 결과로 돌아와서, 계수들과 표준화 계수들은 다음과 같다.
@@ -126,7 +125,7 @@ bhat.ridge <- coef(cv.ridge2, s = 'lambda.1se')
 options(scipen=1)  # fixed digits (not exponential notation)
 cbind(bhat.ridge, bhat.ridge * c(1, apply(X, 2, sd)))
 # 13 x 2 sparse Matrix of class "dgCMatrix"
-#                       s1           s1
+#              lambda.1se   lambda.1se
 # (Intercept) -4.11408458 -4.114084583
 # dir          2.99674558  0.524209620
 # hir          0.31785056  0.050232787
@@ -199,10 +198,10 @@ plot(cv.lasso)
 bhat.lasso <- coef(cv.lasso, s = 'lambda.1se')
 cbind(bhat.lasso, bhat.lasso * c(1, apply(X, 2, sd)))
 # 13 x 2 sparse Matrix of class "dgCMatrix"
-#                       s1            s1
+#              lambda.1se  lambda.1se
 # (Intercept) -3.68318639 -3.68318639
 # dir          3.31736931  0.58029514
-# hir          .           .         
+# hir          .           .
 # lvr          0.99790725  0.17984534
 # ccs          0.28811176  0.55594163
 # mcs          0.14755238  0.08168086
@@ -211,7 +210,7 @@ cbind(bhat.lasso, bhat.lasso * c(1, apply(X, 2, sd)))
 # selfyes      0.35453552  0.12223306
 # singleyes    0.23073077  0.11453754
 # uria         0.04377992  0.09554385
-# condominium  .           .         
+# condominium  .           .
 # blackyes     0.60609562  0.24949882
 ```
 
@@ -236,7 +235,7 @@ Performance(cv.lasso, TestSet, s = 'lambda.1se')
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
+# Sensitivity Specificity   Precision    Accuracy
 #   0.6000000   0.8299320   0.3243243   0.8023952
 ```
 
@@ -251,8 +250,8 @@ Performance(cv.lasso, TestSet, s = 'lambda.min')
 #    yes   8  12
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6000000   0.8367347   0.3333333   0.8083832 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6000000   0.8367347   0.3333333   0.8083832
 ```
 
 `no`를 올바르게 예측하는 경우가 "1se"의 경우보다 1건 더 많다. 참고로,
@@ -303,15 +302,15 @@ Performance(cv.enet, TestSet, s='lambda.1se')
 #    yes   7  13
 # 
 # $Summary
-# Sensitivity Specificity   Precision    Accuracy 
-#   0.6500000   0.8435374   0.3611111   0.8203593 
+# Sensitivity Specificity   Precision    Accuracy
+#   0.6500000   0.8435374   0.3611111   0.8203593
 ```
 
+[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
+[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [ridge]: https://en.wikipedia.org/wiki/Ridge_regression
 [lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
 [glmnet]: https://cran.r-project.org/package=glmnet
-[CV]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 [deviance]: https://en.wikipedia.org/wiki/Deviance_(statistics)
-[confusion matrix]: https://en.wikipedia.org/wiki/Confusion_matrix
-[ROC]: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 [elastic net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
