@@ -13,7 +13,7 @@
 
 [준비](https://chan079.github.io/loepy/00-intro/)<br />
 [3장 단순회귀 모형의 추정](https://chan079.github.io/loepy/03/)<br />
-[4장 추정값과 참값의 관계]()<br />
+[4장 추정값과 참값의 관계](https://chan079.github.io/loepy/04/)<br />
 6장 최소제곱법을 이용한 가설검정<br />
 7장 표본크기가 클 때<br />
 8장 다중회귀 모형과 그 추정<br />
