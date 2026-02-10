@@ -114,7 +114,7 @@ RMSE(z15$ynext, predict(reg, z15))
 ```
 
 이상에서는 BIC를 이용하여 최적 변수를 선택하였다. [Mallows's Cp]를
-사용할 수도 있는데, 그러면 $k=5$가 선택되고, 이 경우 test set에 적용한 결과는 다음과 같다.
+사용할 수도 있는데, 그러면 $k=6$이 선택된다.
 
 ```R
 plot(reg.summ$cp, type='o', ylab = 'Cp')
@@ -125,6 +125,11 @@ plot(reg.summ$cp, type='o', ylab = 'Cp')
 ```R
 (k.cp <- which.min(reg.summ$cp))
 # [1] 6
+```
+
+$k=6$을 사용할 때 test set에 적용한 결과는 다음과 같다.
+
+```
 RMSE(z15$ynext, predict(reg.full, z15, k.cp))
 # [1] 46.46588
 ```
