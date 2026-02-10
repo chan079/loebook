@@ -11,7 +11,7 @@
 
 주피터 노트북을 GitHub에서 보는 데 시간이 걸려서 현재 html로 변환 중이다. 변환이 완료된 페이지는 다음에서 접속할 수 있다.
 
-[준비](https://chan079.github.io/loepy/00-intro/)<br />
+[준비](https://chan079.github.io/loepy/00/)<br />
 [3장 단순회귀 모형의 추정](https://chan079.github.io/loepy/03/)<br />
 [4장 추정값과 참값의 관계](https://chan079.github.io/loepy/04/)<br />
 6장 최소제곱법을 이용한 가설검정<br />
