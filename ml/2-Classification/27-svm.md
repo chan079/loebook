@@ -7,10 +7,7 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/2-Classification/data.R
 
 # Support Vector Machines
 
-앞서 살펴본 [Support Vector Regression](../1-Regression/17-svr.md)은 [Support Vector
-Machine][SVM] (SVM)을 회귀 문제에 적용한 것이다. 이제 분류 문제에서
-SVM을 살펴보자. 데이터로는 `TrainSet` 대신 random oversample한
-데이터(`Over`)를 만들어 사용한다.
+앞서 살펴본 [Support Vector Regression](../1-Regression/17-svr.md)은 [Support Vector Machine][SVM] (SVM)을 회귀 문제에 적용한 것이다. 이제 분류 문제에서 SVM을 살펴보자. 데이터로는 `TrainSet` 대신 random oversample한 데이터(`Over`)를 만들어 사용한다.
 
 ```R
 overSample <- function(DF) {
