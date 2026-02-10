@@ -9,6 +9,13 @@
 부분을 제외하고) 『계량경제학강의』와 결과가 동일한지 눈으로 직접
 확인한 것이다.
 
+주피터 노트북을 GitHub에서 보는 데 시간이 걸려서 현재 html로 변환 중이다. 변환이 완료된 페이지는 다음에서 접속할 수 있다.
+
+[준비](https://chan079.github.io/loepy/00-intro/)<br />
+[3장 단순회귀 모형의 추정](https://chan079.github.io/loepy/03/)
+
+아래는 주피터 노트북
+
 [준비](Prepare%20Data.md)<br />
 [3장 단순회귀 모형의 추정](notebooks/03.ipynb)<br />
 [4장 추정값과 참값의 관계](notebooks/04.ipynb)<br />
