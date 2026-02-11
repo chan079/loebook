@@ -17,7 +17,7 @@ install.packages('loedata')
 
 [19장 머신러닝 예제](ml)
 
-[Python 코드](python)
+[Python 코드][loepy] [주피터 노트북](python)
 
 ## 제5판 서문
 
@@ -46,3 +46,4 @@ install.packages('loedata')
 [home]: https://chan079.github.io
 [pybook]: https://www.pybook.co.kr/mall/book/field?goodsno=2198
 [loedata]: https://cran.r-project.org/package=loedata
+[loepy]: https://chan079.github.io/loepy/
