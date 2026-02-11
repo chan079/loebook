@@ -17,7 +17,7 @@ install.packages('loedata')
 
 [19장 머신러닝 예제](ml)
 
-[Python 코드][loepy] ([주피터 노트북](python))
+[Python 코드][loepy] ([주피터 노트북](python/notebooks))
 
 ## 제5판 서문
 
