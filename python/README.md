@@ -9,7 +9,7 @@
 부분을 제외하고) 『계량경제학강의』와 결과가 동일한지 눈으로 직접
 확인한 것이다.
 
-주피터 노트북을 GitHub에서 보는 데 시간이 걸려서 현재 html로 변환 중이다. 변환이 완료된 페이지는 다음에서 접속할 수 있다.
+주피터 노트북을 GitHub에서 보는 데 시간이 걸려서 html로 변환하였다. 다음 링크 참조.
 
 [준비](https://chan079.github.io/loepy/00/)<br />
 [3장 단순회귀 모형의 추정](https://chan079.github.io/loepy/03/)<br />
@@ -18,27 +18,12 @@
 [7장 표본크기가 클 때](https://chan079.github.io/loepy/07/)<br />
 [8장 다중회귀 모형과 그 추정](https://chan079.github.io/loepy/08/)<br />
 [9장 다중회귀 추정량의 성질](https://chan079.github.io/loepy/09/)<br />
-10장 다중회귀 모형에서 가설검정<br />
-11장 다중회귀 관련 추가 주제<br />
-12장 정규분포 문제<br />
-13장 이분산<br />
-14장 오차의 자기상관<br />
-15장 확률적인 설명변수<br />
-16장 도구변수 추정
+[10장 다중회귀 모형에서 가설검정](https://chan079.github.io/loepy/09/)<br />
+[11장 다중회귀 관련 추가 주제](https://chan079.github.io/loepy/09/)<br />
+[12장 정규분포 문제](https://chan079.github.io/loepy/09/)<br />
+[13장 이분산](https://chan079.github.io/loepy/09/)<br />
+[14장 오차의 자기상관](https://chan079.github.io/loepy/09/)<br />
+[15장 확률적인 설명변수](https://chan079.github.io/loepy/09/)<br />
+[16장 도구변수 추정](https://chan079.github.io/loepy/09/)
 
-아래는 원래 주피터 노트북(변환 완료된 것은 링크를 지움).
-
-준비<br />
-3장 단순회귀 모형의 추정<br />
-4장 추정값과 참값의 관계<br />
-6장 최소제곱법을 이용한 가설검정<br />
-7장 표본크기가 클 때<br />
-8장 다중회귀 모형과 그 추정<br />
-9장 다중회귀 추정량의 성질<br />
-[10장 다중회귀 모형에서 가설검정](notebooks/10.ipynb)<br />
-[11장 다중회귀 관련 추가 주제](notebooks/11.ipynb)<br />
-[12장 정규분포 문제](notebooks/12.ipynb)<br />
-[13장 이분산](notebooks/13.ipynb)<br />
-[14장 오차의 자기상관](notebooks/14.ipynb)<br />
-[15장 확률적인 설명변수](notebooks/15.ipynb)<br />
-[16장 도구변수 추정](notebooks/16.ipynb)
+주피터 노트북이 필요하면 다운로드 받기 바란다.
