@@ -18,12 +18,12 @@ HTML 페이지는 다음 링크에 있다.
 [7장 표본크기가 클 때](https://chan079.github.io/loepy/07/)<br />
 [8장 다중회귀 모형과 그 추정](https://chan079.github.io/loepy/08/)<br />
 [9장 다중회귀 추정량의 성질](https://chan079.github.io/loepy/09/)<br />
-[10장 다중회귀 모형에서 가설검정](https://chan079.github.io/loepy/09/)<br />
-[11장 다중회귀 관련 추가 주제](https://chan079.github.io/loepy/09/)<br />
-[12장 정규분포 문제](https://chan079.github.io/loepy/09/)<br />
-[13장 이분산](https://chan079.github.io/loepy/09/)<br />
-[14장 오차의 자기상관](https://chan079.github.io/loepy/09/)<br />
-[15장 확률적인 설명변수](https://chan079.github.io/loepy/09/)<br />
-[16장 도구변수 추정](https://chan079.github.io/loepy/09/)
+[10장 다중회귀 모형에서 가설검정](https://chan079.github.io/loepy/10/)<br />
+[11장 다중회귀 관련 추가 주제](https://chan079.github.io/loepy/11/)<br />
+[12장 정규분포 문제](https://chan079.github.io/loepy/12/)<br />
+[13장 이분산](https://chan079.github.io/loepy/13/)<br />
+[14장 오차의 자기상관](https://chan079.github.io/loepy/14/)<br />
+[15장 확률적인 설명변수](https://chan079.github.io/loepy/15/)<br />
+[16장 도구변수 추정](https://chan079.github.io/loepy/16/)
 
 주피터 노트북이 필요하면 [`notebooks`](notebooks) 폴더에서 다운로드 받기 바란다.
