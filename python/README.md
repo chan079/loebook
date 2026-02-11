@@ -16,8 +16,8 @@
 [4장 추정값과 참값의 관계](https://chan079.github.io/loepy/04/)<br />
 [6장 최소제곱법을 이용한 가설검정](https://chan079.github.io/loepy/06/)<br />
 [7장 표본크기가 클 때](https://chan079.github.io/loepy/07/)<br />
-8장 다중회귀 모형과 그 추정<br />
-9장 다중회귀 추정량의 성질<br />
+[8장 다중회귀 모형과 그 추정](https://chan079.github.io/loepy/08/)<br />
+[9장 다중회귀 추정량의 성질](https://chan079.github.io/loepy/09/)<br />
 10장 다중회귀 모형에서 가설검정<br />
 11장 다중회귀 관련 추가 주제<br />
 12장 정규분포 문제<br />
@@ -33,8 +33,8 @@
 4장 추정값과 참값의 관계<br />
 6장 최소제곱법을 이용한 가설검정<br />
 7장 표본크기가 클 때<br />
-[8장 다중회귀 모형과 그 추정](notebooks/08.ipynb)<br />
-[9장 다중회귀 추정량의 성질](notebooks/09.ipynb)<br />
+8장 다중회귀 모형과 그 추정<br />
+9장 다중회귀 추정량의 성질<br />
 [10장 다중회귀 모형에서 가설검정](notebooks/10.ipynb)<br />
 [11장 다중회귀 관련 추가 주제](notebooks/11.ipynb)<br />
 [12장 정규분포 문제](notebooks/12.ipynb)<br />
