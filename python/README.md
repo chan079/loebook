@@ -26,4 +26,4 @@
 [15장 확률적인 설명변수](https://chan079.github.io/loepy/09/)<br />
 [16장 도구변수 추정](https://chan079.github.io/loepy/09/)
 
-주피터 노트북이 필요하면 [`notebook`](notebook) 폴더에서 다운로드 받기 바란다.
+주피터 노트북이 필요하면 [`notebooks`](notebooks) 폴더에서 다운로드 받기 바란다.
