@@ -7,14 +7,14 @@
 ```r
 stage1 <- lm(x2~x1+z2a+z2b,data=Ivdata)
 Ivdata$x2hat <- stage1$fitted
-tsls <- ivreg(y~x1+x2|x1+z2a+z2b,data=Ivdata)
+tsls <- ivreg(y~x1+x2|x1+z2a+z2b,data=Ivdata)  # HERE
 aux1 <- lm(z2b~x1+x2hat,data=Ivdata)
-Ivdata$w <- aux1$resid*tsls$residuals
+Ivdata$w <- aux1$resid*tsls$residuals          # HERE
 Ivdata$one <- 1
 aux2 <- lm(one~w-1,data=Ivdata)
 stat <- nrow(Ivdata)*summary(aux2)$r.sq
 stat
-# [1] 0.3571221
+# [1] 0.3571221                                # HERE
 1-pchisq(stat,1)
-# [1] 0.5501089
+# [1] 0.5501089                                # HERE
 ```
