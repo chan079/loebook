@@ -24,6 +24,7 @@ Over <- overSample(TrainSet)
 커널(kernel)로는 선형(linear) 커널을 사용한다(다른 커널을 사용해도 된다).
 
 ```R
+library(e1071)
 svmfit0 <- svm(deny~., data=Over, kernel="linear")
 summary(svmfit0)
 # Call:
@@ -96,12 +97,12 @@ summary(tune.out)
 # - best performance: 0.2464063
 # 
 # - Detailed performance results:
-#     cost     error dispersion
-# 1   0.01 0.2546220 0.02108922
-# 2   0.10 0.2471795 0.02014827
-# 3   1.00 0.2469198 0.02123332
-# 4  10.00 0.2464063 0.02123804
-# 5 100.00 0.2466627 0.02138720
+#    cost     error dispersion
+# 1 1e-02 0.2546220 0.02108922
+# 2 1e-01 0.2471795 0.02014827
+# 3 1e+00 0.2469198 0.02123332
+# 4 1e+01 0.2464063 0.02123804
+# 5 1e+02 0.2466627 0.02138720
 ```
 
 Cost = 100이 최선의 매개변수라고 나왔다. `cost`를 1000까지 올리면
@@ -224,7 +225,7 @@ colSums(cverrs)
 
 ```R
 costs
-# [1]   0.01   0.10   1.00  10.00 100.00 200.00
+# [1] 1e-02 1e-01 1e+00 1e+01 1e+02 2e+02
 costs[which.min(colSums(cverrs)-seq_len(ncol(cverrs))*0.01)]
 # [1] 10
 ```
