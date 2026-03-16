@@ -106,7 +106,7 @@ rmspe.rw
 
 ```R
 set.seed(1)
-group <- sample(rep(1:10, length.out=nrow(z14)))
+group <- sample(rep_len(1:10, nrow(z14)))
 ```
 
 위에서와 마찬가지로 `df1`(`deathrate` 용)과 `df2`(`aged` 용)을 1~4까지
@@ -120,7 +120,7 @@ for (i in 1:nrow(dfset)) {
   df1 <- dfset$df1[i]
   df2 <- dfset$df2[i]
   for (k in 1:10) {
-    reg <- lm(ynext~ns(deathrate, df1) + ns(aged, df2), data=z14, subset = group != k)
+    reg <- lm(ynext~ns(deathrate, df1) + ns(aged, df2), data=z14[group != k, ])
     zk <- z14[group==k, ]
     cv.err <- cv.err + sum((zk$ynext - predict(reg, zk))^2)
   }
