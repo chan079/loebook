@@ -10,10 +10,10 @@ load(url("https://github.com/chan079/loebook/raw/main/ml/1-Regression/data.RData
 [Best subset selection](11-subset-selection.md)을 이용하면 [BIC]를
 사용하든 [CV]를 사용하든 똑같이 2개의 변수(`deathrate`와 `aged`)가
 선택되었다. 이제 이 두 변수만을 사용하여 회귀를 하는데(머신러닝이
-아니라 휴먼러닝이 많이 가미되었다), 이제는 3차 natural [spline] (NS)을
+아니라 휴먼러닝이 많이 가미되었다), 이제는 natural [spline] (NS)을
 활용하여 비선형성을 허용해 보자.
 
-3차 NS를 사용하여 학습할 때 어느 정도 성과를 얻는지 보자. 먼저 두
+NS를 사용하여 학습할 때 어느 정도 성과를 얻는지 보자. 먼저 두
 변수의 `df`를 모두 3 (자의적인 선택) 정도로 하고 살펴보자(`df=3`은
 가운데에 2개의 구분점이 있는 NS를 말한다).
 
