@@ -208,7 +208,7 @@ $k=3$에서 Best SS = Forward SS ≠ Backward SS 이다.
 ```R
 ## Cross Validation
 set.seed(1)
-group <- sample(1:10, nrow(z14), replace = TRUE)
+group <- sample(rep(1:10, length.out=nrow(z14)))
 ```
 
 1~10 그룹별 표본크기는 다음과 같다.
@@ -217,7 +217,7 @@ group <- sample(1:10, nrow(z14), replace = TRUE)
 table(group)
 # group
 #  1  2  3  4  5  6  7  8  9 10
-# 21 17 22 21 23 24 22 21 28 24
+# 23 23 23 22 22 22 22 22 22 22
 ```
 
 다음으로 CV error들을 저장할 공간을 마련한다. 전체 변수 개수가
