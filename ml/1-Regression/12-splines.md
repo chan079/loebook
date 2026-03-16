@@ -106,7 +106,7 @@ rmspe.rw
 
 ```R
 set.seed(1)
-group <- sample(1:10, nrow(z14), replace = TRUE)
+group <- sample(rep(1:10, length.out=nrow(z14)))
 ```
 
 위에서와 마찬가지로 `df1`(`deathrate` 용)과 `df2`(`aged` 용)을 1~4까지
@@ -133,7 +133,7 @@ CV error가 가장 작은 셋팅은 다음과 같다.
 ```R
 dfset[which.min(dfset$cv.error),]
 #   df1 df2 cv.error
-# 1   1   1 559499.5
+# 1   1   1 573865.1
 ```
 
 위에서 BIC를 사용한 경우와 똑같은 결과를 얻었다. NS (natural
